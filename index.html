@@ -1,0 +1,639 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Netplan Configuration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <!-------- Kendo Sources (Order Matters!) ---------->
+    <!-- CSS -->
+    <link href="kendo/styles/kendo.common-bootstrap.min.css" rel="stylesheet" />
+    <link href="kendo/styles/kendo.bootstrap.min.css" rel="stylesheet" />
+    <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+    <!-- JS -->
+    <script src="kendo/js/jquery.min.js"></script>
+    <script src="kendo/js/angular.min.js"></script>
+    <script src="kendo/js/kendo.all.min.js"></script>
+    <script src="kendo/js/jszip.min.js"></script>
+
+    <!-------- Outside Script ---------->
+    <!-- Time/Date -->
+    <script src="osrc/moment.min.js"></script>
+    <!-- PDF/Excel Export -->
+    <script src="osrc/pako_deflate.min.js"></script>
+    <!-- Fort Awesome -->
+    <script src="https://use.fortawesome.com/dc0da9b8.js"></script>
+    <!-- Bootstrap -->
+    <script src="osrc/bootstrap/popper.min.js"></script> <!-- releases >> dist/umd/popper.min.js -->
+    <link href="osrc/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <script src="osrc/bootstrap/bootstrap.min.js"></script>
+
+    <!-------- My Script (Order Matters!) ---------->
+    <script src="src/helper.js"></script>
+    <script src="src/index.js"></script>
+    <link href="src/index.css" rel="stylesheet" />
+</head>
+
+<body>
+    <span id="screen_popup"></span>
+    <span id="screen_popup_no_hide"></span>
+
+    <!-- Home Screen -->
+    <div id="home_screen" data-role="view" data-transition="fade" data-model="APP.models.home_screen">
+        <div class="container-fluid">
+            <!-- Information -->
+            <div data-role="header">
+                <div data-role="navbar">
+                    <span class="heading_1">Netplan Administration</span>
+                </div>
+            </div>
+            <div class="row form-group justify-content-center" style="margin-top: 20px;">
+                <div class="col text-center">
+                    <span class="heading_3">Changing these values can cause connection to be lost. Select Refresh
+                        before making changes.</span>
+                </div>
+            </div>
+            <!-- Panelbar -->
+            <ul data-role="panelbar" data-expand-mode="single" data-bind="events: { select: panelbar_select }">
+                <!-- Network -->
+                <li>
+                    <span class="heading_3 panelbar_panel" data-id="1">Network</span>
+                    <div id="home_screen_network_panel">
+                        <!-- Bridge 0, General, Wi-Fi -->
+                        <div class="row form-group justify-content-center mt-3">
+                            <!-- Bridge 0 -->
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Bridge 0
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <!-- Enable -->
+                                        <li class="list-group-item">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="Bridge both ethernet ports together"
+                                                    class="fa fa-question help"></i> Enabled
+                                            </h6>
+                                            <input type="checkbox" data-role="switch" data-off-label="No"
+                                                data-on-label="Yes"
+                                                data-bind="checked: br0_enabled, events: { change: br0_enabled_change }" />
+                                        </li>
+                                        <!-- Gateway -->
+                                        <li class="list-group-item" data-bind="visible: br0_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="The IP Address of the network's router."
+                                                    class="fa fa-question help"></i> Gateway
+                                            </h6>
+                                            <input name="Bridge 0 Gateway" data-role="maskedtextbox"
+                                                data-bind="value: br0_gateway"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Bridge 0 Gateway"></span>
+                                        </li>
+                                        <!-- Nameserver 1 -->
+                                        <li class="list-group-item" data-bind="visible: br0_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="The IP Address of the network's DNS server (default: 8.8.8.8)."
+                                                    class="fa fa-question help"></i> Nameserver
+                                            </h6>
+                                            <input name="Bridge 0 Nameserver" data-role="maskedtextbox"
+                                                data-bind="value: br0_nameserver0"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Bridge 0 Nameserver"></span>
+                                        </li>
+                                        <!-- Nameserver 2 -->
+                                        <li class="list-group-item" data-bind="visible: br0_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="The IP Address of the network's backup DNS server (default: 8.8.4.4)."
+                                                    class="fa fa-question help"></i> Backup Nameserver
+                                            </h6>
+                                            <input name="Bridge 0 Backup Nameserver" data-role="maskedtextbox"
+                                                data-bind="value: br0_nameserver1"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Bridge 0 Backup Nameserver"></span>
+
+                                        </li>
+                                        <!-- Addresses Grid -->
+                                        <li class="list-group-item" data-bind="visible: br0_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="IP addresses of the bridge (can add multiple)"
+                                                    class="fa fa-question help"></i> Addresses
+                                            </h6>
+                                            <div id="br0_addresses"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- General -->
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                                <div class="card">
+                                    <div class="card-header">
+                                        General
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <!-- Controller IP Address -->
+                                        <li class="list-group-item">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="IP Address of the WebRelay / PLC in the panel."
+                                                    class="fa fa-question help"></i>
+                                                Controller IP Address</h6>
+                                            <input name="Controller IP Address" data-role="maskedtextbox"
+                                                data-bind="value: contr_ip_addr"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Controller IP Address"></span>
+                                        </li>
+                                        <!-- Reader IP Address -->
+                                        <li class="list-group-item">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="IP Address of the ethernet FOB reader."
+                                                    class="fa fa-question help"></i>
+                                                Reader IP Address</h6>
+                                            <input name="Reader IP Address" data-role="maskedtextbox"
+                                                data-bind="value: reader_ip_addr"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Reader IP Address"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Wi-Fi -->
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Wi-Fi
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <!-- Enable -->
+                                        <li class="list-group-item">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="Connect to a Wi-Fi network.  Only one gateway is allowed on the network."
+                                                    class="fa fa-question help"></i> Enabled
+                                            </h6>
+                                            <input type="checkbox" data-role="switch" data-off-label="No"
+                                                data-on-label="Yes"
+                                                data-bind="checked: wifi_enabled, events: { change: wifi_enabled_change }" />
+                                        </li>
+                                        <!-- Gateway -->
+                                        <li class="list-group-item" data-bind="visible: wifi_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="The IP Address of the network's router."
+                                                    class="fa fa-question help"></i> Gateway
+                                            </h6>
+                                            <input name="Wi-Fi Gateway" data-role="maskedtextbox"
+                                                data-bind="value: wifi_gateway"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Wi-Fi Gateway"></span>
+                                        </li>
+                                        <!-- Nameserver 1 -->
+                                        <li class="list-group-item" data-bind="visible: wifi_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="The IP Address of the network's DNS server (default: 8.8.8.8)."
+                                                    class="fa fa-question help"></i> Nameserver
+                                            </h6>
+                                            <input name="Wi-Fi Nameserver" data-role="maskedtextbox"
+                                                data-bind="value: wifi_nameserver0"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Wi-Fi Nameserver"></span>
+                                        </li>
+                                        <!-- Nameserver 2 -->
+                                        <li class="list-group-item" data-bind="visible: wifi_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="The IP Address of the network's backup DNS server (default: 8.8.4.4)."
+                                                    class="fa fa-question help"></i> Backup Nameserver
+                                            </h6>
+                                            <input name="Wi-Fi Backup Nameserver" data-role="maskedtextbox"
+                                                data-bind="value: wifi_nameserver1"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Wi-Fi Backup Nameserver"></span>
+
+                                        </li>
+                                        <!-- SSID -->
+                                        <li class="list-group-item" data-bind="visible: wifi_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="Name of the Wi-Fi network to connect to (Service Set Identifier)."
+                                                    class="fa fa-question help"></i> SSID
+                                            </h6>
+                                            <input name="SSID" data-role="maskedtextbox"
+                                                data-bind="value: wifi_ssid" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="SSID"></span>
+                                        </li>
+                                        <!-- SSID Password -->
+                                        <li class="list-group-item" data-bind="visible: wifi_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="Passphrase for WPA2 authentication.  If not given, the network is assumed to be open.  Other authentication modes are not currently supported."
+                                                    class="fa fa-question help"></i> Passphrase
+                                            </h6>
+                                            <input name="Passphrase" data-role="maskedtextbox"
+                                                data-bind="value: wifi_ssid_password" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Passphrase"></span>
+                                        </li>
+                                        <!-- Addresses Grid -->
+                                        <li class="list-group-item" data-bind="visible: wifi_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="IP addresses of the wifi (can add multiple)"
+                                                    class="fa fa-question help"></i> Addresses
+                                            </h6>
+                                            <div id="wifi_addresses"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Ethernet Port 1, 2 -->
+                        <div class="row form-group justify-content-center mt-2" data-bind="invisible: br0_enabled">
+                            <!-- Ethernet Port 1 -->
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Ethernet Port 1
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <!-- Enable -->
+                                        <li class="list-group-item">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="LAN1 (enp3s0)"
+                                                    class="fa fa-question help"></i> Enabled
+                                            </h6>
+                                            <input type="checkbox" data-role="switch" data-off-label="No"
+                                                data-on-label="Yes"
+                                                data-bind="checked: eth1_enabled, events: { change: eth1_enabled_change }" />
+                                        </li>
+                                        <!-- Gateway -->
+                                        <li class="list-group-item" data-bind="visible: eth1_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="The IP Address of the network's router."
+                                                    class="fa fa-question help"></i> Gateway
+                                            </h6>
+                                            <input name="Ethernet 1 Gateway" data-role="maskedtextbox"
+                                                data-bind="value: eth1_gateway, invisible: eth2_gateway"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Ethernet 1 Gateway"></span>
+                                        </li>
+                                        <!-- Nameserver 1 -->
+                                        <li class="list-group-item" data-bind="visible: eth1_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="The IP Address of the network's DNS server (default: 8.8.8.8)."
+                                                    class="fa fa-question help"></i> Nameserver
+                                            </h6>
+                                            <input name="Ethernet 1 Nameserver" data-role="maskedtextbox"
+                                                data-bind="value: eth1_nameserver0"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Ethernet 1 Nameserver"></span>
+                                        </li>
+                                        <!-- Nameserver 2 -->
+                                        <li class="list-group-item" data-bind="visible: eth1_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="The IP Address of the network's backup DNS server (default: 8.8.4.4)."
+                                                    class="fa fa-question help"></i> Backup Nameserver
+                                            </h6>
+                                            <input name="Ethernet 1 Backup Nameserver" data-role="maskedtextbox"
+                                                data-bind="value: eth1_nameserver1"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Ethernet 1 Backup Nameserver"></span>
+
+                                        </li>
+                                        <!-- Addresses Grid -->
+                                        <li class="list-group-item" data-bind="visible: eth1_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="IP addresses of the bridge (can add multiple)"
+                                                    class="fa fa-question help"></i> Addresses
+                                            </h6>
+                                            <div id="eth1_addresses"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Ethernet Port 2 -->
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Ethernet Port 2
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <!-- Enable -->
+                                        <li class="list-group-item">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                title="LAN2 (enp4s0)"
+                                                class="fa fa-question help"></i> Enabled
+                                            </h6>
+                                            <input type="checkbox" data-role="switch" data-off-label="No"
+                                                data-on-label="Yes"
+                                                data-bind="checked: eth2_enabled, events: { change: eth2_enabled_change }" />
+                                        </li>
+                                        <!-- Gateway -->
+                                        <li class="list-group-item" data-bind="visible: eth2_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="The IP Address of the network's router."
+                                                    class="fa fa-question help"></i> Gateway
+                                            </h6>
+                                            <input name="Ethernet 2 Gateway" data-role="maskedtextbox"
+                                                data-bind="value: eth2_gateway, invisible: eth1_gateway"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Ethernet 2 Gateway"></span>
+                                        </li>
+                                        <!-- Nameserver 1 -->
+                                        <li class="list-group-item" data-bind="visible: eth2_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="The IP Address of the network's DNS server (default: 8.8.8.8)."
+                                                    class="fa fa-question help"></i> Nameserver
+                                            </h6>
+                                            <input name="Ethernet 2 Nameserver" data-role="maskedtextbox"
+                                                data-bind="value: eth2_nameserver0"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Ethernet 2 Nameserver"></span>
+                                        </li>
+                                        <!-- Nameserver 2 -->
+                                        <li class="list-group-item" data-bind="visible: eth2_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="The IP Address of the network's backup DNS server (default: 8.8.4.4)."
+                                                    class="fa fa-question help"></i> Backup Nameserver
+                                            </h6>
+                                            <input name="Ethernet 2 Backup Nameserver" data-role="maskedtextbox"
+                                                data-bind="value: eth2_nameserver1"
+                                                onkeypress="return numeric_with_period(event);" maxlength="15"
+                                                data-checkIP-msg="IP Address format is incorrect" />
+                                            <br />
+                                            <span class="k-invalid-msg" data-for="Ethernet 2 Backup Nameserver"></span>
+
+                                        </li>
+                                        <!-- Addresses Grid -->
+                                        <li class="list-group-item" data-bind="visible: eth2_enabled">
+                                            <h6 data-filter="i" data-role="tooltip"><i
+                                                    title="IP addresses of the bridge (can add multiple)"
+                                                    class="fa fa-question help"></i> Addresses
+                                            </h6>
+                                            <div id="eth2_addresses"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Buttons -->
+                        <div class="row form-group justify-content-center mt-2">
+                            <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-1 my-auto text-center">
+                                <button data-role="button" class="k-button custom_button"
+                                    data-bind="events: { click: submit_network_validate }"><i class="fa fa-check"></i>
+                                    Submit</button>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-1 my-auto text-center">
+                                <button data-role="button" class="k-button custom_button"
+                                    data-bind="click: get_current_network_values"><i
+                                        class="fa fa-refresh-glyphicon"></i> Refresh</button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!-- VPN Server Bridge -->
+                <li>
+                    <span class="heading_3 panelbar_panel" data-id="2">VPN Server Bridge</span>
+                    <div id="home_screen_vpn_server_panel">
+                        <div class="row form-group justify-content-center" style="margin-top: 15px;">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <span class="heading_3 include_spaces" data-filter="i" data-role="tooltip"><i
+                                        title="Addresses defined and saved under Network."
+                                        class="fa fa-question help"></i> Server Bridge Network:</span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <input id="home_screen_server_bridge_network" data-role="dropdownlist"
+                                    data-value-primitive="false" data-text-field="network" data-value-field="index"
+                                    class="heading_3"
+                                    data-bind="value: server_bridge_network_index, source: server_bridge_network_ds" />
+                            </div>
+                        </div>
+                        <div class="row form-group justify-content-center">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <span class="heading_3 include_spaces" data-filter="i" data-role="tooltip"><i
+                                        title="The starting IP Address range of the bridge network that connecting clients will be assigned to."
+                                        class="fa fa-question help"></i> DHCP IP Range Start:</span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <input id="home_screen_" name="DHCP IP Range Start" data-role="maskedtextbox"
+                                    class="heading_3" data-bind="value: server_bridge_dhcp_range_start"
+                                    onkeypress="return numeric_with_period(event);" maxlength="15"
+                                    data-checkIP-msg="IP Address format is incorrect" />
+                                <br />
+                                <span class="k-invalid-msg" data-for="DHCP IP Range Start"></span>
+                            </div>
+                        </div>
+                        <div class="row form-group justify-content-center">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <span class="heading_3 include_spaces" data-filter="i" data-role="tooltip"><i
+                                        title="The ending IP Address range of the bridge network that connecting clients will be assigned to."
+                                        class="fa fa-question help"></i> DHCP IP Range End:</span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <input id="home_screen_" name="DHCP IP Range End" data-role="maskedtextbox"
+                                    class="heading_3" data-bind="value: server_bridge_dhcp_range_end"
+                                    onkeypress="return numeric_with_period(event);" maxlength="15"
+                                    data-checkIP-msg="IP Address format is incorrect" />
+                                <br />
+                                <span class="k-invalid-msg" data-for="DHCP IP Range End"></span>
+                            </div>
+                        </div>
+                        <div class="row form-group justify-content-center">
+                            <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-1 my-auto text-center">
+                                <button data-role="button" class="k-button custom_button"
+                                    data-bind="events: { click: submit_vpn_server_bridge }"><i class="fa fa-check"></i>
+                                    Submit</button>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-1 my-auto text-center">
+                                <button data-role="button" class="k-button custom_button"
+                                    data-bind="click: get_vpn_server_bridge_values"><i
+                                        class="fa fa-refresh-glyphicon"></i>
+                                    Refresh</button>
+                            </div>
+                        </div>
+                        <div class="row form-group justify-content-center">
+                            <div style="text-align:center">
+                                <form action="https://www.ipaddressguide.com/cidr" target="_blank" method="post">
+                                    <p
+                                        style="background:#fff;border:1px solid #99A8AE;width:180px;padding:5px 5px 5px 5px;font-size:14px;font-family:'Trebuchet MS',Arial,Sans-serif;">
+                                        <a href="https://www.ipaddressguide.com" target="_blank"><img
+                                                src="https://www.ipaddressguide.com/images/ipaddressguide.gif"
+                                                alt="CIDR to IPv4 Address Range Utility Tool | IPAddressGuide"
+                                                border="0" width="120" height="12" /></a><br />
+                                        <b>CIDR to IPv4 Conversion</b><br /><br />
+                                        <label>CIDR</label><br />
+                                        <input type="text" name="cidr" value=""
+                                            style="border:solid 1px #C0C0C0;font-size:14px;width:110px;" placeholder="10.0.0.0/24" /><br />
+                                        <input type="submit" value="Calculate"
+                                            style="width:100px;font-size:14px;margin-top:3px;padding:2px 3px;color:#FFF;background:#8EB50C;border-width:1px;border-style:solid;">
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!-- Broadcast Wi-Fi Network -->
+                <li>
+                    <span class="heading_3 panelbar_panel" data-id="3">Broadcast Wi-Fi Network</span>
+                    <div id="home_screen_wifi_panel">
+                        <div class="row form-group justify-content-center" style="margin-top: 15px;">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <span class="heading_3">Broadcast Wi-Fi:</span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <input type="checkbox" data-role="switch" class="heading_3" data-on-label="Yes"
+                                    data-off-label="No"
+                                    data-bind="checked: wifi_broadcast_enabled, events: { change: wifi_broadcast_type_select }" />
+                            </div>
+                        </div>
+                        <div class="row form-group justify-content-center">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <span class="heading_3">Network Name:</span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <input name="Network Name" data-role="maskedtextbox" class="heading_3"
+                                    data-bind="value: wifi_broadcast_name, enabled: wifi_broadcast_enabled"
+                                    onkeypress="return alphanumeric_dash_underscore(event);" maxlength="50" required />
+                                <br />
+                                <span class="k-invalid-msg" data-for="Network Name"></span>
+                            </div>
+                        </div>
+                        <div class="row form-group justify-content-center">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <span class="heading_3">Network Password:</span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <input name="Network Password" data-role="maskedtextbox" class="heading_3"
+                                    data-bind="value: wifi_broadcast_password, enabled: wifi_broadcast_enabled"
+                                    onkeypress="return prevent_spaces(event);" maxlength="50" />
+                                <br />
+                                <span class="k-invalid-msg" data-for="Network Password"></span>
+                            </div>
+                        </div>
+                        <div class="row form-group justify-content-center">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <span class="heading_3 include_spaces" data-filter="i" data-role="tooltip"><i
+                                        title="Bridge gives access to the PC network. No Bridge gives access only to this PC."
+                                        class="fa fa-question help"></i> Broadcast Type:</span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <ul id="home_screen_wifi_broadcast_type_buttongroup" data-role="buttongroup"
+                                    data-index="0" style="float: left;"
+                                    data-bind="enabled: wifi_broadcast_enabled, events: { select: wifi_broadcast_type_select }">
+                                    <li>
+                                        <span class="heading_3">Bridge</span>
+                                    </li>
+                                    <li>
+                                        <span class="heading_3">No Bridge</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row form-group justify-content-center">
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <span class="heading_3 include_spaces" data-filter="i" data-role="tooltip"><i
+                                        title="The IP Address of the Industrial PC as the access point and its network.  Requires Broadcast Type to be No Bridge.  Default value is 192.168.12.1."
+                                        class="fa fa-question help"></i> Station AP Gateway:</span>
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 my-auto">
+                                <input id="home_screen_wifi_broadcast_ap_gateway" name="Station AP Gateway"
+                                    data-role="maskedtextbox" class="heading_3"
+                                    data-bind="value: wifi_broadcast_ap_gateway, enabled: wifi_broadcast_ap_gateway_enabled"
+                                    onkeypress="return numeric_with_period(event);" maxlength="15"
+                                    data-checkIP-msg="IP Address format is incorrect"
+                                    data-checkGW-msg="Gateway must end in 1." />
+                                <br />
+                                <span class="k-invalid-msg" data-for="Station AP Gateway"></span>
+                            </div>
+                        </div>
+                        <div class="row form-group justify-content-center">
+                            <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-1 my-auto text-center">
+                                <button data-role="button" class="k-button custom_button"
+                                    data-bind="events: { click: submit_wifi_broadcast_validate }"><i
+                                        class="fa fa-check"></i> Submit</button>
+                            </div>
+                            <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-1 my-auto text-center">
+                                <button data-role="button" class="k-button custom_button"
+                                    data-bind="click: get_current_wifi_values"><i class="fa fa-refresh-glyphicon"></i>
+                                    Refresh</button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!-- Commands -->
+                <li>
+                    <span class="heading_3 panelbar_panel" data-id="4">Commands</span>
+                    <div>
+                        <div class="row form-group justify-content-center mt-3">
+                            <!-- Reboot Computer -->
+                            <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2 my-auto text-center">
+                                <button data-role="button" class="k-button custom_button"
+                                    onclick="dialog_reboot.open();"><i class="fa fa-power"></i> Reboot Computer</button>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!-- Info -->
+                <li>
+                    <span class="heading_3 panelbar_panel" data-id="7">Information</span>
+                    <div>
+                        <div style="padding: 20px">
+                            <span data-bind="html: app_version" class="heading_3"></span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <!-- Dialogs, Prompts -->
+            <div id="home_screen_dialog_reboot" data-role="dialog" data-title="Reboot Station Confirmation"
+                data-closable="false"
+                data-content="<span style='font-size: 14pt;'>Are you sure you want to reboot the station?</span>"
+                data-actions="[{ text: 'Yes', action: reboot_station, primary: true },{text:'No', action: close_dialog}]"
+                data-visible="false">
+            </div>
+            <div id="home_screen_dialog_submit_network" data-role="dialog" data-title="Submit Network Confirmation"
+                data-closable="false" data-content="Are you sure you want to change the network settings?"
+                data-actions="[{ text: 'Yes', action: submit_network, primary: true },{text:'No', action: close_dialog}]"
+                data-visible="false">
+            </div>
+            <div id="home_screen_dialog_submit_wifi_broadcast" data-role="dialog" data-title="Submit Network Confirmation"
+                data-closable="false" data-content="Are you sure you want to change the Wi-Fi settings?"
+                data-actions="[{ text: 'Yes', action: submit_wifi_broadcast, primary: true },{text:'No', action: close_dialog}]"
+                data-visible="false">
+            </div>
+            <div id="home_screen_confirm_ip_arr_diff"></div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<!-- Saved Code -->
+<!--
+****************************************************************************************************************************
+<li class="k-state-active">     // expand panelbar list item on page load
+data-expand-mode="single"   // allow only one panel to be open at a time
+****************************************************************************************************************************
+
+-->
