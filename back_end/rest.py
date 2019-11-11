@@ -7,7 +7,13 @@ import yaml
 import io
 
 VERSION = "1.00"
+
+# Configuration
+PORT=3306
+HOST="localhost"
 DATABASE = "NetplanConfig"
+USERNAME = "admin"
+PASSWORD = "admin"
 
 logger = log.setup_custom_logger('root')
 
@@ -126,19 +132,6 @@ class get_interfaces:
 			response_obj["wifi_nameservers"] = wifi_nameservers
 			response_obj["wifi_ssid"] = wifi_ssid
 			response_obj["wifi_ssid_password"] = wifi_ssid_password
-
-			# connect to MySQL
-			cnx = mysql.connector.connect(host="localhost", port=3306, user="port1234", passwd="db0587", db=DATABASE)
-			cursor = cnx.cursor(dictionary=True)
-
-			# get Controller IP Address
-			cursor.execute("select ControllerIpAddress, ReaderIPAddress from LocalPLC")
-			for row in cursor:
-				response_obj["contr_ip_addr"] = row["ControllerIpAddress"]
-				response_obj["reader_ip_addr"] = row["ReaderIPAddress"]
-
-			# close connection
-			cnx.close()
 
 			# return data
 			ret_str = json.dumps(response_obj)	# converts json object to string
@@ -273,22 +266,6 @@ class change_interfaces:
 			with io.open(netplan_config_file, "w", encoding="utf8") as outfile:
 				yaml.safe_dump(netplan_config, outfile)
 
-			# connect to MySQL
-			cnx = mysql.connector.connect(host="localhost", port=3306, user="port1234", passwd="db0587", db=DATABASE)
-			cursor = cnx.cursor(dictionary=True)
-
-			# update Controller and Reader IP Address
-			cursor.execute("update LocalPLC set ControllerIpAddress = '" + contr_ip_addr + "', ReaderIPAddress = '" + reader_ip_addr + "'")
-
-			# update C++
-			cursor.execute("update Task set Val = 27 where pkTask = 1")
-
-			# commit
-			cnx.commit()
-
-			# close connection
-			cnx.close()
-
 			# apply changes
 			thr = threading.Thread(target=delayed_netplan_change)
 			thr.start()
@@ -297,42 +274,6 @@ class change_interfaces:
 			return web.internalerror('{ "message": "' + str(e) + '" }')
 
 		return '{"status":"success", "response":""}'
-
-class get_alarm_history:
-	def GET(self):
-		try:
-			web.header('Content-Type', 'application/json')
-			web.header('Access-Control-Allow-Origin', '*')
-			web.header('Access-Control-Allow-Credentials', 'true')
-
-			debug = False
-			ret_arr = []
-
-			# connect to MySQL
-			cnx = mysql.connector.connect(host="localhost", port=3306, user="port1234", passwd="db0587", db=DATABASE)
-			cursor = cnx.cursor(dictionary=True)
-
-			# query data
-			cursor.execute("select * from AlarmHistory")
-			for row in cursor:
-				ret_arr.append({
-					"pkAlarmHistory": row["pkAlarmHistory"],
-					"CreateDate": str(row["CreateDate"]),
-					"Level": row["Level"],
-					"Description": row["Description"],
-					"Solution": row["Solution"],
-				})
-
-			# close connection
-			cnx.close()
-
-			# return data
-			ret_str = json.dumps(ret_arr)	# converts json to string
-			if (debug): logger.info("ret_str = " + ret_str)
-			return ret_str
-		except Exception, e:
-			logger.error(str(e))
-			return web.internalerror('{ "message": "' + str(e) + '" }')		
 
 class get_vpn_server_bridge:
 	def GET(self):
@@ -462,7 +403,7 @@ class get_station_wifi:
 			ret_obj = {}
 
 			# connect to MySQL
-			cnx = mysql.connector.connect(host="localhost", port=3306, user="port1234", passwd="db0587", db=DATABASE)
+			cnx = mysql.connector.connect(host=HOST, port=PORT, user=USERNAME, passwd=PASSWORD, db=DATABASE)
 			cursor = cnx.cursor(dictionary=True)
 
 			# get Controller IP Address
@@ -499,7 +440,7 @@ class update_station_wifi:
 			logger.info("broadcast_wifi_enabled = " + str(broadcast_wifi_enabled) + "; wifi_network_name = " + wifi_network_name + "; wifi_network_password = " + wifi_network_password + "; wifi_broadcast_type = " + str(wifi_broadcast_type) + "; wifi_network_ap_gateway = " + wifi_network_ap_gateway)
 
 			# connect to MySQL
-			cnx = mysql.connector.connect(host="localhost", port=3306, user="port1234", passwd="db0587", db=DATABASE)
+			cnx = mysql.connector.connect(host=HOST, port=PORT, user=USERNAME, passwd=PASSWORD, db=DATABASE)
 			cursor = cnx.cursor(dictionary=True)
 
 			# update Controller IP Address
