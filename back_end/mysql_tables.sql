@@ -1,10 +1,3 @@
-SET @version := "1.04";
-
-/* Note: update TablesVersion in LocalPLC */
-drop schema if exists NetplanConfig;
-create schema if not exists NetplanConfig;
-use NetplanConfig;
-
 DROP TABLE IF EXISTS StationWiFi;
 CREATE TABLE
 StationWiFi(
