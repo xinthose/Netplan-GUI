@@ -450,7 +450,7 @@ window.APP = {
             contr_ip_addr: contr_ip_addr,
             reader_ip_addr: reader_ip_addr,
           };
-          var url = URL + "/change_interfaces1/" + JSON.stringify(send_obj);
+          var url = URL + "/change_interfaces/" + JSON.stringify(send_obj);
           $.getJSON(url, function (data) {
             try {
               if (debug)
@@ -474,7 +474,7 @@ window.APP = {
           var debug = false;
           var loc = "home_screen >> get_current_network_values >> ";
 
-          var url = URL + "/get_interfaces1";
+          var url = URL + "/get_interfaces";
           if (debug) console.log(loc + "url = " + url);
           $.getJSON(url, function (data) {
             try {
