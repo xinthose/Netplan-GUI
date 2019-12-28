@@ -5,7 +5,7 @@
 - Operating System: Linux using netplan
 - `sudo apt update`
 - `sudo apt install php libapache2-mod-php apache2-utils mysql-server`
-- `easy_install simplejson pathlib`
+- `pip install simplejson pathlib`
 - `pip install mysql-connector pyyaml`
 
 ## MySQL
