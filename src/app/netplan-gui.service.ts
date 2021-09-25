@@ -1,14 +1,9 @@
-import { Injectable, Output, EventEmitter, NgZone } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-
-// Progress
-import { NotificationService } from "@progress/kendo-angular-notification";
+import { Injectable, Output, EventEmitter } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 
 // interfaces
-import { eBoxNetworkIntf } from "./interfaces/eBoxNetworkIntf";
-import { eBoxVPNserverBridgeIntf } from "./interfaces/eBoxVPNserverBridgeIntf";
+import { eBoxNetworkIntf } from "./interfaces/linuxNetworkIntf";
 import { StationWifiIntf } from "./interfaces/StationWifiIntf";
-import { AlarmHistoryIntf } from "./interfaces/AlarmHistoryIntf";
 
 // Other
 import { environment } from "../environments/environment";
@@ -37,9 +32,7 @@ export class NetplanGUIService {
   @Output() vpnServerSelected$: EventEmitter<boolean> = new EventEmitter();
   @Output() wifiSelected$: EventEmitter<boolean> = new EventEmitter();
   @Output() commandsSelected$: EventEmitter<boolean> = new EventEmitter();
-  @Output() alarmsSelected$: EventEmitter<boolean> = new EventEmitter();
   @Output() filesSelected$: EventEmitter<boolean> = new EventEmitter();
-  @Output() aboutSelected$: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private http: HttpClient,
@@ -66,15 +59,6 @@ export class NetplanGUIService {
     return this.http.get<eBoxNetworkIntf>(URL).toPromise();
   }
 
-  public getVPNserverBridge(): Promise<eBoxVPNserverBridgeIntf> {
-    const URL = this.BASE_URL + "get_vpn_server_bridge";
-    if (this.debug) {
-      this.logger.debug("NetplanGUIService.getVPNserverBridge >> URL = " + URL);
-    }
-
-    return this.http.get<eBoxVPNserverBridgeIntf>(URL).toPromise();
-  }
-
   public getStationWifi(): Promise<StationWifiIntf> {
     const URL = this.BASE_URL + "get_station_wifi";
     if (this.debug) {
@@ -82,15 +66,6 @@ export class NetplanGUIService {
     }
 
     return this.http.get<StationWifiIntf>(URL).toPromise();
-  }
-
-  public getStationAlarms(): Promise<Array<AlarmHistoryIntf>> {
-    const URL = this.BASE_URL + "get_alarm_history";
-    if (this.debug) {
-      this.logger.debug("NetplanGUIService.getStationWifi >> URL = " + URL);
-    }
-
-    return this.http.get<Array<AlarmHistoryIntf>>(URL).toPromise();
   }
 
 }

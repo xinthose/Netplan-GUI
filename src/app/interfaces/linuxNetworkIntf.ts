@@ -13,6 +13,4 @@ export interface eBoxNetworkIntf {
   "wifi_nameservers": Array<string>,
   "wifi_ssid": string,
   "wifi_ssid_password": string,
-  "contr_ip_addr": string,
-  "reader_ip_addr": string,
 };

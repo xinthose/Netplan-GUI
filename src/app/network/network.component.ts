@@ -11,7 +11,7 @@ import { SortDescriptor, orderBy } from "@progress/kendo-data-query";
 
 // interfaces
 import { GridNetworkIntf } from "../interfaces/GridNetworkIntf";
-import { eBoxNetworkIntf } from "../interfaces/eBoxNetworkIntf";
+import { eBoxNetworkIntf } from "../interfaces/linuxNetworkIntf";
 import { SubnetDropdownIntf } from "../interfaces/SubnetDropdownIntf";
 
 // Icons
@@ -30,7 +30,6 @@ export class NetworkComponent implements OnInit {
   debug: boolean = true;
   loading: boolean = false;
   loadingBridge: boolean = false;
-  loadingGeneral: boolean = false;
   loadingEth1: boolean = false;
   loadingEth2: boolean = false;
   loadingWiFi: boolean = false;
@@ -38,7 +37,6 @@ export class NetworkComponent implements OnInit {
   // forms
   public BridgeForm: FormGroup;
   public BridgeGridForm!: FormGroup;
-  public GeneralForm: FormGroup;
   public Eth1Form: FormGroup;
   public Eth1GridForm!: FormGroup;
   public Eth2Form: FormGroup;
@@ -226,10 +224,6 @@ export class NetworkComponent implements OnInit {
       nameserver2: ["", Validators.pattern(this.ipRegex)],
       addresses: [[], Validators.required],
     });
-    this.GeneralForm = this.formBuilder.group({
-      controllerIPaddress: ["", [Validators.required, Validators.pattern(this.ipRegex)]],
-      readerIPaddress: ["", [Validators.pattern(this.ipRegex)]],
-    });
     this.Eth1Form = this.formBuilder.group({
       enabled: false,
       gateway: ["", Validators.pattern(this.ipRegex)],
@@ -398,10 +392,6 @@ export class NetworkComponent implements OnInit {
         "nameserver2": eBoxNetwork.eth2_nameservers.length > 1 ? eBoxNetwork.eth2_nameservers[1] : "",
         "addresses": eBoxNetwork.eth2_addresses,
       });
-      this.GeneralForm.setValue({
-        "controllerIPaddress": eBoxNetwork.contr_ip_addr,
-        "readerIPaddress": eBoxNetwork.reader_ip_addr,
-      });
       this.WiFiForm.setValue({
         "enabled": eBoxNetwork.wifi_addresses.length ? true : false,
         "gateway": eBoxNetwork.wifi_gateway,
@@ -419,8 +409,6 @@ export class NetworkComponent implements OnInit {
       this.Eth1Form.markAsUntouched();
       this.Eth2Form.markAsPristine();
       this.Eth2Form.markAsUntouched();
-      this.GeneralForm.markAsPristine();
-      this.GeneralForm.markAsUntouched();
       this.WiFiForm.markAsPristine();
       this.WiFiForm.markAsUntouched();
 
@@ -506,64 +494,6 @@ export class NetworkComponent implements OnInit {
         },
       });
       this.loading = false;
-    }
-  }
-
-  async onSubmitGeneral(e: any) {
-    try {
-      if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitGeneral >> " + JSON.stringify(e.value));
-      }
-
-      // show loading icon
-      this.loadingGeneral = true;
-
-      // build URL
-      const URL = "submitGeneral/" + JSON.stringify(e.value);
-      if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitGeneral >> URL =" + URL);
-      }
-
-      // send data
-      const response = await this.netplanguiService.query(URL);
-      if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitGeneral >> response = " + JSON.stringify(response));
-      }
-
-      // show popup
-      this.notificationService.show({
-        content: "General settings saved.",
-        cssClass: "notification",
-        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
-        type: { style: "success", icon: false },  // none, success, error, warning, info
-        hideAfter: 3000,  // milliseconds
-        animation: {
-          type: "fade",
-          duration: 150, // milliseconds (notif)
-        },
-      });
-
-      // hide loading icon
-      this.loadingGeneral = false;
-
-      // reset form
-      this.GeneralForm.markAsPristine();
-      this.GeneralForm.markAsUntouched();
-    } catch (error: any) {
-      this.logger.error("NetworkComponent.onSubmitGeneral >> error = " + error);
-      this.notificationService.show({
-        content: error,
-        closable: true,
-        cssClass: "notification",
-        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
-        type: { style: "error", icon: false },  // none, success, error, warning, info
-        hideAfter: 10000,  // milliseconds
-        animation: {
-          type: "fade",
-          duration: 150, // milliseconds (notif)
-        },
-      });
-      this.loadingGeneral = false;
     }
   }
 

@@ -9,7 +9,7 @@
         </button>
       </div>
     </div>
-    <!-- Warning, Bridge, General -->
+    <!-- Warning, Bridge -->
     <div class="row justify-content-center mb-3">
       <!-- Warning -->
       <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12">
@@ -131,56 +131,6 @@
                       <span>Submit</span>
                     </button>
                     <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="BridgeForm.dirty"></fa-icon>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- General -->
-      <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">
-              General
-            </h4>
-            <div class="card-text">
-              <form [formGroup]="GeneralForm" (ngSubmit)="onSubmitGeneral(GeneralForm)">
-                <!-- Controller IP Address -->
-                <div class="row justify-content-center mt-2">
-                  <div class="col">
-                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
-                      Controller IP Address
-                      <i class="fa fa-info-circle text-left" aria-hidden="true"
-                        title="IP Address of the WebRelay / PLC that the eBox connects to."></i>
-                    </div>
-                    <kendo-maskedtextbox formControlName="controllerIPaddress">
-                    </kendo-maskedtextbox>
-                  </div>
-                </div>
-                <!-- Reader IP Address -->
-                <div class="row justify-content-center mt-2">
-                  <div class="col">
-                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
-                      Reader IP Address
-                      <i class="fa fa-info-circle text-left" aria-hidden="true"
-                        title="IP Address of the ethernet FOB reader, if used."></i>
-                    </div>
-                    <kendo-maskedtextbox formControlName="readerIPaddress">
-                    </kendo-maskedtextbox>
-                  </div>
-                </div>
-                <!-- Submit -->
-                <div class="row mt-4 justify-content-center">
-                  <div class="col">
-                    <button kendoButton [disabled]="!GeneralForm.valid || loadingGeneral" [primary]="true"
-                      type="submit">
-                      <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                        *ngIf="loadingGeneral"></span>
-                      <span>Submit</span>
-                    </button>
-                    <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="GeneralForm.dirty"></fa-icon>
                   </div>
                 </div>
               </form>
