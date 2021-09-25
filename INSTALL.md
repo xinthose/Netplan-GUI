@@ -4,16 +4,25 @@
 
 - Operating System: Linux using netplan
 - `sudo apt update`
-- `sudo apt install php libapache2-mod-php apache2-utils mysql-server`
-- `pip install simplejson pathlib mysql-connector pyyaml`
+- `sudo apt install npm nodejs nodejs-dev node-gyp php libapache2-mod-php apache2-utils libssl1.0-dev`
+- `pip install mysql-connector simplejson pyyaml python-benedict`
 
 ## MySQL
 
-- login to server
+- login to mysql server
   - `mysql -u root -p`
 - `create database NetplanConfig;`
+- `CREATE USER 'user1'@'localhost' IDENTIFIED BY 'superleet';
+- `GRANT ALL PRIVILEGES ON NetplanConfig.* TO 'user1'@'localhost';`
+- `FLUSH PRIVILEGES;`
 - copy, paste, and run text in `mysql_tables.sql`
 - `exit;`
+
+## Build client
+
+- `cd client`
+- `npm i`
+- `npm run build`
 
 ## Move files
 

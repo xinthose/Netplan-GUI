@@ -1,0 +1,18 @@
+export interface eBoxNetworkIntf {
+  "br0_addresses": Array<string>,
+  "br0_gateway": string,
+  "br0_nameservers": Array<string>,
+  "eth1_addresses": Array<string>,
+  "eth1_gateway": string,
+  "eth1_nameservers": Array<string>,
+  "eth2_addresses": Array<string>,
+  "eth2_gateway": string,
+  "eth2_nameservers": Array<string>,
+  "wifi_addresses": Array<string>,
+  "wifi_gateway": string,
+  "wifi_nameservers": Array<string>,
+  "wifi_ssid": string,
+  "wifi_ssid_password": string,
+  "contr_ip_addr": string,
+  "reader_ip_addr": string,
+};

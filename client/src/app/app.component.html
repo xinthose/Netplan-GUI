@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Kiosk Admin</a>
+    <button class="navbar-toggler" type="button" (click)="toggler.toggle()">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" mdbCollapse #toggler="mdbCollapse">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="networkSelected" href="network">Network</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="vpnServerSelected" href="vpn-server">VPN Server</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="wifiSelected" href="wifi">Wi-Fi</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="commandsSelected" href="commands">Commands</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="alarmsSelected" href="alarm-history">Alarms</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" target="_blank" [attr.href]="LogsURL">Logs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="aboutSelected" href="about">About</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<router-outlet>
+</router-outlet>

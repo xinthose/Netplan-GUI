@@ -1,0 +1,165 @@
+<main>
+  <div class="container">
+    <!-- Commands, Power Commands, Insert Test Alarm -->
+    <div class="row justify-content-center">
+      <!-- Commands -->
+      <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">
+              Commands
+            </h4>
+            <div class="card-text">
+              <ul class="list-group list-group-flush">
+                <!-- Restart NetplanGUI Code -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingResPalCode" look="outline" (click)="restartNetplanGUICode()">
+                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
+                      *ngIf="loadingResPalCode"></span>
+                    <span>Restart NetplanGUI Code</span>
+                  </button>
+                </li>
+                <!-- Restart Porter Code -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingResPortCode" look="outline" (click)="restartPorterCode()">
+                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
+                      *ngIf="loadingResPortCode"></span>
+                    <span>Restart Porter Code</span>
+                  </button>
+                </li>
+                <!-- Clear All Log Files -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingClrLogFiles" look="outline" (click)="clearLogFiles()">
+                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
+                      *ngIf="loadingClrLogFiles"></span>
+                    <span>Clear All Log Files</span>
+                  </button>
+                </li>
+                <!-- Change Log File Permissions -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingChngLogFilePerm" look="outline"
+                    (click)="changeLogFilePermissions()">
+                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
+                      *ngIf="loadingChngLogFilePerm"></span>
+                    <span>Change Log File Permissions</span>
+                  </button>
+                </li>
+                <!-- Reset Sampler -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingRstSampler" look="outline" (click)="resetSampler()">
+                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
+                      *ngIf="loadingRstSampler"></span>
+                    <span>Reset Sampler</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Power Commands -->
+      <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">
+              Power Commands
+            </h4>
+            <div class="card-text">
+              <ul class="list-group list-group-flush">
+                <!-- Reboot Station -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingRbtStation" look="outline"
+                    (click)="rebootStationConfirm('open')">
+                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
+                      *ngIf="loadingRbtStation"></span>
+                    <span>Reboot Station</span>
+                  </button>
+                </li>
+                <!-- Shutdown Station -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingShutdownStation" look="outline"
+                    (click)="shutdownStationConfirm('open')">
+                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
+                      *ngIf="loadingShutdownStation"></span>
+                    <span>Shutdown Station</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Insert Test Alarm -->
+      <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">
+              Insert Test Alarm
+            </h4>
+            <div class="card-text">
+              <ul class="list-group list-group-flush">
+                <!-- Information -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingInsertInfoAlarm" look="outline" (click)="insertInfoAlarm()">
+                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
+                      *ngIf="loadingInsertInfoAlarm"></span>
+                    <span>Information</span>
+                  </button>
+                </li>
+                <!-- Warning -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingInsertWarningAlarm" look="outline"
+                    (click)="insertWarningAlarm()">
+                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
+                      *ngIf="loadingInsertWarningAlarm"></span>
+                    <span>Warning</span>
+                  </button>
+                </li>
+                <!-- Error -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingInsertErrorAlarm" look="outline" (click)="insertErrorAlarm()">
+                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
+                      *ngIf="loadingInsertErrorAlarm"></span>
+                    <span>Error</span>
+                  </button>
+                </li>
+                <!-- Fatal -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingInsertFatalAlarm" look="outline" (click)="insertFatalAlarm()">
+                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
+                      *ngIf="loadingInsertFatalAlarm"></span>
+                    <span>Fatal</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialogs -->
+
+  <!-- Reboot Station Confirm -->
+  <kendo-dialog title="Please confirm" *ngIf="rebootStationConfirmOpen" (close)="rebootStationConfirm('close')"
+    [minWidth]="250" [width]="450">
+    <p style="margin: 30px; text-align: center;">Are you sure you want to reboot the eBox? Your connection will be lost
+      afterwards.</p>
+    <kendo-dialog-actions>
+      <button kendoButton (click)="rebootStationConfirm('close')">No</button>
+      <button kendoButton (click)="rebootStationConfirm('yes')" [primary]="true">Yes</button>
+    </kendo-dialog-actions>
+  </kendo-dialog>
+
+  <!-- Shutdown Station Confirm -->
+  <kendo-dialog title="Please confirm" *ngIf="shutdownStationConfirmOpen" (close)="shutdownStationConfirm('close')"
+    [minWidth]="250" [width]="450">
+    <p style="margin: 30px; text-align: center;">Are you sure you want to shutdown the eBox? Your connection will be
+      lost.</p>
+    <kendo-dialog-actions>
+      <button kendoButton (click)="shutdownStationConfirm('close')">No</button>
+      <button kendoButton (click)="shutdownStationConfirm('yes')" [primary]="true">Yes</button>
+    </kendo-dialog-actions>
+  </kendo-dialog>
+</main>

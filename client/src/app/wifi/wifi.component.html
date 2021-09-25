@@ -1,0 +1,97 @@
+<main>
+  <div class="container">
+    <!-- Refresh -->
+    <div class="row justify-content-center mb-3">
+      <div class="col text-center">
+        <button kendoButton (click)="refreshNetwork()" look="outline" [disabled]="loading">
+          <span class="spinner-border spinner-border-sm" style="margin-right: 10px;" *ngIf="loading"></span>
+          Refresh
+        </button>
+      </div>
+    </div>
+    <!-- Form -->
+    <div class="row justify-content-center">
+      <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">
+              <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                Broadcast eBox Wi-Fi Network
+                <i class="fa fa-info-circle text-left" aria-hidden="true"
+                  title="Broadcast the eBox's own Wi-Fi network for other devices to connect to."></i>
+              </div>
+            </h4>
+            <div class="card-text">
+              <form [formGroup]="WifiForm" (ngSubmit)="onSubmit(WifiForm)">
+                <!-- Enabled -->
+                <div class="row justify-content-center">
+                  <div class="col">
+                    <h6>Enabled</h6>
+                    <kendo-switch formControlName="enabled" [onLabel]="'Yes'" [offLabel]="'No'"></kendo-switch>
+                  </div>
+                </div>
+                <!-- Network Name -->
+                <div class="row justify-content-center mt-2">
+                  <div class="col">
+                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                      Network Name
+                      <i class="fa fa-info-circle text-left" aria-hidden="true"
+                        title="Name of the broadcasted Wi-Fi network."></i>
+                    </div>
+                    <kendo-maskedtextbox formControlName="networkName">
+                    </kendo-maskedtextbox>
+                  </div>
+                </div>
+                <!-- Network Password -->
+                <div class="row justify-content-center mt-2">
+                  <div class="col">
+                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                      Network Password
+                      <i class="fa fa-info-circle text-left" aria-hidden="true"
+                        title="Broadcasted Wi-Fi network password (can leave blank)"></i>
+                    </div>
+                    <kendo-maskedtextbox formControlName="networkPassword">
+                    </kendo-maskedtextbox>
+                  </div>
+                </div>
+                <!-- Enable Bridge -->
+                <div class="row justify-content-center mt-2">
+                  <div class="col">
+                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                      Enable Bridge
+                      <i class="fa fa-info-circle text-left" aria-hidden="true"
+                        title="Bridge gives access to the PC network. No Bridge gives access only to this PC."></i>
+                    </div>
+                    <kendo-switch formControlName="enableBridge" [onLabel]="'Yes'" [offLabel]="'No'"></kendo-switch>
+                  </div>
+                </div>
+                <!-- Station Access Point Gateway -->
+                <div class="row justify-content-center mt-2">
+                  <div class="col">
+                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                      Access Point IP
+                      <i class="fa fa-info-circle text-left" aria-hidden="true"
+                        title="Access Point IP address of the eBox."></i>
+                    </div>
+                    <kendo-maskedtextbox formControlName="acessPointGateway">
+                    </kendo-maskedtextbox>
+                  </div>
+                </div>
+                <!-- Submit -->
+                <div class="row mt-4 justify-content-center">
+                  <div class="col">
+                    <button kendoButton [disabled]="!WifiForm.valid || loading1" [primary]="true" type="submit">
+                      <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
+                        *ngIf="loading1"></span>
+                      <span>Submit</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
