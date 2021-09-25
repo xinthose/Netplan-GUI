@@ -1,5 +1,10 @@
 # Installation
 
+## Requirements
+
+- Python version 3
+- Linux Operating System that uses Netplan to configure its network
+
 ## Install software
 
 - Operating System: Linux using netplan
