@@ -26,7 +26,7 @@
   "private": false,
   "dependencies": {
     "@angular/animations": "~12.2.7",
-    "@angular/cdk": "^11.2.13",
+    "@angular/cdk": "^12.2.7",
     "@angular/common": "~12.2.7",
     "@angular/compiler": "~12.2.7",
     "@angular/core": "^12.2.7",
@@ -73,7 +73,6 @@
     "compression": "^1.7.4",
     "express": "^4.17.1",
     "mdb-angular-ui-kit": "^1.0.0",
-    "ng-uikit-pro-standard": "git+https://oauth2:LPs-gZ7WJvKkUaT1Xo9J@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git",
     "ngx-logger": "^4.3.3",
     "rxjs": "^6.6.7",
     "terser": "^5.7.1",
