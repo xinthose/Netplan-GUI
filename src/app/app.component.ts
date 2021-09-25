@@ -49,10 +49,6 @@ export class AppComponent implements AfterViewInit {
       this.resetSelection();
       this.networkSelected = networkSelected;
     });
-    this.vpnServerSelected$ = this.netplanguiService.vpnServerSelected$.subscribe((vpnServerSelected: boolean) => {
-      this.resetSelection();
-      this.vpnServerSelected = vpnServerSelected;
-    });
     this.wifiSelected$ = this.netplanguiService.wifiSelected$.subscribe((wifiSelected: boolean) => {
       this.resetSelection();
       this.wifiSelected = wifiSelected;
@@ -61,28 +57,17 @@ export class AppComponent implements AfterViewInit {
       this.resetSelection();
       this.commandsSelected = commandsSelected;
     });
-    this.alarmsSelected$ = this.netplanguiService.alarmsSelected$.subscribe((alarmsSelected: boolean) => {
-      this.resetSelection();
-      this.alarmsSelected = alarmsSelected;
-    });
     this.filesSelected$ = this.netplanguiService.filesSelected$.subscribe((filesSelected: boolean) => {
       this.resetSelection();
       this.filesSelected = filesSelected;
-    });
-    this.aboutSelected$ = this.netplanguiService.aboutSelected$.subscribe((aboutSelected: boolean) => {
-      this.resetSelection();
-      this.aboutSelected = aboutSelected;
     });
   }
 
   private resetSelection(): void {
     this.networkSelected = false;
-    this.vpnServerSelected = false;
     this.wifiSelected = false;
     this.commandsSelected = false;
-    this.alarmsSelected = false;
     this.filesSelected = false;
-    this.aboutSelected = false;
   }
 
 }

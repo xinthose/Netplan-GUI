@@ -38,6 +38,8 @@
               {
                 "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
               },
+              "node_modules/mdb-angular-ui-kit/assets/scss/mdb.scss",
+              "node_modules/animate.css/animate.css",
               "src/styles.scss"
             ],
             "scripts": [
