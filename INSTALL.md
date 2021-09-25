@@ -7,7 +7,7 @@
 - `sudo apt install npm nodejs nodejs-dev node-gyp php libapache2-mod-php apache2-utils libssl1.0-dev`
 - `pip install mysql-connector simplejson pyyaml python-benedict`
 
-## MySQL
+## Setup MySQL
 
 - login to mysql server
   - `mysql -u root -p`
@@ -18,19 +18,18 @@
 - copy, paste, and run text in `mysql_tables.sql`
 - `exit;`
 
-## Build client
+## Install Application
 
 - `cd client`
 - `npm i`
 - `npm run build`
-
-## Move files
-
-- `sudo mkdir /var/www/html/admin`
-- copy files in `front_end` to `/var/www/html/admin`
-- run server in `back_end`
-  - `python rest.py`
-
-## Access Admin Webpage
-
-- enter this URL in a browser: `http://localhost/admin`
+- copy `package.json` to `dist/admin` folder
+- `sudo mkdir /var/www/html/netplan-gui`
+- `sudo cp -R dist/admin/* /var/www/html/netplan-gui`
+- install node packages for production: `cd /var/www/html/netplan-gui` --> `npm i`
+- `pm2 start pm2.json`
+- `pm2 save`
+- webpage can now be accessed `http://localhost:3000`
+- set netplan-gui to run automatically on bootup
+  - as root, run `crontab -e`
+  - add this line: `@reboot pm2 resurrect && python3 /var/www/html/netplan-gui/assets/rest.py`
