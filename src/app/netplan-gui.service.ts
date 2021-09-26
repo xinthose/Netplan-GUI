@@ -29,7 +29,6 @@ export class NetplanGUIService {
   private BASE_URL: string = "";
   // event emitters
   @Output() networkSelected$: EventEmitter<boolean> = new EventEmitter();
-  @Output() vpnServerSelected$: EventEmitter<boolean> = new EventEmitter();
   @Output() wifiSelected$: EventEmitter<boolean> = new EventEmitter();
   @Output() commandsSelected$: EventEmitter<boolean> = new EventEmitter();
   @Output() filesSelected$: EventEmitter<boolean> = new EventEmitter();

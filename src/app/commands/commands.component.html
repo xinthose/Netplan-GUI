@@ -1,32 +1,16 @@
 <main>
   <div class="container">
-    <!-- Commands, Power Commands, Insert Test Alarm -->
+    <!-- Commands, Power Commands-->
     <div class="row justify-content-center">
       <!-- Commands -->
       <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">
-              Commands
+              Log File Commands
             </h4>
             <div class="card-text">
               <ul class="list-group list-group-flush">
-                <!-- Restart NetplanGUI Code -->
-                <li class="list-group-item">
-                  <button kendoButton [disabled]="loadingResPalCode" look="outline" (click)="restartNetplanGUICode()">
-                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                      *ngIf="loadingResPalCode"></span>
-                    <span>Restart NetplanGUI Code</span>
-                  </button>
-                </li>
-                <!-- Restart Porter Code -->
-                <li class="list-group-item">
-                  <button kendoButton [disabled]="loadingResPortCode" look="outline" (click)="restartPorterCode()">
-                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                      *ngIf="loadingResPortCode"></span>
-                    <span>Restart Porter Code</span>
-                  </button>
-                </li>
                 <!-- Clear All Log Files -->
                 <li class="list-group-item">
                   <button kendoButton [disabled]="loadingClrLogFiles" look="outline" (click)="clearLogFiles()">
@@ -42,14 +26,6 @@
                     <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
                       *ngIf="loadingChngLogFilePerm"></span>
                     <span>Change Log File Permissions</span>
-                  </button>
-                </li>
-                <!-- Reset Sampler -->
-                <li class="list-group-item">
-                  <button kendoButton [disabled]="loadingRstSampler" look="outline" (click)="resetSampler()">
-                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                      *ngIf="loadingRstSampler"></span>
-                    <span>Reset Sampler</span>
                   </button>
                 </li>
               </ul>
@@ -82,53 +58,6 @@
                     <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
                       *ngIf="loadingShutdownStation"></span>
                     <span>Shutdown Station</span>
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Insert Test Alarm -->
-      <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">
-              Insert Test Alarm
-            </h4>
-            <div class="card-text">
-              <ul class="list-group list-group-flush">
-                <!-- Information -->
-                <li class="list-group-item">
-                  <button kendoButton [disabled]="loadingInsertInfoAlarm" look="outline" (click)="insertInfoAlarm()">
-                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                      *ngIf="loadingInsertInfoAlarm"></span>
-                    <span>Information</span>
-                  </button>
-                </li>
-                <!-- Warning -->
-                <li class="list-group-item">
-                  <button kendoButton [disabled]="loadingInsertWarningAlarm" look="outline"
-                    (click)="insertWarningAlarm()">
-                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                      *ngIf="loadingInsertWarningAlarm"></span>
-                    <span>Warning</span>
-                  </button>
-                </li>
-                <!-- Error -->
-                <li class="list-group-item">
-                  <button kendoButton [disabled]="loadingInsertErrorAlarm" look="outline" (click)="insertErrorAlarm()">
-                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                      *ngIf="loadingInsertErrorAlarm"></span>
-                    <span>Error</span>
-                  </button>
-                </li>
-                <!-- Fatal -->
-                <li class="list-group-item">
-                  <button kendoButton [disabled]="loadingInsertFatalAlarm" look="outline" (click)="insertFatalAlarm()">
-                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                      *ngIf="loadingInsertFatalAlarm"></span>
-                    <span>Fatal</span>
                   </button>
                 </li>
               </ul>

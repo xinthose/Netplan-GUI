@@ -9,7 +9,7 @@
 
 - Operating System: Linux using netplan
 - `sudo apt update`
-- `sudo apt install npm nodejs node-gyp php libapache2-mod-php apache2-utils`
+- `sudo apt install npm nodejs php libapache2-mod-php apache2-utils`
 - `sudo pip install mysql-connector-python simplejson pyyaml python-benedict web.py`
 - `npm i -g pm2`
 

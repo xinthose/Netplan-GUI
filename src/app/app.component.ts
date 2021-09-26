@@ -21,20 +21,15 @@ export class AppComponent implements AfterViewInit {
   public LogsURL: string = "http://" + (environment.production ? window.location.hostname : "localhost") + "/logs";
   // navigation selected
   public networkSelected: boolean = false;
-  public vpnServerSelected: boolean = false;
   public wifiSelected: boolean = false;
   public commandsSelected: boolean = false;
-  public alarmsSelected: boolean = false;
   public filesSelected: boolean = false;
-  public aboutSelected: boolean = false;
   // subscriptions
   networkSelected$!: Subscription;
-  vpnServerSelected$!: Subscription;
   wifiSelected$!: Subscription;
   commandsSelected$!: Subscription;
   alarmsSelected$!: Subscription;
   filesSelected$!: Subscription;
-  aboutSelected$!: Subscription;
 
   constructor(
     private netplanguiService: NetplanGUIService,
@@ -61,6 +56,8 @@ export class AppComponent implements AfterViewInit {
       this.resetSelection();
       this.filesSelected = filesSelected;
     });
+
+    this.logger.info("NetplanGUI is running");
   }
 
   private resetSelection(): void {
