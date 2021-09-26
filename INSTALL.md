@@ -24,6 +24,10 @@
 - copy, paste, and run text in `mysql_tables.sql`
 - `exit;`
 
+## Configuration
+
+- set `ROOT_PASSWORD` in `src/assets/rest.py` and other settings that need to be changed
+
 ## Install Application
 
 - `cd client`
