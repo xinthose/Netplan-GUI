@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/admin",
+            "outputPath": "dist/netplan-gui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -41,9 +41,6 @@
               "node_modules/mdb-angular-ui-kit/assets/scss/mdb.scss",
               "node_modules/animate.css/animate.css",
               "src/styles.scss"
-            ],
-            "scripts": [
-              "node_modules/chart.js/dist/chart.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,

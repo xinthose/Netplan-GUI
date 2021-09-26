@@ -1,4 +1,4 @@
-# Linux Kiosk Administrator Changelog
+# Netplan GUI Changelog
 
 ## 1.0.0 (9/25/2021)
 

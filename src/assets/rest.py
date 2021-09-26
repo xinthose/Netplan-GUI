@@ -11,13 +11,11 @@ import io
 from benedict import benedict
 import mysql.connector
 
-VERSION = "1.00"
-
 # Configuration
 
 # region
 
-VERSION = "1.20"
+VERSION = "1.0.0"
 DATABASE = "NetplanConfig"
 DATABASE_USER = "user1"
 DATABASE_PASSWORD = "superleet"

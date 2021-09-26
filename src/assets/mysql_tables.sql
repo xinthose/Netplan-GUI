@@ -1,3 +1,5 @@
+use NetplanConfig;
+
 DROP TABLE IF EXISTS StationWiFi;
 CREATE TABLE
 StationWiFi(
