@@ -29,14 +29,15 @@
 - `cd client`
 - `npm i`
 - `npm run build`
-- `cp package.json /dist/netplan-gui`
 - `sudo mkdir /var/www/html/netplan-gui`
-- `sudo cp -R dist/netplan-gui/* /var/www/html/netplan-gui`
-- install node packages for production: `cd /var/www/html/netplan-gui` --> `npm i`
+- `sudo cp -r dist/netplan-gui/* /var/www/html/netplan-gui`
+- install node packages for server
+  - `cd /var/www/html/netplan-gui`
+  - `npm i express compression`
 - `pm2 start pm2.json`
 - `pm2 save`
 - `python3 /var/www/html/netplan-gui/assets/rest.py`
 - webpage can now be accessed `http://localhost:3000`
-- set netplan-gui to run automatically on bootup
-  - as root, run `crontab -e`
+- set `netplan-gui` to run automatically on bootup
+  - `sudo crontab -e`
   - add this line: `@reboot pm2 resurrect && python3 /var/www/html/netplan-gui/assets/rest.py`
