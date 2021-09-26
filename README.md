@@ -13,7 +13,7 @@
 - Ability to setup a bridge with two NICs attached to it
 - Can individually setup network on two different NICs
 - Can setup a Wi-Fi network with the option to bridge it or not
-- Can run helpful commands (`reboot`, `shutdown`, clear logs, change log file persmissions so that they can be used)
+- Can run helpful commands (`reboot`, `shutdown`, clear logs, change log file persmissions so that they can be viewed remotely over apache)
 - mobile friendly and works in all modern browsers
 
 ![Screenshot from 2021-09-26 16-30-03](https://user-images.githubusercontent.com/12835202/134824903-3feaeac5-f23e-4280-b242-15a0db7c03f3.png)
