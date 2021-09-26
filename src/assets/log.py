@@ -7,13 +7,13 @@ import logging.handlers
 
 def setup_custom_logger(name):
 	# logger settings
-	log_file = "/var/www/html/logs/rest7.log"
+	log_file = "/var/www/html/logs/netplan-gui-rest.log"
 	log_file_max_size = 1024 * 1024 * 20 # megabytes
 	log_num_backups = 3
 	log_format = "%(asctime)s [%(levelname)s]: %(filename)s(%(funcName)s:%(lineno)s) >> %(message)s"
 	log_date_format = "%m/%d/%Y %I:%M:%S %p"
 	log_filemode = "w" # w: overwrite; a: append
-	
+
 	# setup logger
 	# datefmt=log_date_format
 	logging.basicConfig(filename=log_file, format=log_format, filemode=log_filemode ,level=logging.DEBUG)
@@ -28,9 +28,9 @@ def setup_custom_logger(name):
 	logFormatter = logging.Formatter(log_format)
 	consoleHandler.setFormatter(logFormatter)
 	logger.addHandler(consoleHandler)
-	
+
 	return logger
-	
+
 # source: https://docs.python.org/2/howto/logging.html
 # logger.info("")		// Detailed information, typically of interest only when diagnosing problems.
 # logger.debug("")		// Confirmation that things are working as expected.

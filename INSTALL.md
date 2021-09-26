@@ -29,7 +29,7 @@
 - `cd client`
 - `npm i`
 - `npm run build`
-- `sudo mkdir /var/www/html/netplan-gui`
+- `sudo mkdir /var/www/html/netplan-gui /var/www/html/logs`
 - `sudo cp -r dist/netplan-gui/* /var/www/html/netplan-gui`
 - install node packages for server
   - `cd /var/www/html/netplan-gui`

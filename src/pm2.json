@@ -5,8 +5,8 @@
       "script": "./server.js",
       "watch": false,
       "max_memory_restart": "256M",
-      "output": "/var/www/html/logs/app/netplan-gui-out.log",
-      "error": "/var/www/html/logs/app/netplan-gui-error.log",
+      "output": "/var/www/html/logs/netplan-gui-out.log",
+      "error": "/var/www/html/logs/netplan-gui-error.log",
       "kill_timeout": 5000,
       "restartDelay": 5000
     }

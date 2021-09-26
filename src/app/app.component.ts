@@ -18,7 +18,7 @@ import { environment } from "../environments/environment";
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements AfterViewInit {
-  public LogsURL: string = "http://" + (environment.production ? window.location.hostname : "10.0.0.2") + "/logs";
+  public LogsURL: string = "http://" + (environment.production ? window.location.hostname : "localhost") + "/logs";
   // navigation selected
   public networkSelected: boolean = false;
   public vpnServerSelected: boolean = false;

@@ -4,7 +4,7 @@
     */
 
     // Setup
-    define("LOGFILE_DIR", "/var/www/html/logs/app/");
+    define("LOGFILE_DIR", "/var/www/html/logs/");
     define("LOGFILE", (LOGFILE_DIR . "netplan-gui_" . date("Y-m-d") . ".log"));
     define("LOGFILE_DELETE_DAYS", 30);
 

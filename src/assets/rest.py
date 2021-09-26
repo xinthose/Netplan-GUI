@@ -765,7 +765,7 @@ class clear_all_log_files:
             web.header('Access-Control-Allow-Origin', '*')
             web.header('Access-Control-Allow-Credentials', 'true')
             EXECUTABLE = "echo " + ROOT_PASSWORD + \
-                " | sudo -S rm -f /var/www/html/logs/app/*.log"
+                " | sudo -S rm -f /var/www/html/logs/*.log"
             os.system(EXECUTABLE)
             return '{"status":"success", "response":""}'
         except Exception as e:
