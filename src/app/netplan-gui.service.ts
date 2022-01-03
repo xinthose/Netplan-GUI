@@ -14,8 +14,7 @@ export let SERVER: string = "";
 if (environment.production) {
   SERVER = window.location.hostname;
 } else {
-  SERVER = "10.0.0.2";
-  //SERVER = "10.0.0.126";  // linux laptop
+  SERVER = "localhost";
 }
 
 /******************************** General ********************************/
