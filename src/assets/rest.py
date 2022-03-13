@@ -792,8 +792,8 @@ def delayed_netplan_change():
         os.system("echo " + ROOT_PASSWORD + " | sudo -S netplan apply")
         time.sleep(1)
         # apply config for the renderers
-        os.system(
-            "echo " + ROOT_PASSWORD + " | sudo -S /etc/init.d/network-manager restart")
+        # os.system(
+        #     "echo " + ROOT_PASSWORD + " | sudo -S /etc/init.d/network-manager restart")
     except Exception as e:
         logger.error("error = " + str(e))
 

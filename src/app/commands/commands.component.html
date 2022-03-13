@@ -42,22 +42,22 @@
             </h4>
             <div class="card-text">
               <ul class="list-group list-group-flush">
-                <!-- Reboot Station -->
+                <!-- Reboot Computer -->
                 <li class="list-group-item">
-                  <button kendoButton [disabled]="loadingRbtStation" look="outline"
-                    (click)="rebootStationConfirm('open')">
+                  <button kendoButton [disabled]="loadingRebootComputer" look="outline"
+                    (click)="rebootComputerConfirm('open')">
                     <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                      *ngIf="loadingRbtStation"></span>
-                    <span>Reboot Station</span>
+                      *ngIf="loadingRebootComputer"></span>
+                    <span>Reboot Computer</span>
                   </button>
                 </li>
-                <!-- Shutdown Station -->
+                <!-- Shutdown Computer -->
                 <li class="list-group-item">
-                  <button kendoButton [disabled]="loadingShutdownStation" look="outline"
-                    (click)="shutdownStationConfirm('open')">
+                  <button kendoButton [disabled]="loadingShutdownComputer" look="outline"
+                    (click)="shutdownComputerConfirm('open')">
                     <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                      *ngIf="loadingShutdownStation"></span>
-                    <span>Shutdown Station</span>
+                      *ngIf="loadingShutdownComputer"></span>
+                    <span>Shutdown Computer</span>
                   </button>
                 </li>
               </ul>
@@ -71,24 +71,24 @@
   <!-- Dialogs -->
 
   <!-- Reboot Station Confirm -->
-  <kendo-dialog title="Please confirm" *ngIf="rebootStationConfirmOpen" (close)="rebootStationConfirm('close')"
+  <kendo-dialog title="Please confirm" *ngIf="rebootComputerConfirmOpen" (close)="rebootComputerConfirm('close')"
     [minWidth]="250" [width]="450">
     <p style="margin: 30px; text-align: center;">Are you sure you want to reboot the eBox? Your connection will be lost
       afterwards.</p>
     <kendo-dialog-actions>
-      <button kendoButton (click)="rebootStationConfirm('close')">No</button>
-      <button kendoButton (click)="rebootStationConfirm('yes')" [primary]="true">Yes</button>
+      <button kendoButton (click)="rebootComputerConfirm('close')">No</button>
+      <button kendoButton (click)="rebootComputerConfirm('yes')" [primary]="true">Yes</button>
     </kendo-dialog-actions>
   </kendo-dialog>
 
   <!-- Shutdown Station Confirm -->
-  <kendo-dialog title="Please confirm" *ngIf="shutdownStationConfirmOpen" (close)="shutdownStationConfirm('close')"
+  <kendo-dialog title="Please confirm" *ngIf="shutdownComputerConfirmOpen" (close)="shutdownComputerConfirm('close')"
     [minWidth]="250" [width]="450">
     <p style="margin: 30px; text-align: center;">Are you sure you want to shutdown the eBox? Your connection will be
       lost.</p>
     <kendo-dialog-actions>
-      <button kendoButton (click)="shutdownStationConfirm('close')">No</button>
-      <button kendoButton (click)="shutdownStationConfirm('yes')" [primary]="true">Yes</button>
+      <button kendoButton (click)="shutdownComputerConfirm('close')">No</button>
+      <button kendoButton (click)="shutdownComputerConfirm('yes')" [primary]="true">Yes</button>
     </kendo-dialog-actions>
   </kendo-dialog>
 </main>

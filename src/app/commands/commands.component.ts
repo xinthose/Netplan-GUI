@@ -23,16 +23,16 @@ export class CommandsComponent implements OnInit {
   loadingClrLogFiles: boolean = false;
   loadingChngLogFilePerm: boolean = false;
   loadingRstSampler: boolean = false;
-  loadingRbtStation: boolean = false;
-  loadingShutdownStation: boolean = false;
+  loadingRebootComputer: boolean = false;
+  loadingShutdownComputer: boolean = false;
   // insert test alarm button loading
   loadingInsertInfoAlarm: boolean = false;
   loadingInsertWarningAlarm: boolean = false;
   loadingInsertErrorAlarm: boolean = false;
   loadingInsertFatalAlarm: boolean = false;
   // dialog open status
-  rebootStationConfirmOpen: boolean = false;
-  shutdownStationConfirmOpen: boolean = false;
+  rebootComputerConfirmOpen: boolean = false;
+  shutdownComputerConfirmOpen: boolean = false;
 
   constructor(
     private netplanguiService: NetplanGUIService,
@@ -138,15 +138,15 @@ export class CommandsComponent implements OnInit {
     }
   }
 
-  async rebootStation() {
+  async rebootComputer() {
     try {
       // show loading icon
-      this.loadingRbtStation = true;
+      this.loadingRebootComputer = true;
 
       // submit
       const response = await this.netplanguiService.query("reboot_station");
       if (this.debug) {
-        this.logger.debug("CommandsComponent.rebootStation >> response = " + JSON.stringify(response));
+        this.logger.debug("CommandsComponent.rebootComputer >> response = " + JSON.stringify(response));
       }
 
       // show popup
@@ -163,23 +163,23 @@ export class CommandsComponent implements OnInit {
       });
 
       // hide loading icon
-      this.loadingRbtStation = false;
+      this.loadingRebootComputer = false;
     } catch (error: any) {
-      this.logger.error("CommandsComponent.rebootStation >> error = " + error);
-      this.loadingRbtStation = false;
+      this.logger.error("CommandsComponent.rebootComputer >> error = " + error);
+      this.loadingRebootComputer = false;
       throw new Error(error);
     }
   }
 
-  async shutdownStation() {
+  async shutdownComputer() {
     try {
       // show loading icon
-      this.loadingShutdownStation = true;
+      this.loadingShutdownComputer = true;
 
       // submit
       const response = await this.netplanguiService.query("shutdown_station");
       if (this.debug) {
-        this.logger.debug("CommandsComponent.shutdownStation >> response = " + JSON.stringify(response));
+        this.logger.debug("CommandsComponent.shutdownComputer >> response = " + JSON.stringify(response));
       }
 
       // show popup
@@ -196,35 +196,35 @@ export class CommandsComponent implements OnInit {
       });
 
       // hide loading icon
-      this.loadingShutdownStation = false;
+      this.loadingShutdownComputer = false;
     } catch (error: any) {
-      this.logger.error("CommandsComponent.shutdownStation >> error = " + error);
-      this.loadingShutdownStation = false;
+      this.logger.error("CommandsComponent.shutdownComputer >> error = " + error);
+      this.loadingShutdownComputer = false;
       throw new Error(error);
     }
   }
 
   // dialog confirm
 
-  async rebootStationConfirm(status: string) {
+  async rebootComputerConfirm(status: string) {
     try {
       switch (status) {
         case "open":
-          this.rebootStationConfirmOpen = true;
+          this.rebootComputerConfirmOpen = true;
           break;
         case "close":
-          this.rebootStationConfirmOpen = false;
+          this.rebootComputerConfirmOpen = false;
           break;
         case "yes":
-          await this.rebootStation();
-          this.rebootStationConfirmOpen = false;
+          await this.rebootComputer();
+          this.rebootComputerConfirmOpen = false;
           break;
         default:
-          this.logger.error("CommandsComponent.rebootStationConfirm >> status unhandled >> status = " + status);
+          this.logger.error("CommandsComponent.rebootComputerConfirm >> status unhandled >> status = " + status);
           break;
       }
     } catch (error: any) {
-      this.logger.error("CommandsComponent.rebootStationConfirm >> error = " + error);
+      this.logger.error("CommandsComponent.rebootComputerConfirm >> error = " + error);
       this.notificationService.show({
         content: error,
         closable: true,
@@ -237,29 +237,29 @@ export class CommandsComponent implements OnInit {
           duration: 150, // milliseconds (notif)
         },
       });
-      this.rebootStationConfirmOpen = false;
+      this.rebootComputerConfirmOpen = false;
     }
   }
 
-  async shutdownStationConfirm(status: string) {
+  async shutdownComputerConfirm(status: string) {
     try {
       switch (status) {
         case "open":
-          this.shutdownStationConfirmOpen = true;
+          this.shutdownComputerConfirmOpen = true;
           break;
         case "close":
-          this.shutdownStationConfirmOpen = false;
+          this.shutdownComputerConfirmOpen = false;
           break;
         case "yes":
-          await this.shutdownStation();
-          this.shutdownStationConfirmOpen = false;
+          await this.shutdownComputer();
+          this.shutdownComputerConfirmOpen = false;
           break;
         default:
-          this.logger.error("CommandsComponent.shutdownStationConfirm >> status unhandled >> status = " + status);
+          this.logger.error("CommandsComponent.shutdownComputerConfirm >> status unhandled >> status = " + status);
           break;
       }
     } catch (error: any) {
-      this.logger.error("CommandsComponent.shutdownStationConfirm >> error = " + error);
+      this.logger.error("CommandsComponent.shutdownComputerConfirm >> error = " + error);
       this.notificationService.show({
         content: error,
         closable: true,
@@ -272,7 +272,7 @@ export class CommandsComponent implements OnInit {
           duration: 150, // milliseconds (notif)
         },
       });
-      this.shutdownStationConfirmOpen = false;
+      this.shutdownComputerConfirmOpen = false;
     }
   }
 }
