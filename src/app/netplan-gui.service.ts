@@ -1,6 +1,9 @@
 import { Injectable, Output, EventEmitter } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
+// rxjs
+import { firstValueFrom } from "rxjs";
+
 // interfaces
 import { eBoxNetworkIntf } from "./interfaces/linuxNetworkIntf";
 import { StationWifiIntf } from "./interfaces/StationWifiIntf";
@@ -54,7 +57,7 @@ export class NetplanGUIService {
       this.logger.debug("NetplanGUIService.getNetwork >> URL = " + URL);
     }
 
-    return this.http.get<eBoxNetworkIntf>(URL).toPromise();
+    return firstValueFrom(this.http.get<eBoxNetworkIntf>(URL));
   }
 
   public getStationWifi(): Promise<StationWifiIntf> {
@@ -63,7 +66,7 @@ export class NetplanGUIService {
       this.logger.debug("NetplanGUIService.getStationWifi >> URL = " + URL);
     }
 
-    return this.http.get<StationWifiIntf>(URL).toPromise();
+    return firstValueFrom(this.http.get<StationWifiIntf>(URL));
   }
 
 }

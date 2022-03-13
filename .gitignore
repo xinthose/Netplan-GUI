@@ -78,3 +78,6 @@ back_end/crontab/schedule/build/
 back_end/crontab/send_to_cloud/build/
 back_end/crontab/UpdateCapbalance/build/
 *.spec
+
+# other
+.angular

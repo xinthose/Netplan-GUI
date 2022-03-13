@@ -1,5 +1,9 @@
 # Netplan GUI Changelog
 
+## 1.0.2 (3/12/2022)
+
+- update packages
+
 ## 1.0.1 (1/2/2022)
 
 - *Bug*: in `netplan-gui.service.ts`, `SERVER` should have been `localhost`
