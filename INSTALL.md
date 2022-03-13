@@ -3,7 +3,9 @@
 ## Requirements
 
 - Python version 3
+  - Check with this command `python3 --version`
 - Linux Operating System that uses Netplan to configure its network
+  - Directory `/etc/netplan` should exist in your file system
 
 ## Install software
 
