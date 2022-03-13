@@ -3,7 +3,7 @@
 ## Build Release
 
 - `npm run build`
-- copy `package.json` to `dist/netplan-gui`
+- zip `dist/netplan-gui`
 
 ## Install Application
 
