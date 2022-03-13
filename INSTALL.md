@@ -25,7 +25,7 @@
 - copy, paste, and run text in `mysql_tables.sql`
 - `exit;`
 
-## Install Application
+## Install Netplan GUI
 
 - download latest release of `netplan-gui` and unzip folder
   - <https://github.com/xinthose/Netplan-GUI/releases>
@@ -38,7 +38,7 @@
   - both should show a status of `online`, consult Troubleshooting steps below if it is `errored`
 - `sudo chmod -R 777 /etc/netplan`  // allow 01-network-manager-all.yaml file to be changed by non-root app
 
-## Updating to new version
+## Updating to New Version
 
 - TODO
 
