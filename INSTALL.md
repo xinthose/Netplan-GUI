@@ -7,7 +7,7 @@
 - Linux Operating System that uses Netplan to configure its network
   - Directory `/etc/netplan` should exist in your file system
 
-## Install software
+## Install Linux Software
 
 - `sudo apt update`
 - `sudo apt install npm nodejs php libapache2-mod-php apache2-utils`
