@@ -81,3 +81,4 @@ back_end/crontab/UpdateCapbalance/build/
 
 # other
 .angular
+__pycache__

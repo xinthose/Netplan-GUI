@@ -13,6 +13,7 @@
     {
       "name": "netplan-gui-rest",
       "script": "/var/www/html/netplan-gui/assets/rest.py",
+      "interpreter": "/usr/bin/python3",
       "max_memory_restart": "256M",
       "output": "/var/www/html/logs/netplan-gui-rest-out.log",
       "error": "/var/www/html/logs/netplan-gui-rest-error.log",

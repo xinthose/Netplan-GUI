@@ -23,10 +23,6 @@
 - copy, paste, and run text in `mysql_tables.sql`
 - `exit;`
 
-## Configuration
-
-- set `ROOT_PASSWORD` in `src/assets/rest.py` and other settings that need to be changed
-
 ## Install Application
 
 - download latest release and unzip folder
@@ -36,7 +32,13 @@
 - `cd /var/www/html/netplan-gui`  // change directories
 - `sudo npm i`  // install packages required for application to run
 - `pm2 start pm2.json`
+  - both should show a status of `online`, consult Troubleshooting steps below if it is `errored`
+- `sudo chmod -R 777 /etc/netplan`  // allow 01-network-manager-all.yaml file to be changed by non-root app
 
 ## Updating to new version
+
+- TODO
+
+## Troubleshooting
 
 - TODO

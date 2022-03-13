@@ -20,7 +20,6 @@ DATABASE = "NetplanConfig"
 DATABASE_USER = "user1"
 DATABASE_PASSWORD = "superleet"
 NETPLAN = "/etc/netplan/01-network-manager-all.yaml"
-ROOT_PASSWORD = "myRootPassword"
 
 logger = log.setup_custom_logger('root')
 
@@ -52,7 +51,6 @@ application = web.application(urls, globals())
 
 
 class get_interfaces1:
-    # region
     def GET(self):
         try:
             web.header('Content-Type', 'application/json')
@@ -172,11 +170,9 @@ class get_interfaces1:
         except Exception as e:
             logger.error(str(e))
             return web.internalerror('{ "message": "' + str(e) + '" }')
-    # endregion
 
 
 class change_interfaces1:
-    # region
     def GET(self, param):
         try:
             web.header('Content-Type', 'application/json')
@@ -309,11 +305,9 @@ class change_interfaces1:
         except Exception as e:
             logger.error(str(e))
             return web.internalerror('{ "message": "' + str(e) + '" }')
-    # endregion
 
 
 class submitBridge:
-    # region
     def GET(self, param):
         try:
             # pip install python-benedict
@@ -380,11 +374,9 @@ class submitBridge:
         except Exception as e:
             logger.error(str(e))
             return web.internalerror('{ "message": "' + str(e) + '" }')
-    # endregion
 
 
 class submitEth1:
-    # region
     def GET(self, param):
         try:
             web.header('Content-Type', 'application/json')
@@ -443,11 +435,9 @@ class submitEth1:
         except Exception as e:
             logger.error(str(e))
             return web.internalerror('{ "message": "' + str(e) + '" }')
-    # endregion
 
 
 class submitEth2:
-    # region
     def GET(self, param):
         try:
             web.header('Content-Type', 'application/json')
@@ -506,11 +496,9 @@ class submitEth2:
         except Exception as e:
             logger.error(str(e))
             return web.internalerror('{ "message": "' + str(e) + '" }')
-    # endregion
 
 
 class submitWiFi:
-    # region
     def GET(self, param):
         try:
             web.header('Content-Type', 'application/json')
@@ -580,11 +568,9 @@ class submitWiFi:
         except Exception as e:
             logger.error(str(e))
             return web.internalerror('{ "message": "' + str(e) + '" }')
-    # endregion
 
 
 class get_station_wifi:
-    # region
     def GET(self):
         try:
             web.header('Content-Type', 'application/json')
@@ -616,11 +602,9 @@ class get_station_wifi:
         except Exception as e:
             logger.error(str(e))
             return web.internalerror('{ "message": "' + str(e) + '" }')
-    # endregion
 
 
 class update_station_wifi:
-    # region
     def GET(self, param):
         try:
             web.header('Content-Type', 'application/json')
@@ -666,7 +650,6 @@ class update_station_wifi:
         except Exception as e:
             logger.error(str(e))
             return web.internalerror('{ "message": "' + str(e) + '" }')
-    # endregion
 
 # endregion
 
@@ -676,41 +659,34 @@ class update_station_wifi:
 
 
 class clear_all_log_files:
-    # region
     def GET(self):
         try:
             web.header('Content-Type', 'application/json')
             web.header('Access-Control-Allow-Origin', '*')
             web.header('Access-Control-Allow-Credentials', 'true')
-            EXECUTABLE = "echo " + ROOT_PASSWORD + \
-                " | sudo -S rm -f /var/www/html/logs/*.log"
+            EXECUTABLE = "rm -f /var/www/html/logs/*.log"
             os.system(EXECUTABLE)
             return '{"status":"success", "response":""}'
         except Exception as e:
             logger.error(str(e))
             return web.internalerror('{ "message": "' + str(e) + '" }')
-    # endregion
 
 
 class change_log_file_perm:
-    # region
     def GET(self):
         try:
             web.header('Content-Type', 'application/json')
             web.header('Access-Control-Allow-Origin', '*')
             web.header('Access-Control-Allow-Credentials', 'true')
-            EXECUTABLE = "echo " + ROOT_PASSWORD + \
-                " | sudo -S chmod -R 777 /var/www/html/logs"
+            EXECUTABLE = "chmod -R 777 /var/www/html/logs"
             os.system(EXECUTABLE)
             return '{"status":"success", "response":""}'
         except Exception as e:
             logger.error(str(e))
             return web.internalerror('{ "message": "' + str(e) + '" }')
-    # endregion
 
 
 class reboot_station:
-    # region
     def GET(self):
         try:
             web.header('Content-Type', 'application/json')
@@ -722,11 +698,9 @@ class reboot_station:
         except Exception as e:
             logger.error(str(e))
             return web.internalerror('{ "message": "' + str(e) + '" }')
-    # endregion
 
 
 class shutdown_station:
-    # region
     def GET(self):
         try:
             web.header('Content-Type', 'application/json')
@@ -738,23 +712,7 @@ class shutdown_station:
         except Exception as e:
             logger.error(str(e))
             return web.internalerror('{ "message": "' + str(e) + '" }')
-    # endregion
 
-
-class flush_mysql_hosts:
-    # region
-    def GET(self):
-        try:
-            web.header('Content-Type', 'application/json')
-            web.header('Access-Control-Allow-Origin', '*')
-            web.header('Access-Control-Allow-Credentials', 'true')
-            EXECUTABLE = "echo " + ROOT_PASSWORD + " | sudo -S mysqladmin flush-hosts"
-            os.system(EXECUTABLE)
-            return '{"status":"success", "response":""}'
-        except Exception as e:
-            logger.error(str(e))
-            return web.internalerror('{ "message": "' + str(e) + '" }')
-    # endregion
 
 # endregion
 
@@ -766,7 +724,7 @@ class flush_mysql_hosts:
 def delayed_reboot():
     try:
         time.sleep(3)
-        EXECUTABLE = "echo " + ROOT_PASSWORD + " | sudo -S reboot"
+        EXECUTABLE = "reboot"
         os.system(EXECUTABLE)
     except Exception as e:
         logger.error("error = " + str(e))
@@ -775,7 +733,7 @@ def delayed_reboot():
 def delayed_shutdown():
     try:
         time.sleep(3)
-        EXECUTABLE = "echo " + ROOT_PASSWORD + " | sudo -S shutdown now"
+        EXECUTABLE = "shutdown now"
         os.system(EXECUTABLE)
     except Exception as e:
         logger.error("error = " + str(e))
@@ -786,14 +744,14 @@ def delayed_netplan_change():
         time.sleep(1)
         os.system("sync")  # commit buffer cache to disk
         # generate config for the renderers
-        os.system("echo " + ROOT_PASSWORD + " | sudo -S netplan generate")
+        os.system("netplan generate")
         time.sleep(1)
         # apply config for the renderers
-        os.system("echo " + ROOT_PASSWORD + " | sudo -S netplan apply")
+        os.system("netplan apply")
         time.sleep(1)
         # apply config for the renderers
         # os.system(
-        #     "echo " + ROOT_PASSWORD + " | sudo -S /etc/init.d/network-manager restart")
+        #     "/etc/init.d/network-manager restart")
     except Exception as e:
         logger.error("error = " + str(e))
 
