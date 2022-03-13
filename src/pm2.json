@@ -9,6 +9,15 @@
       "error": "/var/www/html/logs/netplan-gui-error.log",
       "kill_timeout": 5000,
       "restartDelay": 5000
+    },
+    {
+      "name": "netplan-gui-rest",
+      "script": "/var/www/html/netplan-gui/assets/rest.py",
+      "max_memory_restart": "256M",
+      "output": "/var/www/html/logs/netplan-gui-rest-out.log",
+      "error": "/var/www/html/logs/netplan-gui-rest-error.log",
+      "kill_timeout": 5000,
+      "restartDelay": 5000
     }
   ]
 }

@@ -13,7 +13,7 @@
               <ul class="list-group list-group-flush">
                 <!-- Clear All Log Files -->
                 <li class="list-group-item">
-                  <button kendoButton [disabled]="loadingClrLogFiles" look="outline" (click)="clearLogFiles()">
+                  <button kendoButton [disabled]="loadingClrLogFiles" (click)="clearLogFiles()">
                     <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
                       *ngIf="loadingClrLogFiles"></span>
                     <span>Clear All Log Files</span>
@@ -21,8 +21,7 @@
                 </li>
                 <!-- Change Log File Permissions -->
                 <li class="list-group-item">
-                  <button kendoButton [disabled]="loadingChngLogFilePerm" look="outline"
-                    (click)="changeLogFilePermissions()">
+                  <button kendoButton [disabled]="loadingChngLogFilePerm" (click)="changeLogFilePermissions()">
                     <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
                       *ngIf="loadingChngLogFilePerm"></span>
                     <span>Change Log File Permissions</span>
@@ -44,8 +43,7 @@
               <ul class="list-group list-group-flush">
                 <!-- Reboot Computer -->
                 <li class="list-group-item">
-                  <button kendoButton [disabled]="loadingRebootComputer" look="outline"
-                    (click)="rebootComputerConfirm('open')">
+                  <button kendoButton [disabled]="loadingRebootComputer" (click)="rebootComputerConfirm('open')">
                     <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
                       *ngIf="loadingRebootComputer"></span>
                     <span>Reboot Computer</span>
@@ -53,8 +51,7 @@
                 </li>
                 <!-- Shutdown Computer -->
                 <li class="list-group-item">
-                  <button kendoButton [disabled]="loadingShutdownComputer" look="outline"
-                    (click)="shutdownComputerConfirm('open')">
+                  <button kendoButton [disabled]="loadingShutdownComputer" (click)="shutdownComputerConfirm('open')">
                     <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
                       *ngIf="loadingShutdownComputer"></span>
                     <span>Shutdown Computer</span>
@@ -77,7 +74,7 @@
       afterwards.</p>
     <kendo-dialog-actions>
       <button kendoButton (click)="rebootComputerConfirm('close')">No</button>
-      <button kendoButton (click)="rebootComputerConfirm('yes')" [primary]="true">Yes</button>
+      <button kendoButton (click)="rebootComputerConfirm('yes')" themeColor="primary">Yes</button>
     </kendo-dialog-actions>
   </kendo-dialog>
 
@@ -88,7 +85,7 @@
       lost.</p>
     <kendo-dialog-actions>
       <button kendoButton (click)="shutdownComputerConfirm('close')">No</button>
-      <button kendoButton (click)="shutdownComputerConfirm('yes')" [primary]="true">Yes</button>
+      <button kendoButton (click)="shutdownComputerConfirm('yes')" themeColor="primary">Yes</button>
     </kendo-dialog-actions>
   </kendo-dialog>
 </main>

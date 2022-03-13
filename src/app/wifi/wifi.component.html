@@ -3,7 +3,7 @@
     <!-- Refresh -->
     <div class="row justify-content-center mb-3">
       <div class="col text-center">
-        <button kendoButton (click)="refreshNetwork()" look="outline" [disabled]="loading">
+        <button kendoButton (click)="refreshNetwork()" [disabled]="loading">
           <span class="spinner-border spinner-border-sm" style="margin-right: 10px;" *ngIf="loading"></span>
           Refresh
         </button>
@@ -80,7 +80,7 @@
                 <!-- Submit -->
                 <div class="row mt-4 justify-content-center">
                   <div class="col">
-                    <button kendoButton [disabled]="!WifiForm.valid || loading1" [primary]="true" type="submit">
+                    <button kendoButton [disabled]="!WifiForm.valid || loading1" themeColor="primary" type="submit">
                       <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
                         *ngIf="loading1"></span>
                       <span>Submit</span>

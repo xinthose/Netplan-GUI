@@ -29,18 +29,14 @@
 
 ## Install Application
 
-- `cd client`
-- `npm i`
-- `npm run build`
-- `sudo mkdir /var/www/html/netplan-gui /var/www/html/logs`
-- `sudo cp -r dist/netplan-gui/* /var/www/html/netplan-gui`
-- install node packages for server
-  - `cd /var/www/html/netplan-gui`
-  - `npm i express compression`
+- download latest release and unzip folder
+- rename the folder `netplan-gui`
+- copy the folder to this directory `/var/www/html`
+  - `sudo cp -r ~/Downloads/netplan-gui /var/www/html`
+- `cd /var/www/html/netplan-gui`  // change directories
+- `sudo npm i`  // install packages required for application to run
 - `pm2 start pm2.json`
-- `pm2 save`
-- `python3 /var/www/html/netplan-gui/assets/rest.py`
-- webpage can now be accessed `http://localhost:3000`
-- set `netplan-gui` to run automatically on bootup
-  - `sudo crontab -e`
-  - add this line: `@reboot pm2 resurrect && python3 /var/www/html/netplan-gui/assets/rest.py`
+
+## Updating to new version
+
+- TODO

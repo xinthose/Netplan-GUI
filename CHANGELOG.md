@@ -3,6 +3,8 @@
 ## 1.0.2 (3/12/2022)
 
 - update packages
+  - kendo button: `[primary]="true"` became `themeColor="primary"`
+  - use rxjs `firstValueFrom` instead of deprecated `toPromise`
 
 ## 1.0.1 (1/2/2022)
 

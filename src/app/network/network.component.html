@@ -3,7 +3,7 @@
     <!-- Refresh -->
     <div class="row justify-content-center mb-3">
       <div class="col text-center">
-        <button kendoButton (click)="refreshNetwork()" look="outline" [disabled]="loading">
+        <button kendoButton (click)="refreshNetwork()" [disabled]="loading">
           <span class="spinner-border spinner-border-sm" style="margin-right: 10px;" *ngIf="loading"></span>
           Refresh
         </button>
@@ -15,7 +15,9 @@
       <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Warning</h4>
+            <h4 class="card-title text-warning">
+              Warning
+            </h4>
             <p class="card-text">
               Changing these values can cause connection to be lost. Select Refresh before making changes.
             </p>
@@ -109,7 +111,7 @@
                       </kendo-grid-column>
                       <kendo-grid-command-column title="Command" [width]="220">
                         <ng-template kendoGridCellTemplate let-isNew="isNew">
-                          <button kendoGridEditCommand [primary]="true">Edit</button>
+                          <button kendoGridEditCommand themeColor="primary">Edit</button>
                           <button kendoGridRemoveCommand>Remove</button>
                           <button kendoGridSaveCommand [disabled]="BridgeGridForm?.invalid">{{ isNew ? 'Add' : 'Update'
                             }}</button>
@@ -124,7 +126,7 @@
                   <div class="col">
                     <button kendoButton
                       [disabled]="!BridgeForm.valid || !bridgeGridData.length || bridgeGridEditing || loadingBridge"
-                      [primary]="true" type="submit">
+                      themeColor="primary" type="submit">
                       <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
                         *ngIf="loadingBridge"></span>
                       <span>Submit</span>
@@ -224,7 +226,7 @@
                       </kendo-grid-column>
                       <kendo-grid-command-column title="Command" [width]="220">
                         <ng-template kendoGridCellTemplate let-isNew="isNew">
-                          <button kendoGridEditCommand [primary]="true">Edit</button>
+                          <button kendoGridEditCommand themeColor="primary">Edit</button>
                           <button kendoGridRemoveCommand>Remove</button>
                           <button kendoGridSaveCommand [disabled]="Eth1GridForm?.invalid">{{ isNew ? 'Add' : 'Update'
                             }}</button>
@@ -239,7 +241,7 @@
                   <div class="col">
                     <button kendoButton
                       [disabled]="!Eth1Form.valid || !eth1GridData.length || eth1GridEditing || loadingEth1"
-                      [primary]="true" type="submit">
+                      themeColor="primary" type="submit">
                       <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
                         *ngIf="loadingEth1"></span>
                       <span>Submit</span>
@@ -336,7 +338,7 @@
                       </kendo-grid-column>
                       <kendo-grid-command-column title="Command" [width]="220">
                         <ng-template kendoGridCellTemplate let-isNew="isNew">
-                          <button kendoGridEditCommand [primary]="true">Edit</button>
+                          <button kendoGridEditCommand themeColor="primary">Edit</button>
                           <button kendoGridRemoveCommand>Remove</button>
                           <button kendoGridSaveCommand [disabled]="Eth2GridForm?.invalid">{{ isNew ? 'Add' : 'Update'
                             }}</button>
@@ -351,7 +353,7 @@
                   <div class="col">
                     <button kendoButton
                       [disabled]="!Eth2Form.valid || !eth2GridData.length || eth2GridEditing || loadingEth2"
-                      [primary]="true" type="submit">
+                      themeColor="primary" type="submit">
                       <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
                         *ngIf="loadingEth2"></span>
                       <span>Submit</span>
@@ -476,7 +478,7 @@
                       </kendo-grid-column>
                       <kendo-grid-command-column title="Command" [width]="220">
                         <ng-template kendoGridCellTemplate let-isNew="isNew">
-                          <button kendoGridEditCommand [primary]="true">Edit</button>
+                          <button kendoGridEditCommand themeColor="primary">Edit</button>
                           <button kendoGridRemoveCommand>Remove</button>
                           <button kendoGridSaveCommand [disabled]="WiFiGridForm?.invalid">{{ isNew ? 'Add' : 'Update'
                             }}</button>
@@ -491,7 +493,7 @@
                   <div class="col">
                     <button kendoButton
                       [disabled]="!WiFiForm.valid || !wifiGridData.length || wifiGridEditing || loadingWiFi"
-                      [primary]="true" type="submit">
+                      themeColor="primary" type="submit">
                       <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
                         *ngIf="loadingWiFi"></span>
                       <span>Submit</span>
