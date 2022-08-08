@@ -22,9 +22,12 @@
   - `sudo cp -r netplan-gui /var/www/html`  // copy folder
 - `cd /var/www/html/netplan-gui`  // change directories
 - `sudo npm i express compression`  // install packages required for application to run
-- `pm2 start pm2.json`
-  - both should show a status of `online`, consult Troubleshooting steps below if it is `errored`
+- `pm2 start pm2.json`  // start client app
+- `pm2 start assets/rest/pm2.json`  // start REST app
+  - both apps should show a status of `online`, consult Troubleshooting steps below if it is `errored`
 - `sudo chmod -R 777 /etc/netplan`  // allow 01-network-manager-all.yaml file to be changed by non-root app
+- Netplan GUI can now be access locally from this URL: <http://localhost:3000>
+  - change `localhost` to the IP address of the computer to accesss it remotely
 
 ## Updating to New Version
 
