@@ -11,22 +11,16 @@
 import log
 import os
 import os.path
-import io
 import threading
 import time
 import simplejson as json
-import mysql.connector
-import uuid
 import yaml
 from benedict import benedict
-import subprocess
 from datetime import datetime
-import configparser
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.encoders import jsonable_encoder
-from pydantic import BaseModel
 import models   # models.py
 
 # Configuration
@@ -34,9 +28,6 @@ import models   # models.py
 # region
 
 VERSION = "1.0.3"
-DATABASE = "NetplanConfig"
-DATABASE_USER = "user1"
-DATABASE_PASSWORD = "superleet"
 NETPLAN = "/etc/netplan/01-network-manager-all.yaml"
 
 logger = log.setup_custom_logger('root')
@@ -182,53 +173,8 @@ async def get_interfaces1():
         ret_obj["wifi_ssid"] = wifi_ssid
         ret_obj["wifi_ssid_password"] = wifi_ssid_password
 
-        # connect to MySQL
-        cnx = mysql.connector.connect(
-            host="localhost", port=3306, user=DATABASE_USER, passwd=DATABASE_PASSWORD, db=DATABASE)
-        cursor = cnx.cursor(dictionary=True)
-
-        # get Controller IP Address
-        cursor.execute(
-            "select ControllerIpAddress, ReaderIPAddress from LocalPLC")
-        for row in cursor:
-            ret_obj["contr_ip_addr"] = row["ControllerIpAddress"]
-            ret_obj["reader_ip_addr"] = row["ReaderIPAddress"]
-
-        # close connection
-        cursor.close()
-        cnx.close()
-
         # return data
         # converts json object to string
-        if (debug):
-            logger.info(f"ret_obj = {json.dumps(ret_obj)}")
-        return ret_obj
-    except Exception as e:
-        logger.error(f"error = {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.get("/get_station_wifi")
-async def get_station_wifi():
-    try:
-        debug = False
-        ret_obj = {}
-
-        # connect to MySQL
-        cnx = mysql.connector.connect(
-            host="localhost", port=3306, user=DATABASE_USER, passwd=DATABASE_PASSWORD, db=DATABASE)
-        cursor = cnx.cursor(dictionary=True)
-
-        # get Controller IP Address
-        cursor.execute("select Description, Val from StationWiFi")
-        for row in cursor:
-            ret_obj[row["Description"]] = row["Val"]
-
-        # close connection
-        cursor.close()
-        cnx.close()
-
-        # return data
         if (debug):
             logger.info(f"ret_obj = {json.dumps(ret_obj)}")
         return ret_obj
@@ -300,17 +246,6 @@ async def shutdown_station():
     try:
         thr = threading.Thread(target=delayed_shutdown)
         thr.start()
-        return {"response": "OK"}
-    except Exception as e:
-        logger.error(f"error = {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@ app.get("/flush_mysql_hosts")
-async def flush_mysql_hosts():
-    try:
-        EXECUTABLE = 'mysqladmin flush-hosts'
-        os.system(EXECUTABLE)
         return {"response": "OK"}
     except Exception as e:
         logger.error(f"error = {str(e)}")

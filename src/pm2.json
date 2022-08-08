@@ -12,8 +12,7 @@
     },
     {
       "name": "netplan-gui-rest",
-      "script": "/var/www/html/netplan-gui/assets/rest.py",
-      "interpreter": "/usr/bin/python3",
+      "script": "gunicorn -w 4 -b 0.0.0.0:8080 -k uvicorn.workers.UvicornWorker rest:app -chdir /var/www/html/netplan-gui/assets/rest",
       "max_memory_restart": "256M",
       "output": "/var/www/html/logs/netplan-gui-rest-out.log",
       "error": "/var/www/html/logs/netplan-gui-rest-error.log",

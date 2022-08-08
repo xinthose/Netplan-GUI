@@ -11,19 +11,8 @@
 
 - `sudo apt update`
 - `sudo apt install npm nodejs php libapache2-mod-php apache2-utils`
-- `sudo pip install mysql-connector-python simplejson pyyaml python-benedict fastapi gunicorn`
+- `sudo pip install simplejson pyyaml python-benedict fastapi gunicorn`
 - `npm i -g pm2`
-
-## Setup MySQL
-
-- login to mysql server
-  - `mysql -u root -p`
-- `create database NetplanConfig;`
-- `CREATE USER 'user1'@'localhost' IDENTIFIED BY 'superleet';`
-- `GRANT ALL PRIVILEGES ON NetplanConfig.* TO 'user1'@'localhost';`
-- `FLUSH PRIVILEGES;`
-- copy, paste, and run text in `mysql_tables.sql`
-- `exit;`
 
 ## Install Netplan GUI
 
