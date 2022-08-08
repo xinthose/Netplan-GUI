@@ -4,6 +4,9 @@ import { Component, OnInit } from "@angular/core";
 import { NetplanGUIService } from "../netplan-gui.service";
 import { NotificationService } from "@progress/kendo-angular-notification";
 
+// Icons
+import { faPowerOff, faTrash, faLockOpen, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
+
 // other
 import { NGXLogger } from "ngx-logger";
 
@@ -30,6 +33,11 @@ export class CommandsComponent implements OnInit {
   // dialog open status
   rebootComputerConfirmOpen: boolean = false;
   shutdownComputerConfirmOpen: boolean = false;
+  // icons
+  faTrash = faTrash;
+  faLockOpen = faLockOpen;
+  faArrowRotateLeft = faArrowRotateLeft;
+  faPowerOff = faPowerOff;
 
   constructor(
     private netplanguiService: NetplanGUIService,
@@ -53,10 +61,7 @@ export class CommandsComponent implements OnInit {
       this.loadingClrLogFiles = true;
 
       // submit
-      const response = await this.netplanguiService.query("clear_all_log_files");
-      if (this.debug) {
-        this.logger.debug("CommandsComponent.clearLogFiles >> response = " + JSON.stringify(response));
-      }
+      await this.netplanguiService.runCommand("clear_all_log_files");
 
       // show popup
       this.notificationService.show({
@@ -97,10 +102,7 @@ export class CommandsComponent implements OnInit {
       this.loadingChngLogFilePerm = true;
 
       // submit
-      const response = await this.netplanguiService.query("change_log_file_perm");
-      if (this.debug) {
-        this.logger.debug("CommandsComponent.changeLogFilePermissions >> response = " + JSON.stringify(response));
-      }
+      await this.netplanguiService.runCommand("change_log_file_perm");
 
       // show popup
       this.notificationService.show({
@@ -141,10 +143,7 @@ export class CommandsComponent implements OnInit {
       this.loadingRebootComputer = true;
 
       // submit
-      const response = await this.netplanguiService.query("reboot_station");
-      if (this.debug) {
-        this.logger.debug("CommandsComponent.rebootComputer >> response = " + JSON.stringify(response));
-      }
+      await this.netplanguiService.runCommand("reboot_station");
 
       // show popup
       this.notificationService.show({
@@ -174,10 +173,7 @@ export class CommandsComponent implements OnInit {
       this.loadingShutdownComputer = true;
 
       // submit
-      const response = await this.netplanguiService.query("shutdown_station");
-      if (this.debug) {
-        this.logger.debug("CommandsComponent.shutdownComputer >> response = " + JSON.stringify(response));
-      }
+      await this.netplanguiService.runCommand("shutdown_station");
 
       // show popup
       this.notificationService.show({

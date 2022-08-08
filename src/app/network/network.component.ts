@@ -518,22 +518,8 @@ export class NetworkComponent implements OnInit {
         nameservers.push(e.value.nameserver2);
       }
 
-      // build URL
-      const data = {
-        "gateway": e.value.gateway,
-        "addresses": e.value.addresses,
-        "nameservers": nameservers,
-      }
-      const URL = "submitBridge/" + JSON.stringify(data);
-      if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitBridge >> URL =" + URL);
-      }
-
       // send data
-      const response = await this.netplanguiService.query(URL);
-      if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitBridge >> response = " + JSON.stringify(response));
-      }
+      await this.netplanguiService.submitBridge(e.value.gateway, e.value.addresses, nameservers);
 
       // show popup
       this.notificationService.show({
@@ -703,23 +689,8 @@ export class NetworkComponent implements OnInit {
         nameservers.push(e.value.nameserver2);
       }
 
-      // build URL
-      const data = {
-        "gateway": e.value.gateway,
-        "addresses": "addresses" in e.value ? e.value.addresses : [""],
-        "nameservers": nameservers,
-        "delete": !this.eth1GridEnabled,
-      }
-      const URL = "submitEth1/" + JSON.stringify(data);
-      if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitEth1 >> URL =" + URL);
-      }
-
       // send data
-      const response = await this.netplanguiService.query(URL);
-      if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitEth1 >> response = " + JSON.stringify(response));
-      }
+      await this.netplanguiService.submitEth(1, e.value.gateway, e.value.addresses, nameservers, !this.eth1GridEnabled);
 
       // show popup
       this.notificationService.show({
@@ -887,23 +858,8 @@ export class NetworkComponent implements OnInit {
         nameservers.push(e.value.nameserver2);
       }
 
-      // build URL
-      const data = {
-        "gateway": e.value.gateway,
-        "addresses": "addresses" in e.value ? e.value.addresses : [""],
-        "nameservers": nameservers,
-        "delete": !this.eth2GridEnabled,
-      }
-      const URL = "submitEth2/" + JSON.stringify(data);
-      if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitEth2 >> URL =" + URL);
-      }
-
       // send data
-      const response = await this.netplanguiService.query(URL);
-      if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitEth2 >> response = " + JSON.stringify(response));
-      }
+      await this.netplanguiService.submitEth(2, e.value.gateway, e.value.addresses, nameservers, !this.eth2GridEnabled);
 
       // show popup
       this.notificationService.show({
@@ -1073,25 +1029,8 @@ export class NetworkComponent implements OnInit {
         nameservers.push(e.value.nameserver2);
       }
 
-      // build URL
-      const data = {
-        "gateway": e.value.gateway,
-        "addresses": "addresses" in e.value ? e.value.addresses : [""],
-        "nameservers": nameservers,
-        "ssid": "ssid" in e.value ? e.value.ssid : "",
-        "ssidPassword": e.value.ssidPassword,
-        "delete": !this.wifiGridEnabled,
-      }
-      const URL = "submitWiFi/" + JSON.stringify(data);
-      if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitWiFi >> URL =" + URL);
-      }
-
       // send data
-      const response = await this.netplanguiService.query(URL);
-      if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitWiFi >> response = " + JSON.stringify(response));
-      }
+      await this.netplanguiService.submitWiFi(e.value.gateway, e.value.addresses, nameservers, !this.wifiGridEnabled, e.value.ssid, e.value.ssidPassword);
 
       // show popup
       this.notificationService.show({

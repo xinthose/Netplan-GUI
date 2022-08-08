@@ -14,17 +14,21 @@
                 <!-- Clear All Log Files -->
                 <li class="list-group-item">
                   <button kendoButton [disabled]="loadingClrLogFiles" (click)="clearLogFiles()">
-                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                      *ngIf="loadingClrLogFiles"></span>
-                    <span>Clear All Log Files</span>
+                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingClrLogFiles"></span>
+                    <fa-icon [icon]="faTrash" class="me-2"></fa-icon>
+                    <span>
+                      Clear All Log Files
+                    </span>
                   </button>
                 </li>
                 <!-- Change Log File Permissions -->
                 <li class="list-group-item">
                   <button kendoButton [disabled]="loadingChngLogFilePerm" (click)="changeLogFilePermissions()">
-                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                      *ngIf="loadingChngLogFilePerm"></span>
-                    <span>Change Log File Permissions</span>
+                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingChngLogFilePerm"></span>
+                    <fa-icon [icon]="faLockOpen" class="me-2"></fa-icon>
+                    <span>
+                      Change Log File Permissions
+                    </span>
                   </button>
                 </li>
               </ul>
@@ -44,17 +48,21 @@
                 <!-- Reboot Computer -->
                 <li class="list-group-item">
                   <button kendoButton [disabled]="loadingRebootComputer" (click)="rebootComputerConfirm('open')">
-                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                      *ngIf="loadingRebootComputer"></span>
-                    <span>Reboot Computer</span>
+                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingRebootComputer"></span>
+                    <fa-icon [icon]="faArrowRotateLeft" class="me-2"></fa-icon>
+                    <span>
+                      Reboot Computer
+                    </span>
                   </button>
                 </li>
                 <!-- Shutdown Computer -->
                 <li class="list-group-item">
                   <button kendoButton [disabled]="loadingShutdownComputer" (click)="shutdownComputerConfirm('open')">
-                    <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                      *ngIf="loadingShutdownComputer"></span>
-                    <span>Shutdown Computer</span>
+                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingShutdownComputer"></span>
+                    <fa-icon [icon]="faPowerOff" class="me-2"></fa-icon>
+                    <span>
+                      Shutdown Computer
+                    </span>
                   </button>
                 </li>
               </ul>

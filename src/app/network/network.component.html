@@ -4,7 +4,7 @@
     <div class="row justify-content-center mb-3">
       <div class="col text-center">
         <button kendoButton (click)="refreshNetwork()" [disabled]="loading">
-          <span class="spinner-border spinner-border-sm" style="margin-right: 10px;" *ngIf="loading"></span>
+          <span class="spinner-border spinner-border-sm me-2" *ngIf="loading"></span>
           Refresh
         </button>
       </div>
@@ -98,7 +98,7 @@
                       </ng-template>
                       <!-- Columns -->
                       <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
-                      <kendo-grid-column field="cidr" title="Subnet Mask" [width]="150">
+                      <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
                         <ng-template kendoGridCellTemplate let-dataItem>
                           {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
                         </ng-template>
@@ -127,8 +127,7 @@
                     <button kendoButton
                       [disabled]="!BridgeForm.valid || !bridgeGridData.length || bridgeGridEditing || loadingBridge"
                       themeColor="primary" type="submit">
-                      <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                        *ngIf="loadingBridge"></span>
+                      <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingBridge"></span>
                       <span>Submit</span>
                     </button>
                     <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="BridgeForm.dirty"></fa-icon>
@@ -213,7 +212,7 @@
                       </ng-template>
                       <!-- Columns -->
                       <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
-                      <kendo-grid-column field="cidr" title="Subnet Mask" [width]="150">
+                      <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
                         <ng-template kendoGridCellTemplate let-dataItem>
                           {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
                         </ng-template>
@@ -242,8 +241,7 @@
                     <button kendoButton
                       [disabled]="!Eth1Form.valid || !eth1GridData.length || eth1GridEditing || loadingEth1"
                       themeColor="primary" type="submit">
-                      <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                        *ngIf="loadingEth1"></span>
+                      <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingEth1"></span>
                       <span>Submit</span>
                     </button>
                     <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="Eth1Form.dirty"></fa-icon>
@@ -325,7 +323,7 @@
                       </ng-template>
                       <!-- Columns -->
                       <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
-                      <kendo-grid-column field="cidr" title="Subnet Mask" [width]="150">
+                      <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
                         <ng-template kendoGridCellTemplate let-dataItem>
                           {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
                         </ng-template>
@@ -354,8 +352,7 @@
                     <button kendoButton
                       [disabled]="!Eth2Form.valid || !eth2GridData.length || eth2GridEditing || loadingEth2"
                       themeColor="primary" type="submit">
-                      <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                        *ngIf="loadingEth2"></span>
+                      <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingEth2"></span>
                       <span>Submit</span>
                     </button>
                     <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="Eth2Form.dirty"></fa-icon>
@@ -465,7 +462,7 @@
                       </ng-template>
                       <!-- Columns -->
                       <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
-                      <kendo-grid-column field="cidr" title="Subnet Mask" [width]="150">
+                      <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
                         <ng-template kendoGridCellTemplate let-dataItem>
                           {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
                         </ng-template>
@@ -494,8 +491,7 @@
                     <button kendoButton
                       [disabled]="!WiFiForm.valid || !wifiGridData.length || wifiGridEditing || loadingWiFi"
                       themeColor="primary" type="submit">
-                      <span class="spinner-border spinner-border-sm" style="margin-right: 10px;"
-                        *ngIf="loadingWiFi"></span>
+                      <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingWiFi"></span>
                       <span>Submit</span>
                     </button>
                     <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="WiFiForm.dirty"></fa-icon>
