@@ -1,5 +1,9 @@
 # Netplan GUI Changelog
 
+## 1.0.3 (8/7/2022)
+
+- update packages
+
 ## 1.0.2 (3/12/2022)
 
 - update packages
