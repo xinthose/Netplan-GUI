@@ -3,6 +3,7 @@
 ## 1.0.3 (8/7/2022)
 
 - update packages
+- replace [web.py](https://github.com/webpy/webpy) with [FastAPI](https://github.com/tiangolo/fastapi) for REST service
 
 ## 1.0.2 (3/12/2022)
 

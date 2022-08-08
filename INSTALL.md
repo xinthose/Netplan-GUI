@@ -11,7 +11,7 @@
 
 - `sudo apt update`
 - `sudo apt install npm nodejs php libapache2-mod-php apache2-utils`
-- `sudo pip install mysql-connector-python simplejson pyyaml python-benedict web.py`
+- `sudo pip install mysql-connector-python simplejson pyyaml python-benedict fastapi gunicorn`
 - `npm i -g pm2`
 
 ## Setup MySQL

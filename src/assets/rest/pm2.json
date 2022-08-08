@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "name": "portalogic-rest",
+      "script": "gunicorn -w 4 -b 0.0.0.0:8080 -k uvicorn.workers.UvicornWorker portalogic:app",
+      "watch": false,
+      "max_memory_restart": "1G",
+      "output": "/var/www/html/logs/portalogic-rest-out.log",
+      "error": "/var/www/html/logs/portalogic-rest-error.log",
+      "kill_timeout": 5000,
+      "restartDelay": 5000
+    }
+  ]
+}
