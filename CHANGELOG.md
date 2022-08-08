@@ -4,6 +4,7 @@
 
 - update packages
 - replace [web.py](https://github.com/webpy/webpy) with [FastAPI](https://github.com/tiangolo/fastapi) for REST service
+- remove Station Wi-Fi, focus on netplan configuration instead
 
 ## 1.0.2 (3/12/2022)
 

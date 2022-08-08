@@ -21,12 +21,10 @@ export class AppComponent implements AfterViewInit {
   public LogsURL: string = "http://" + (environment.production ? window.location.hostname : "localhost") + "/logs";
   // navigation selected
   public networkSelected: boolean = false;
-  public wifiSelected: boolean = false;
   public commandsSelected: boolean = false;
   public filesSelected: boolean = false;
   // subscriptions
   networkSelected$!: Subscription;
-  wifiSelected$!: Subscription;
   commandsSelected$!: Subscription;
   alarmsSelected$!: Subscription;
   filesSelected$!: Subscription;
@@ -44,10 +42,6 @@ export class AppComponent implements AfterViewInit {
       this.resetSelection();
       this.networkSelected = networkSelected;
     });
-    this.wifiSelected$ = this.netplanguiService.wifiSelected$.subscribe((wifiSelected: boolean) => {
-      this.resetSelection();
-      this.wifiSelected = wifiSelected;
-    });
     this.commandsSelected$ = this.netplanguiService.commandsSelected$.subscribe((commandsSelected: boolean) => {
       this.resetSelection();
       this.commandsSelected = commandsSelected;
@@ -62,7 +56,6 @@ export class AppComponent implements AfterViewInit {
 
   private resetSelection(): void {
     this.networkSelected = false;
-    this.wifiSelected = false;
     this.commandsSelected = false;
     this.filesSelected = false;
   }

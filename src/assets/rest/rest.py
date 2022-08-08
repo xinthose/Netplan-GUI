@@ -69,7 +69,7 @@ logger.info(f"netplan gui REST started; version = {VERSION}")
 @ app.get("/get_interfaces1")
 async def get_interfaces1():
     try:
-        debug = True
+        debug = False
         ret_obj = {}
 
         # get network data
@@ -265,7 +265,7 @@ async def get_date_time():
 @ app.get("/clear_all_log_files")
 async def clear_all_log_files():
     try:
-        EXECUTABLE = 'echo EleMech0587 | sudo -S rm -f /var/www/html/logs/*.log /var/www/html/logs/app/*.log /var/www/html/logs/general/*.csv /var/www/html/logs/startup/*.log /var/www/html/logs/vpn/*.log'
+        EXECUTABLE = "rm -f /var/www/html/logs/*.log"
         os.system(EXECUTABLE)
         return {"response": "OK"}
     except Exception as e:
@@ -276,7 +276,7 @@ async def clear_all_log_files():
 @ app.get("/change_log_file_perm")
 async def change_log_file_perm():
     try:
-        EXECUTABLE = 'echo EleMech0587 | sudo -S chmod -R 777 /var/www/html/logs'
+        EXECUTABLE = "chmod -R 777 /var/www/html/logs"
         os.system(EXECUTABLE)
         return {"response": "OK"}
     except Exception as e:
@@ -309,7 +309,7 @@ async def shutdown_station():
 @ app.get("/flush_mysql_hosts")
 async def flush_mysql_hosts():
     try:
-        EXECUTABLE = 'echo EleMech0587 | sudo -S mysqladmin flush-hosts'
+        EXECUTABLE = 'mysqladmin flush-hosts'
         os.system(EXECUTABLE)
         return {"response": "OK"}
     except Exception as e:
@@ -322,7 +322,7 @@ async def flush_mysql_hosts():
 @app.post("/submitBridge")
 async def submitBridge(data: models.SubmitBridge):
     try:
-        debug = True
+        debug = False
         data = jsonable_encoder(data)
 
         if (debug):
@@ -386,7 +386,7 @@ async def submitBridge(data: models.SubmitBridge):
 @app.post("/submitEth1")
 async def submitEth1(data: models.SubmitEth):
     try:
-        debug = True
+        debug = False
         data = jsonable_encoder(data)
 
         if (debug):
@@ -442,7 +442,7 @@ async def submitEth1(data: models.SubmitEth):
 @app.post("/submitEth2")
 async def submitEth2(data: models.SubmitEth):
     try:
-        debug = True
+        debug = False
         data = jsonable_encoder(data)
 
         if (debug):
@@ -498,7 +498,7 @@ async def submitEth2(data: models.SubmitEth):
 @app.post("/submitWiFi")
 async def submitWiFi(data: models.SubmitWiFi):
     try:
-        debug = True
+        debug = False
         data = jsonable_encoder(data)
 
         if (debug):
@@ -560,51 +560,17 @@ async def submitWiFi(data: models.SubmitWiFi):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/update_station_wifi")
-async def update_station_wifi(data: models.UpdateStationWifi):
-    try:
-        debug = False
-        data = jsonable_encoder(data)
-
-        if (debug):
-            logger.debug(f"data = {json.dumps(data)}")
-
-        # connect to MySQL
-        cnx = mysql.connector.connect(
-            host="localhost", port=3306, user=DATABASE_USER, passwd=DATABASE_PASSWORD, db=DATABASE)
-        cursor = cnx.cursor(dictionary=True)
-
-        # update Controller IP Address
-        query = f"insert into StationWiFi (ID, Val) values (1,'{data['enabled']}'), (2,'{data['network_name']}'), (3,'{data['network_password']}'), (4,'{data['enable_bridge']}'), (5,'{data['network_ap_gateway']}') on duplicate key update ID=values(ID), Val=values(Val);"
-        cursor.execute(query)
-
-        # commit
-        cnx.commit()
-
-        # close connection
-        cursor.close()
-        cnx.close()
-
-        # apply changes
-        thr = threading.Thread(target=delayed_reboot)
-        thr.start()
-        return {"response": "OK"}
-    except Exception as e:
-        logger.error(f"error = {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
 @ app.post("/setdate")
 async def setdate(data: models.SetDate):
     try:
         data = jsonable_encoder(data)
 
         # set new date/time
-        EXECUTABLE = f"echo EleMech0587 | sudo -S date --set '{data['ServerTime']}'"
+        EXECUTABLE = f"date --set '{data['ServerTime']}'"
         os.system(EXECUTABLE)
 
         # permanently save new date/time
-        EXECUTABLE2 = "echo EleMech0587 | sudo -S hwclock -w"
+        EXECUTABLE2 = "hwclock -w"
         os.system(EXECUTABLE2)
 
         # return success
@@ -624,7 +590,7 @@ async def setdate(data: models.SetDate):
 def delayed_reboot():
     try:
         time.sleep(3)
-        EXECUTABLE = 'echo EleMech0587 | sudo -S reboot'
+        EXECUTABLE = 'reboot'
         os.system(EXECUTABLE)
     except Exception as e:
         logger.error(f"error = {str(e)}")
@@ -633,7 +599,7 @@ def delayed_reboot():
 def delayed_shutdown():
     try:
         time.sleep(3)
-        EXECUTABLE = 'echo EleMech0587 | sudo -S shutdown now'
+        EXECUTABLE = 'shutdown now'
         os.system(EXECUTABLE)
     except Exception as e:
         logger.error(f"error = {str(e)}")
@@ -644,10 +610,10 @@ def delayed_netplan_change():
         time.sleep(1)
         os.system("sync")  # commit buffer cache to disk
         # generate config for the renderers
-        os.system("echo EleMech0587 | sudo -S netplan generate")
+        os.system("netplan generate")
         time.sleep(1)
         # apply config for the renderers
-        os.system("echo EleMech0587 | sudo -S netplan apply")
+        os.system("netplan apply")
     except Exception as e:
         logger.error(f"error = {str(e)}")
 
@@ -658,15 +624,15 @@ def delayed_vpn_server_change():
 
         time.sleep(1)
 
-        os.system("echo EleMech0587 | sudo -S service openvpn@server restart")
+        os.system("service openvpn@server restart")
 
         time.sleep(3)
 
-        os.system("echo EleMech0587 | sudo -S brctl addif br0 tap0")
+        os.system("brctl addif br0 tap0")
 
         time.sleep(1)
 
-        os.system("echo EleMech0587 | sudo -S ifconfig tap0 0.0.0.0 promisc up")
+        os.system("ifconfig tap0 0.0.0.0 promisc up")
     except Exception as e:
         logger.error(f"error = {str(e)}")
 

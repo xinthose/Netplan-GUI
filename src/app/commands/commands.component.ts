@@ -4,9 +4,6 @@ import { Component, OnInit } from "@angular/core";
 import { NetplanGUIService } from "../netplan-gui.service";
 import { NotificationService } from "@progress/kendo-angular-notification";
 
-// interfaces
-import { StationWifiIntf } from "../interfaces/StationWifiIntf";
-
 // other
 import { NGXLogger } from "ngx-logger";
 

@@ -6,7 +6,6 @@ import { firstValueFrom } from "rxjs";
 
 // interfaces
 import { eBoxNetworkIntf } from "./interfaces/linuxNetworkIntf";
-import { StationWifiIntf } from "./interfaces/StationWifiIntf";
 
 // Other
 import { environment } from "../environments/environment";
@@ -31,7 +30,6 @@ export class NetplanGUIService {
   private BASE_URL: string = "";
   // event emitters
   @Output() networkSelected$: EventEmitter<boolean> = new EventEmitter();
-  @Output() wifiSelected$: EventEmitter<boolean> = new EventEmitter();
   @Output() commandsSelected$: EventEmitter<boolean> = new EventEmitter();
   @Output() filesSelected$: EventEmitter<boolean> = new EventEmitter();
 
@@ -60,13 +58,5 @@ export class NetplanGUIService {
     return firstValueFrom(this.http.get<eBoxNetworkIntf>(URL));
   }
 
-  public getStationWifi(): Promise<StationWifiIntf> {
-    const URL = this.BASE_URL + "get_station_wifi";
-    if (this.debug) {
-      this.logger.debug("NetplanGUIService.getStationWifi >> URL = " + URL);
-    }
-
-    return firstValueFrom(this.http.get<StationWifiIntf>(URL));
-  }
 
 }

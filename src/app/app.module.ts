@@ -34,7 +34,6 @@ import { environment } from "../environments/environment";
 
 // Components
 import { NetworkComponent } from './network/network.component';
-import { WifiComponent } from './wifi/wifi.component';
 import { CommandsComponent } from './commands/commands.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -43,7 +42,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   declarations: [
     AppComponent,
     NetworkComponent,
-    WifiComponent,
     CommandsComponent,
     PageNotFoundComponent
   ],
