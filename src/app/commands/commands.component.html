@@ -78,7 +78,8 @@
   <!-- Reboot Station Confirm -->
   <kendo-dialog title="Please confirm" *ngIf="rebootComputerConfirmOpen" (close)="rebootComputerConfirm('close')"
     [minWidth]="250" [width]="450">
-    <p style="margin: 30px; text-align: center;">Are you sure you want to reboot the eBox? Your connection will be lost
+    <p style="margin: 30px; text-align: center;">Are you sure you want to reboot the computer? Your connection will be
+      lost
       afterwards.</p>
     <kendo-dialog-actions>
       <button kendoButton (click)="rebootComputerConfirm('close')">No</button>
@@ -89,7 +90,7 @@
   <!-- Shutdown Station Confirm -->
   <kendo-dialog title="Please confirm" *ngIf="shutdownComputerConfirmOpen" (close)="shutdownComputerConfirm('close')"
     [minWidth]="250" [width]="450">
-    <p style="margin: 30px; text-align: center;">Are you sure you want to shutdown the eBox? Your connection will be
+    <p style="margin: 30px; text-align: center;">Are you sure you want to shutdown the computer? Your connection will be
       lost.</p>
     <kendo-dialog-actions>
       <button kendoButton (click)="shutdownComputerConfirm('close')">No</button>

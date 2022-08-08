@@ -16,8 +16,7 @@
 
 ## Install Netplan GUI
 
-- download latest release of `netplan-gui` and unzip folder
-  - <https://github.com/xinthose/Netplan-GUI/releases>
+- download [latest release](https://github.com/xinthose/Netplan-GUI/releases) of `netplan-gui` and unzip folder
 - copy the folder `netplan-gui` inside it to this directory `/var/www/html`
   - `cd ~/Downloads/netplan-gui-*`  // name of folder may be different if you have multiple versions downloaded
   - `sudo cp -r netplan-gui /var/www/html`  // copy folder
