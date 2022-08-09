@@ -1,4 +1,4 @@
-# Notes for Developer
+# Notes for Developers
 
 ## Build Release
 
