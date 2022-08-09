@@ -20,7 +20,7 @@
 - Can run helpful commands (`reboot`, `shutdown`, clear logs, change log file persmissions so that they can be viewed remotely over apache)
 - mobile friendly and works in all modern browsers
 
-![Screenshot from 2021-09-26 16-30-03](https://user-images.githubusercontent.com/12835202/134824903-3feaeac5-f23e-4280-b242-15a0db7c03f3.png)
+![Screenshot from 2022-08-08 23-33-22](https://user-images.githubusercontent.com/12835202/183564984-ae128673-504d-45c8-9494-cc331e11ca21.png)
 
 ## Use Cases
 
