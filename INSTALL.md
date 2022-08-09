@@ -19,7 +19,7 @@
 - download [latest release](https://github.com/xinthose/Netplan-GUI/releases) of `netplan-gui` and unzip folder
 - `sudo su` // become root user
 - copy the folder `netplan-gui` inside it to this directory `/var/www/html`
-  - `cd ~/Downloads/netplan-gui-*`  // name of folder may be different if you have multiple versions downloaded
+  - `cd ~/Downloads`
   - `cp -r netplan-gui /var/www/html`  // copy folder
 - `cd /var/www/html/netplan-gui`  // change directories
 - `npm i express compression`  // install packages required for application to run
