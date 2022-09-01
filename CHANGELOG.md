@@ -1,5 +1,9 @@
 # Netplan GUI Changelog
 
+## 1.0.4 (8/31/2022)
+
+- *Bug*: in file `models.py`, use python `List` instead of `list` to allow for backwards compatibility for python versions lower than 3.9: [PEP 585](https://docs.python.org/3/whatsnew/3.9.html#type-hinting-generics-in-standard-collections)
+
 ## 1.0.3 (8/7/2022)
 
 - update packages
@@ -15,7 +19,7 @@
 
 ## 1.0.1 (1/2/2022)
 
-- *Bug*: in `netplan-gui.service.ts`, `SERVER` should have been `localhost`
+- *Bug*: in file `netplan-gui.service.ts`, `SERVER` should have been `localhost`
 
 ## 1.0.0 (9/26/2021)
 

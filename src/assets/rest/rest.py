@@ -4,8 +4,8 @@
 # file 'LICENSE.txt', which is part of this source code.
 
 # Run app:
-# DEV: uvicorn rest:app --reload --host 0.0.0.0 --port 8080
-# PROD: gunicorn -w 4 -b 0.0.0.0:8080 -k uvicorn.workers.UvicornWorker rest:app
+# DEV: sudo uvicorn rest:app --reload --host 0.0.0.0 --port 8080
+# PROD: sudo gunicorn -w 4 -b 0.0.0.0:8080 -k uvicorn.workers.UvicornWorker rest:app
 
 
 import log
@@ -27,7 +27,7 @@ import models   # models.py
 
 # region
 
-VERSION = "1.0.3"
+VERSION = "1.0.4"
 NETPLAN = "/etc/netplan/01-network-manager-all.yaml"
 
 logger = log.setup_custom_logger('root')

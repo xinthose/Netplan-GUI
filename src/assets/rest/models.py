@@ -1,10 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# models used by FastAPI for POST requests
-
 from pydantic import BaseModel
-
+from typing import List  # needed for python 3.8 and below
 
 class SetDate(BaseModel):
     ServerTime: str
@@ -12,21 +10,21 @@ class SetDate(BaseModel):
 
 class SubmitBridge(BaseModel):
     gateway: str
-    addresses: list[str]
-    nameservers: list[str]
+    addresses: List[str]
+    nameservers: List[str]
 
 
 class SubmitEth(BaseModel):
     gateway: str
-    addresses: list[str]
-    nameservers: list[str]
+    addresses: List[str]
+    nameservers: List[str]
     deleteEth: bool
 
 
 class SubmitWiFi(BaseModel):
     gateway: str
-    addresses: list[str]
-    nameservers: list[str]
+    addresses: List[str]
+    nameservers: List[str]
     deleteWiFi: bool
     ssid: str
     ssidPassword: str
