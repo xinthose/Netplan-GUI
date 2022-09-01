@@ -29,7 +29,7 @@
   - both apps should show a status of `online`, consult Troubleshooting steps below if it is `errored`
 - `pm2 save`  // save these applications so that `pm2 resurrect` can easily bring them up again on boot
 - `chmod -R 777 /etc/netplan`  // allow 01-network-manager-all.yaml file to be changed by non-root app
-- Netplan GUI can now be access locally from this URL: <http://localhost:3000>
+- Netplan GUI can now be accessed locally from this URL: <http://localhost:3000>
   - change `localhost` to the IP address of the computer to accesss it remotely
 
 ### Run services on boot
