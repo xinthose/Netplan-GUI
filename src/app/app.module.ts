@@ -8,6 +8,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // Forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+// Custom
+import { DropDownListFilterComponent } from './dropdownlist-filter.component';
+
 // Progress
 import { GridModule, PDFModule, ExcelModule, FilterService } from '@progress/kendo-angular-grid';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -43,7 +46,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AppComponent,
     NetworkComponent,
     CommandsComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    DropDownListFilterComponent,
   ],
   imports: [
     // General

@@ -30,6 +30,20 @@ export class NetworkComponent implements OnInit {
   debug: boolean = true;
   loading: boolean = false;
   private ipRegex: RegExp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  InterfaceTypes: Array<{ InterfaceTypeDesc: string, InterfaceTypeID: number }> = [
+    {
+      "InterfaceTypeDesc": "ethernet",
+      "InterfaceTypeID": 0
+    },
+    {
+      "InterfaceTypeDesc": "bridge",
+      "InterfaceTypeID": 1
+    },
+    {
+      "InterfaceTypeDesc": "vlan",
+      "InterfaceTypeID": 2
+    },
+  ];
   // forms
   public InterfacesGridForm!: FormGroup;
   // grids
@@ -172,11 +186,9 @@ export class NetworkComponent implements OnInit {
       dir: "asc"
     }
   ];
-  /// bridge grid
+  /// interfaces grid
   interfacesGridData: Array<InterfacesGridIntf> = [];
   interfacesGridRow: number = 0;
-  interfacesGridEnabled: boolean = false;
-  interfacesGridEditing: boolean = false;
   // icons
   faPencilAlt = faPencilAlt;
 
@@ -252,13 +264,12 @@ export class NetworkComponent implements OnInit {
     this.interfacesGridClose(sender);
 
     this.InterfacesGridForm = this.formBuilder.group({
-      guid: [Chance().guid()],
-      name: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      "guid": [Chance().guid()],
+      "name": ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      "InterfaceType": [undefined, [Validators.required, Validators.min(0)]],
     });
 
     sender.addRow(this.InterfacesGridForm);
-
-    this.interfacesGridEditing = true;
   }
 
   public interfacesGridEdit({ sender, rowIndex, dataItem }: any) {
@@ -267,16 +278,17 @@ export class NetworkComponent implements OnInit {
     }
     this.interfacesGridClose(sender);
 
+    const data: InterfacesGridIntf = dataItem;
+
     this.InterfacesGridForm = this.formBuilder.group({
-      guid: [dataItem.guid],
-      name: [dataItem.name, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      "guid": [data.guid],
+      "name": [data.name, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      "InterfaceType": [data.InterfaceType, [Validators.required, Validators.min(0)]],
     });
 
     this.interfacesGridRow = rowIndex;
 
     sender.editRow(rowIndex, this.InterfacesGridForm);
-
-    this.interfacesGridEditing = true;
   }
 
   public interfacesGridCancel({ sender, rowIndex }: any) {
@@ -299,6 +311,7 @@ export class NetworkComponent implements OnInit {
       for (const row of this.interfacesGridData) {
         if (row.guid === data.guid) {
           row.name = data.name;
+          row.InterfaceType = data.InterfaceType;
           break;
         }
       }
@@ -331,6 +344,10 @@ export class NetworkComponent implements OnInit {
   /* #endregion */
 
   // other
+
+  public GetInterfaceTypeDesc(id: number): any {
+    return this.InterfaceTypes.find(x => x.InterfaceTypeID === id);
+  }
 
   public getSubnetMask(cidr: number): any {
     return this.subnetMaskCidr.find((obj: SubnetDropdownIntf) => obj.cidr === cidr);
