@@ -34,6 +34,22 @@
                   </ng-template>
                   <!-- Columns -->
                   <kendo-grid-column field="name" title="Name" [width]="150"> </kendo-grid-column>
+                  <kendo-grid-column field="InterfaceType" title="Task" [width]="120">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      {{ GetInterfaceTypeDesc(dataItem.InterfaceType)?.InterfaceTypeDesc }}
+                    </ng-template>
+                    <ng-template kendoGridEditTemplate let-formGroup="formGroup">
+                      <kendo-dropdownlist [defaultItem]="{InterfaceTypeID: null, InterfaceTypeDesc: 'Select a task...'}"
+                        [data]="InterfaceTypes" textField="InterfaceTypeDesc" valueField="InterfaceTypeID"
+                        [valuePrimitive]="true" [formControl]="formGroup.get('InterfaceType')">
+                      </kendo-dropdownlist>
+                    </ng-template>
+                    <ng-template kendoGridFilterCellTemplate let-filter>
+                      <my-dropdown-filter [filter]="filter" [data]="InterfaceTypes" textField="InterfaceTypeDesc"
+                        valueField="InterfaceTypeID">
+                      </my-dropdown-filter>
+                    </ng-template>
+                  </kendo-grid-column>
                   <kendo-grid-command-column title="Command" [width]="220">
                     <ng-template kendoGridCellTemplate let-isNew="isNew">
                       <button kendoGridEditCommand themeColor="primary">Edit</button>
