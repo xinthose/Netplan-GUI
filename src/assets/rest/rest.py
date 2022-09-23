@@ -548,7 +548,7 @@ def delayed_netplan_change():
         os.system("netplan generate")
         time.sleep(1)
         # apply config for the renderers
-        os.system("netplan apply")
+        #os.system("netplan apply")
     except Exception as e:
         logger.error(f"error = {str(e)}")
 

@@ -1,0 +1,41 @@
+network:
+  ethernets:
+    enp9s0:
+      dhcp4: no
+  vlans:
+    vlan1300:
+      id: 1300
+      link: enp9s0
+      addresses:
+        - 10.50.48.2/22
+    vlan2:
+      id: 2
+      link: enp9s0
+      addresses:
+        - 192.168.1.131/24
+        - 192.168.88.131/24
+    vlan172:
+      id: 172
+      link: enp9s0
+      addresses:
+        - 172.16.105.151/24
+    vlan4082:
+      id: 4082
+      link: enp9s0
+      addresses:
+        - 192.168.241.131/24
+    vlan4094:
+      id: 4094
+      link: enp9s0
+      addresses:
+        - 192.168.254.131/24
+      gateway4: 192.168.254.105
+      nameservers:
+        search:
+          - xxx.me
+          - xxx.biz
+        addresses:
+          - 192.168.249.240
+          - 192.168.254.241
+  version: 2
+  renderer: networkd

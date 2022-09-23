@@ -1,0 +1,13 @@
+network:
+  bridges:
+    br0:
+      addresses: [10.0.0.2/24, 192.168.2.2/24]
+      gateway4: 10.0.0.1
+      interfaces: [enp3s0, enp4s0]
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
+  ethernets:
+    enp3s0: {dhcp4: false}
+    enp4s0: {dhcp4: false}
+  renderer: NetworkManager
+  version: 2
