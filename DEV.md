@@ -1,5 +1,19 @@
 # Notes for Developers
 
+## Bench Testing
+
+### app
+
+- `npm i -g @angular/cli`
+- `ng serve`
+
+### REST
+
+- install regular packages mentioned in `INSTALL.md`
+- `pip install "uvicorn[standard]"`
+- `cd src/assets/rest`
+- `sudo uvicorn rest:app --reload --host 0.0.0.0 --port 8080`
+
 ## Build Release
 
 - `npm run build`
