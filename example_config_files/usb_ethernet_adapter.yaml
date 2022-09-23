@@ -1,0 +1,27 @@
+network:
+  bridges:
+    br0:
+      addresses:
+        - 200.200.200.2/24
+      interfaces:
+        - enp3s0
+        - enp4s0
+  ethernets:
+    enp3s0:
+      dhcp4: false
+      dhcp6: false
+    enp4s0:
+      dhcp4: false
+      dhcp6: false
+    enx28ee52160301:
+      addresses:
+        - 192.168.2.2/24
+      dhcp4: false
+      dhcp6: false
+      gateway4: 192.168.2.1
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 8.8.4.4
+  renderer: NetworkManager
+  version: 2
