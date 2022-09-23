@@ -20,7 +20,7 @@ import { LabelModule } from '@progress/kendo-angular-label';
 import { PopupModule } from '@progress/kendo-angular-popup';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-import { TooltipModule } from '@progress/kendo-angular-tooltip';
+import { TooltipsModule } from '@progress/kendo-angular-tooltip';
 import { RippleModule } from '@progress/kendo-angular-ripple';
 import { NotificationModule } from '@progress/kendo-angular-notification';
 import { NavigationModule } from '@progress/kendo-angular-navigation';
@@ -72,7 +72,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     PopupModule,
     DialogsModule,
     DropDownsModule,
-    TooltipModule,
+    TooltipsModule,
     RippleModule,
     NotificationModule,
     NavigationModule,

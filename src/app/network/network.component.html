@@ -16,30 +16,29 @@
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">
-              <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+              <div kendoTooltip filter="fa-icon">
                 Interfaces
-                <i class="fa fa-info-circle text-left" aria-hidden="true"
-                  title="Physical connections or virtual ones."></i>
+                <fa-icon [icon]="faCircleQuestion" title="Physical connections or virtual ones." class="ms-2"></fa-icon>
               </div>
             </h4>
             <div class="card-text">
               <div class="row mt-2 justify-content-center">
-                <kendo-grid [data]="interfacesGridData" [height]="200"
-                  [sortable]="{ allowUnsort: true, mode: 'single' }" [sort]="sort" (add)="interfacesGridAdd($event)"
-                  (cancel)="interfacesGridCancel($event)" (save)="interfacesGridSave($event)"
-                  (remove)="interfacesGridRemove($event)" (edit)="interfacesGridEdit($event)">
+                <kendo-grid [data]="interfacesGridData" [height]="300" [sortable]="true" [sort]="interfacesGridSort"
+                  (add)="interfacesGridAdd($event)" (cancel)="interfacesGridCancel($event)"
+                  (save)="interfacesGridSave($event)" (remove)="interfacesGridRemove($event)"
+                  (edit)="interfacesGridEdit($event)">
                   <!-- Toolbar -->
                   <ng-template kendoGridToolbarTemplate>
                     <button type="button" kendoGridAddCommand icon="plus" class="float-left">New Interface</button>
                   </ng-template>
                   <!-- Columns -->
                   <kendo-grid-column field="name" title="Name" [width]="150"> </kendo-grid-column>
-                  <kendo-grid-column field="InterfaceType" title="Task" [width]="120">
+                  <kendo-grid-column field="InterfaceType" title="Type" [width]="140">
                     <ng-template kendoGridCellTemplate let-dataItem>
                       {{ GetInterfaceTypeDesc(dataItem.InterfaceType)?.InterfaceTypeDesc }}
                     </ng-template>
                     <ng-template kendoGridEditTemplate let-formGroup="formGroup">
-                      <kendo-dropdownlist [defaultItem]="{InterfaceTypeID: null, InterfaceTypeDesc: 'Select a task...'}"
+                      <kendo-dropdownlist [defaultItem]="{InterfaceTypeID: null, InterfaceTypeDesc: 'Select Type...'}"
                         [data]="InterfaceTypes" textField="InterfaceTypeDesc" valueField="InterfaceTypeID"
                         [valuePrimitive]="true" [formControl]="formGroup.get('InterfaceType')">
                       </kendo-dropdownlist>

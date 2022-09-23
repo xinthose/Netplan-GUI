@@ -16,6 +16,7 @@ import { SubnetDropdownIntf } from "../interfaces/SubnetDropdownIntf";
 
 // Icons
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons';
 
 // other
 import { NGXLogger } from "ngx-logger";
@@ -180,9 +181,9 @@ export class NetworkComponent implements OnInit {
     cidr: 0
   }
   ];
-  public sort: SortDescriptor[] = [
+  public interfacesGridSort: SortDescriptor[] = [
     {
-      field: "address",
+      field: "name",
       dir: "asc"
     }
   ];
@@ -191,6 +192,7 @@ export class NetworkComponent implements OnInit {
   interfacesGridRow: number = 0;
   // icons
   faPencilAlt = faPencilAlt;
+  faCircleQuestion = faCircleQuestion;
 
   constructor(
     private netplanguiService: NetplanGUIService,
