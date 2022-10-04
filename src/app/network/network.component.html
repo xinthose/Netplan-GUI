@@ -65,5 +65,60 @@
         </div>
       </div>
     </div>
+    <!-- Network -->
+    <div class="row justify-content-center mb-3">
+      <!-- Network -->
+      <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-12 col-sm-12 col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">
+              <div kendoTooltip filter="fa-icon">
+                Network
+                <fa-icon [icon]="faCircleQuestion" title="Physical connections or virtual ones." class="ms-2"></fa-icon>
+              </div>
+            </h4>
+            <div class="card-text">
+              <div class="row mt-2 justify-content-center">
+                <kendo-grid [data]="networkGridData" [height]="300" [sortable]="true" [sort]="networkGridSort"
+                  (add)="networkGridAdd($event)" (cancel)="networkGridCancel($event)" (save)="networkGridSave($event)"
+                  (remove)="networkGridRemove($event)" (edit)="networkGridEdit($event)">
+                  <!-- Toolbar -->
+                  <ng-template kendoGridToolbarTemplate>
+                    <button type="button" kendoGridAddCommand icon="plus" class="float-left">New Interface</button>
+                  </ng-template>
+                  <!-- Columns -->
+                  <kendo-grid-column field="name" title="Name" [width]="150"> </kendo-grid-column>
+                  <kendo-grid-column field="InterfaceType" title="Type" [width]="140">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      {{ GetInterfaceTypeDesc(dataItem.InterfaceType)?.InterfaceTypeDesc }}
+                    </ng-template>
+                    <ng-template kendoGridEditTemplate let-formGroup="formGroup">
+                      <kendo-dropdownlist [defaultItem]="{InterfaceTypeID: null, InterfaceTypeDesc: 'Select Type...'}"
+                        [data]="InterfaceTypes" textField="InterfaceTypeDesc" valueField="InterfaceTypeID"
+                        [valuePrimitive]="true" [formControl]="formGroup.get('InterfaceType')">
+                      </kendo-dropdownlist>
+                    </ng-template>
+                    <ng-template kendoGridFilterCellTemplate let-filter>
+                      <my-dropdown-filter [filter]="filter" [data]="InterfaceTypes" textField="InterfaceTypeDesc"
+                        valueField="InterfaceTypeID">
+                      </my-dropdown-filter>
+                    </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-command-column title="Command" [width]="220">
+                    <ng-template kendoGridCellTemplate let-isNew="isNew">
+                      <button kendoGridEditCommand themeColor="primary">Edit</button>
+                      <button kendoGridRemoveCommand>Remove</button>
+                      <button kendoGridSaveCommand [disabled]="NetworkGridForm?.invalid">{{ isNew ? 'Add' : 'Update'
+                        }}</button>
+                      <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                    </ng-template>
+                  </kendo-grid-command-column>
+                </kendo-grid>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </main>

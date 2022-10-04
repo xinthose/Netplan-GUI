@@ -11,6 +11,7 @@ import { SortDescriptor, orderBy } from "@progress/kendo-data-query";
 
 // interfaces
 import { InterfacesGridIntf } from "../interfaces/InterfacesGridIntf";
+import { NetworkGridIntf } from "../interfaces/NetworkGridIntf";
 import { eBoxNetworkIntf } from "../interfaces/linuxNetworkIntf";
 import { SubnetDropdownIntf } from "../interfaces/SubnetDropdownIntf";
 
@@ -45,9 +46,6 @@ export class NetworkComponent implements OnInit {
       "InterfaceTypeID": 2
     },
   ];
-  // forms
-  public InterfacesGridForm!: FormGroup;
-  // grids
   subnetMaskCidr: Array<SubnetDropdownIntf> = [{
     subnetMask: "255.255.255.255",
     cidr: 32
@@ -181,15 +179,26 @@ export class NetworkComponent implements OnInit {
     cidr: 0
   }
   ];
+  // interfaces grid
+  public InterfacesGridForm!: FormGroup;
   public interfacesGridSort: SortDescriptor[] = [
     {
       field: "name",
       dir: "asc"
     }
   ];
-  /// interfaces grid
   interfacesGridData: Array<InterfacesGridIntf> = [];
   interfacesGridRow: number = 0;
+  // network grid
+  public NetworkGridForm!: FormGroup;
+  public networkGridSort: SortDescriptor[] = [
+    {
+      field: "name",
+      dir: "asc"
+    }
+  ];
+  networkGridData: Array<NetworkGridIntf> = [];
+  networkGridRow: number = 0;
   // icons
   faPencilAlt = faPencilAlt;
   faCircleQuestion = faCircleQuestion;
@@ -345,6 +354,91 @@ export class NetworkComponent implements OnInit {
 
   /* #endregion */
 
+  // Network Grid
+  /* #region */
+
+  public networkGridAdd({ sender }: any) {
+    this.networkGridClose(sender);
+
+    this.NetworkGridForm = this.formBuilder.group({
+      "guid": [Chance().guid()],
+      "name": ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      "InterfaceType": [undefined, [Validators.required, Validators.min(0)]],
+    });
+
+    sender.addRow(this.NetworkGridForm);
+  }
+
+  public networkGridEdit({ sender, rowIndex, dataItem }: any) {
+    if (this.debug) {
+      this.logger.debug(JSON.stringify(dataItem))
+    }
+    this.networkGridClose(sender);
+
+    const data: NetworkGridIntf = dataItem;
+
+    this.NetworkGridForm = this.formBuilder.group({
+      "guid": [data.guid],
+      "name": [data.name, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      "InterfaceType": [data.InterfaceType, [Validators.required, Validators.min(0)]],
+    });
+
+    this.networkGridRow = rowIndex;
+
+    sender.editRow(rowIndex, this.NetworkGridForm);
+  }
+
+  public networkGridCancel({ sender, rowIndex }: any) {
+    this.networkGridClose(sender, rowIndex);
+  }
+
+  public networkGridSave({ sender, rowIndex, formGroup, isNew }: any) {
+    if (this.debug) {
+      this.logger.debug("NetworkComponent.networkGridSave >> formGroup.value = " + JSON.stringify(formGroup.value));
+    }
+
+    // get data
+    const data: NetworkGridIntf = formGroup.value;
+
+    if (isNew) {
+      // add record to array
+      this.networkGridData.push(data);
+    } else {
+      // update specific record in array
+      for (const row of this.networkGridData) {
+        if (row.guid === data.guid) {
+          row.name = data.name;
+          row.InterfaceType = data.InterfaceType;
+          break;
+        }
+      }
+    }
+
+    // close editing
+    sender.closeRow(rowIndex);
+  }
+
+  public networkGridRemove({ dataItem }: any) {
+    if (this.debug) {
+      this.logger.debug("NetworkComponent.networkGridRemove >> dataItem = " + JSON.stringify(dataItem));
+    }
+
+    // get data
+    const data: NetworkGridIntf = dataItem;
+
+    // filter out removed row
+    this.networkGridData = this.networkGridData.filter((obj: NetworkGridIntf) => {
+      return obj.guid !== data.guid;
+    });
+  }
+
+  private networkGridClose(grid: any, rowIndex = this.networkGridRow) {
+    grid.closeRow(rowIndex);
+    this.networkGridRow = 0;
+    this.NetworkGridForm = undefined!;
+  }
+
+  /* #endregion */
   // other
 
   public GetInterfaceTypeDesc(id: number): any {
