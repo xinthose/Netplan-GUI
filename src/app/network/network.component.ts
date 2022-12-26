@@ -34,15 +34,15 @@ export class NetworkComponent implements OnInit {
   private ipRegex: RegExp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
   InterfaceTypes: Array<{ InterfaceTypeDesc: string, InterfaceTypeID: number }> = [
     {
-      "InterfaceTypeDesc": "ethernet",
+      "InterfaceTypeDesc": "Ethernet",
       "InterfaceTypeID": 0
     },
     {
-      "InterfaceTypeDesc": "bridge",
+      "InterfaceTypeDesc": "Bridge",
       "InterfaceTypeID": 1
     },
     {
-      "InterfaceTypeDesc": "vlan",
+      "InterfaceTypeDesc": "VLAN",
       "InterfaceTypeID": 2
     },
   ];
@@ -277,9 +277,9 @@ export class NetworkComponent implements OnInit {
     this.InterfacesGridForm = this.formBuilder.group({
       "guid": [Chance().guid()],
       "name": ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      "id": [{ value: "", disabled: true }, [Validators.minLength(1), Validators.maxLength(50)]],
       "InterfaceType": [undefined, [Validators.required, Validators.min(0)]],
     });
-
     sender.addRow(this.InterfacesGridForm);
   }
 
@@ -294,6 +294,7 @@ export class NetworkComponent implements OnInit {
     this.InterfacesGridForm = this.formBuilder.group({
       "guid": [data.guid],
       "name": [data.name, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+      "id": [{ value: data.id, disabled: data.InterfaceType != 2 }, [Validators.minLength(1), Validators.maxLength(50)]],
       "InterfaceType": [data.InterfaceType, [Validators.required, Validators.min(0)]],
     });
 
@@ -323,6 +324,7 @@ export class NetworkComponent implements OnInit {
         if (row.guid === data.guid) {
           row.name = data.name;
           row.InterfaceType = data.InterfaceType;
+          row.id = data.id;
           break;
         }
       }
@@ -352,93 +354,21 @@ export class NetworkComponent implements OnInit {
     this.InterfacesGridForm = undefined!;
   }
 
-  /* #endregion */
-
-  // Network Grid
-  /* #region */
-
-  public networkGridAdd({ sender }: any) {
-    this.networkGridClose(sender);
-
-    this.NetworkGridForm = this.formBuilder.group({
-      "guid": [Chance().guid()],
-      "name": ["", [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-      "InterfaceType": [undefined, [Validators.required, Validators.min(0)]],
-    });
-
-    sender.addRow(this.NetworkGridForm);
-  }
-
-  public networkGridEdit({ sender, rowIndex, dataItem }: any) {
+  public InterfaceTypeChange(formGroup: FormGroup) {
     if (this.debug) {
-      this.logger.debug(JSON.stringify(dataItem))
-    }
-    this.networkGridClose(sender);
-
-    const data: NetworkGridIntf = dataItem;
-
-    this.NetworkGridForm = this.formBuilder.group({
-      "guid": [data.guid],
-      "name": [data.name, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-      "InterfaceType": [data.InterfaceType, [Validators.required, Validators.min(0)]],
-    });
-
-    this.networkGridRow = rowIndex;
-
-    sender.editRow(rowIndex, this.NetworkGridForm);
-  }
-
-  public networkGridCancel({ sender, rowIndex }: any) {
-    this.networkGridClose(sender, rowIndex);
-  }
-
-  public networkGridSave({ sender, rowIndex, formGroup, isNew }: any) {
-    if (this.debug) {
-      this.logger.debug("NetworkComponent.networkGridSave >> formGroup.value = " + JSON.stringify(formGroup.value));
+      this.logger.debug("NetworkComponent.InterfaceTypeChange >> formGroup.value = " + JSON.stringify(formGroup.value));
     }
 
-    // get data
-    const data: NetworkGridIntf = formGroup.value;
-
-    if (isNew) {
-      // add record to array
-      this.networkGridData.push(data);
+    if (formGroup.controls["InterfaceType"].value == 2) {
+      formGroup.controls["id"].enable();
     } else {
-      // update specific record in array
-      for (const row of this.networkGridData) {
-        if (row.guid === data.guid) {
-          row.name = data.name;
-          row.InterfaceType = data.InterfaceType;
-          break;
-        }
-      }
+      formGroup.controls["id"].setValue("");
+      formGroup.controls["id"].disable();
     }
-
-    // close editing
-    sender.closeRow(rowIndex);
-  }
-
-  public networkGridRemove({ dataItem }: any) {
-    if (this.debug) {
-      this.logger.debug("NetworkComponent.networkGridRemove >> dataItem = " + JSON.stringify(dataItem));
-    }
-
-    // get data
-    const data: NetworkGridIntf = dataItem;
-
-    // filter out removed row
-    this.networkGridData = this.networkGridData.filter((obj: NetworkGridIntf) => {
-      return obj.guid !== data.guid;
-    });
-  }
-
-  private networkGridClose(grid: any, rowIndex = this.networkGridRow) {
-    grid.closeRow(rowIndex);
-    this.networkGridRow = 0;
-    this.NetworkGridForm = undefined!;
   }
 
   /* #endregion */
+
   // other
 
   public GetInterfaceTypeDesc(id: number): any {
