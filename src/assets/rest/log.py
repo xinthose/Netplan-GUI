@@ -4,24 +4,15 @@
 
 import logging
 import logging.handlers
-import os
 
 
 def setup_custom_logger(name):
     # logger settings
-    linux_log_file = "/var/www/html/logs/netplan-gui-rest.log"
-    windows_log_file = "C:/Users/adamd/Documents/GitHub/Netplan-GUI/log/netplan-gui-rest.log"
+    log_file = "/var/www/html/logs/netplan-gui-rest.log"
     log_file_max_size = 1024 * 1024 * 20  # megabytes
     log_num_backups = 3
     log_format = "%(asctime)s [%(levelname)s] %(filename)s/%(funcName)s:%(lineno)s >> %(message)s"
     log_filemode = "w"  # w: overwrite; a: append
-
-    # get log file
-    log_file = ""
-    if os.name == "nt":
-        log_file = windows_log_file
-    else:
-        log_file = linux_log_file
 
     # setup logger
     logging.basicConfig(filename=log_file, format=log_format,

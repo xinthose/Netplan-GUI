@@ -29,8 +29,6 @@ import models   # models.py
 
 VERSION = "1.0.4"
 NETPLAN = "/etc/netplan/01-network-manager-all.yaml"
-# for developing code in Windows
-NETPLAN_WINDOWS = "C:/Users/adamd/Documents/GitHub/Netplan-GUI/example_config_files/vlans.yaml"
 
 logger = log.setup_custom_logger('root')
 
@@ -65,15 +63,8 @@ async def get_interfaces1():
         debug = False
         ret_obj = {}
 
-        # get config file
-        config = ""
-        if os.name == "nt":
-            config = NETPLAN_WINDOWS
-        else:
-            config = NETPLAN
-
         # get network data
-        with open(config, "r") as stream:
+        with open(NETPLAN, "r") as stream:
             try:
                 netplan_config = yaml.safe_load(stream)
                 if (debug):

@@ -8,9 +8,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // Forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-// Custom
-import { DropDownListFilterComponent } from './dropdownlist-filter.component';
-
 // Progress
 import { GridModule, PDFModule, ExcelModule, FilterService } from '@progress/kendo-angular-grid';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,7 +17,7 @@ import { LabelModule } from '@progress/kendo-angular-label';
 import { PopupModule } from '@progress/kendo-angular-popup';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-import { TooltipsModule } from '@progress/kendo-angular-tooltip';
+import { TooltipModule } from '@progress/kendo-angular-tooltip';
 import { RippleModule } from '@progress/kendo-angular-ripple';
 import { NotificationModule } from '@progress/kendo-angular-notification';
 import { NavigationModule } from '@progress/kendo-angular-navigation';
@@ -46,8 +43,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AppComponent,
     NetworkComponent,
     CommandsComponent,
-    PageNotFoundComponent,
-    DropDownListFilterComponent,
+    PageNotFoundComponent
   ],
   imports: [
     // General
@@ -72,7 +68,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     PopupModule,
     DialogsModule,
     DropDownsModule,
-    TooltipsModule,
+    TooltipModule,
     RippleModule,
     NotificationModule,
     NavigationModule,
