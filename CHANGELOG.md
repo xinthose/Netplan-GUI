@@ -3,7 +3,7 @@
 ## 1.0.5 (1/29/2023)
 
 - in `network` component, add a Mac Address field for each interface; use more generic `eth0` and `eth1` names instead of hardware specific names like `enp3s0` and `enp4s0`, which can change between devices
-- if file `rest.py` add `macaddress` and `set-name` to ethernet interfaces, rename them to `eth0` and `eth1`
+- in file `rest.py` add `macaddress` and `set-name` to ethernet interfaces, rename them to `eth0` and `eth1`
 - in file `models.py` add `mac`, `mac1`, `mac2`
 - update packages
 
