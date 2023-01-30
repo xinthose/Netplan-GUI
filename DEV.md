@@ -18,7 +18,7 @@
 
 - `npm run build`
 - zip `dist/netplan-gui`
-- upload ZIP as new tag for project [releases](https://github.com/xinthose/Netplan-GUI/releases)
+- upload ZIP as new release for project [releases](https://github.com/xinthose/Netplan-GUI/releases)
 
 ## Update Packages
 
