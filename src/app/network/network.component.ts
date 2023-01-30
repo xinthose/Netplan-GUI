@@ -11,7 +11,7 @@ import { SortDescriptor, orderBy } from "@progress/kendo-data-query";
 
 // interfaces
 import { GridNetworkIntf } from "../interfaces/GridNetworkIntf";
-import { linuxNetworkIntf } from "../interfaces/LinuxNetworkIntf";
+import { LinuxNetworkIntf } from "../interfaces/LinuxNetworkIntf";
 import { SubnetDropdownIntf } from "../interfaces/SubnetDropdownIntf";
 
 // Icons
@@ -378,7 +378,7 @@ export class NetworkComponent implements OnInit {
       this.loading = true;
 
       // get eBox network
-      const linuxNetwork: linuxNetworkIntf = await this.netplanguiService.getNetwork();
+      const linuxNetwork: LinuxNetworkIntf = await this.netplanguiService.getNetwork();
 
       // set form data
       this.BridgeForm.setValue({
