@@ -88,6 +88,6 @@ wlp3s0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 ## Troubleshooting
 
 - consult the following log files for errors (they can be viewed in a browser on the same PC at <http://localhost/logs>)
-  - /var/www/html/logs/netplan-gui-error.log
-  - /var/www/html/logs/netplan-gui-rest-error.log
-  - /var/www/html/logs/netplan-gui-rest.log
+  - `/var/www/html/logs/netplan-gui-error.log`
+  - `/var/www/html/logs/netplan-gui-rest-error.log`
+  - `/var/www/html/logs/netplan-gui-rest.log`
