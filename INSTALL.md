@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Python version 3
+- Python version 3.7+ ([FastAPI Requirements](https://fastapi.tiangolo.com/#requirements))
   - Check with this command `python3 --version`
 - Linux Operating System that uses Netplan to configure its network
   - Directory `/etc/netplan` should exist in your file system
@@ -46,6 +46,11 @@
 
 ### Notes
 
+- if the name and location of your netplan configuration file is different than this: `/etc/netplan/01-network-manager-all.yaml`, change it in this file: `/var/www/html/netplan-gui/assets/rest/rest.py` >> variable: `NETPLAN`
+  - if the file is changed, you need to reboot the pm2 service
+    - `pm2 ls`  // find the ID of the app named "netplan-gui-rest"
+    - `pm2 restart #` // # is the ID just found
+- log files for the application can be viewed in your browser at <http://localhost/logs>
 - to find the MAC address for your network interfaces, run this command: `ifconfig`; your MAC address for the device will be the value for `ether`
 
 ```shell
@@ -82,4 +87,7 @@ wlp3s0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 
 ## Troubleshooting
 
-- TODO
+- consult the following log files for errors (they can be viewed in a browser on the same PC at <http://localhost/logs>)
+  - /var/www/html/logs/netplan-gui-error.log
+  - /var/www/html/logs/netplan-gui-rest-error.log
+  - /var/www/html/logs/netplan-gui-rest.log

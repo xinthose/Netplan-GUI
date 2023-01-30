@@ -7,8 +7,7 @@
 - Front end uses Angular and the back end uses Python
   - pm2 is used to run two apps:
     - Node.js express app serving the compiled Angular application
-    - python3 REST web service (FastAPI)
-  - *Note*: the front end uses non-open source Kendo UI widgets: grid
+    - REST web service using [FastAPI](https://github.com/tiangolo/fastapi)
 - Read [`INSTALL.md`](https://github.com/xinthose/Netplan-GUI/blob/master/INSTALL.md) for installation instructions
 
 ## Features
