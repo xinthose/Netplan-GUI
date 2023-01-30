@@ -12,12 +12,12 @@
 
 ## Features
 
-- Can add multiple IP addresses with different subnets to a single NIC/bridge
-- Ability to setup a bridge with two NICs attached to it
-- Can individually setup network on two different NICs
-- Can setup network to connect to an existing Wi-Fi network
-- Can run helpful commands (`reboot`, `shutdown`, clear logs, change log file persmissions so that they can be viewed remotely over apache)
-- mobile friendly and works in all modern browsers
+- Can add multiple IP addresses with different subnets to a single NIC/bridge.
+- Ability to setup a bridge with two NICs attached to it.
+- Can individually setup network on two different NICs.
+- Can setup network to connect to an existing Wi-Fi network.
+- Can run helpful commands (`reboot`, `shutdown`, clear logs, change log file persmissions so that they can be viewed remotely over apache).
+- Mobile friendly and works in all modern browsers.
 
 ![Screenshot](https://github.com/xinthose/Netplan-GUI/raw/master/ref/screenshot.png)
 
