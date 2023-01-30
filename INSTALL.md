@@ -44,6 +44,38 @@
 
 - if the `pm2 save` command was run previously with the `netplan-gui` and `netplan-gui-rest` applications saved, the `pm2 resurrect` command will bring them back up after a reboot
 
+### Notes
+
+- to find the MAC address for your network interfaces, run this command: `ifconfig`; your MAC address for the device will be the value for `ether`
+
+```shell
+adam@adam-desktop:~/Downloads$ ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.4.31  netmask 255.255.252.0  broadcast 192.168.7.255
+        inet6 fe80::264b:feff:fee2:1c4a  prefixlen 64  scopeid 0x20<link>
+        ether 24:4b:fe:e2:1c:4a  txqueuelen 1000  (Ethernet)
+        RX packets 1440037  bytes 2097934652 (2.0 GB)
+        RX errors 0  dropped 284  overruns 0  frame 0
+        TX packets 569692  bytes 57722464 (57.7 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 11601  bytes 16936595 (16.9 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 11601  bytes 16936595 (16.9 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+wlp3s0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether 9c:29:76:03:e2:4c  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
+
 ## Updating to New Version
 
 - TODO
