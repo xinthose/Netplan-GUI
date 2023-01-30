@@ -93,9 +93,11 @@ export class NetplanGUIService {
 
   // POST requests
 
-  public async submitBridge(gateway: string, addresses: Array<string>, nameservers: Array<string>): Promise<void> {
+  public async submitBridge(mac1: string, mac2: string, gateway: string, addresses: Array<string>, nameservers: Array<string>): Promise<void> {
     try {
       const data = {
+        "mac1": mac1 ?? "",
+        "mac2": mac2 ?? "",
         "gateway": gateway ?? "",
         "addresses": addresses ?? [],
         "nameservers": nameservers ?? [],
@@ -107,9 +109,10 @@ export class NetplanGUIService {
     }
   }
 
-  public async submitEth(port: 1 | 2, gateway: string, addresses: Array<string>, nameservers: Array<string>, deleteEth: boolean): Promise<void> {
+  public async submitEth(port: 1 | 2, mac: string, gateway: string, addresses: Array<string>, nameservers: Array<string>, deleteEth: boolean): Promise<void> {
     try {
       const data = {
+        "mac": mac ?? "",
         "gateway": gateway ?? "",
         "addresses": addresses ?? [],
         "nameservers": nameservers ?? [],

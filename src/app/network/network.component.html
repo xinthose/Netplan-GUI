@@ -31,6 +31,30 @@
                     <kendo-switch formControlName="enabled" [onLabel]="'Yes'" [offLabel]="'No'"></kendo-switch>
                   </div>
                 </div>
+                <!-- MAC Address LAN 1 -->
+                <div class="row justify-content-center mt-2" *ngIf="bridgeGridEnabled">
+                  <div class="col">
+                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                      MAC Address LAN 1
+                      <i class="fa fa-info-circle text-start" aria-hidden="true"
+                        title="The MAC Address of the first ethernet port on the computer."></i>
+                    </div>
+                    <kendo-maskedtextbox formControlName="mac1" [mask]="macAddressMask" includeLiterals="true">
+                    </kendo-maskedtextbox>
+                  </div>
+                </div>
+                <!-- MAC Address LAN 2 -->
+                <div class="row justify-content-center mt-2" *ngIf="bridgeGridEnabled">
+                  <div class="col">
+                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                      MAC Address LAN 2
+                      <i class="fa fa-info-circle text-start" aria-hidden="true"
+                        title="The MAC Address of the first second port on the computer."></i>
+                    </div>
+                    <kendo-maskedtextbox formControlName="mac2" [mask]="macAddressMask" includeLiterals="true">
+                    </kendo-maskedtextbox>
+                  </div>
+                </div>
                 <!-- Gateway -->
                 <div class="row justify-content-center mt-2" *ngIf="bridgeGridEnabled">
                   <div class="col">
@@ -147,6 +171,18 @@
                     <kendo-switch formControlName="enabled" [onLabel]="'Yes'" [offLabel]="'No'"></kendo-switch>
                   </div>
                 </div>
+                <!-- MAC Address -->
+                <div class="row justify-content-center mt-2" *ngIf="eth0GridEnabled">
+                  <div class="col">
+                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                      MAC Address
+                      <i class="fa fa-info-circle text-start" aria-hidden="true"
+                        title="The MAC Address of the first ethernet port on the computer."></i>
+                    </div>
+                    <kendo-maskedtextbox formControlName="mac" [mask]="macAddressMask" includeLiterals="true">
+                    </kendo-maskedtextbox>
+                  </div>
+                </div>
                 <!-- Gateway -->
                 <div class="row justify-content-center mt-2" *ngIf="eth0GridEnabled">
                   <div class="col">
@@ -256,6 +292,18 @@
                   <div class="col">
                     <h6>Enabled</h6>
                     <kendo-switch formControlName="enabled" [onLabel]="'Yes'" [offLabel]="'No'"></kendo-switch>
+                  </div>
+                </div>
+                <!-- MAC Address -->
+                <div class="row justify-content-center mt-2" *ngIf="eth1GridEnabled">
+                  <div class="col">
+                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                      MAC Address
+                      <i class="fa fa-info-circle text-start" aria-hidden="true"
+                        title="The MAC Address of the second ethernet port on the computer."></i>
+                    </div>
+                    <kendo-maskedtextbox formControlName="mac" [mask]="macAddressMask" includeLiterals="true">
+                    </kendo-maskedtextbox>
                   </div>
                 </div>
                 <!-- Gateway -->

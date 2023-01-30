@@ -34,6 +34,8 @@ export class NetworkComponent implements OnInit {
   loadingEth1: boolean = false;
   loadingWiFi: boolean = false;
   private ipRegex: RegExp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+  private macRegex: RegExp = /^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})|([0-9a-fA-F]{4}\\.[0-9a-fA-F]{4}\\.[0-9a-fA-F]{4})$/
+  public macAddressMask: string = "AA:AA:AA:AA:AA:AA";
   // forms
   public BridgeForm: FormGroup;
   public BridgeGridForm!: FormGroup;
@@ -219,6 +221,8 @@ export class NetworkComponent implements OnInit {
     // setup forms
     this.BridgeForm = this.formBuilder.group({
       enabled: [false, Validators.requiredTrue],
+      mac1: [{ value: "", disabled: false }, [Validators.required, Validators.pattern(this.macRegex)]],
+      mac2: [{ value: "", disabled: false }, [Validators.required, Validators.pattern(this.macRegex)]],
       gateway: ["", Validators.pattern(this.ipRegex)],
       nameserver1: ["", Validators.pattern(this.ipRegex)],
       nameserver2: ["", Validators.pattern(this.ipRegex)],
@@ -226,6 +230,7 @@ export class NetworkComponent implements OnInit {
     });
     this.Eth0Form = this.formBuilder.group({
       enabled: false,
+      mac: [{ value: "", disabled: false }, [Validators.required, Validators.pattern(this.macRegex)]],
       gateway: ["", Validators.pattern(this.ipRegex)],
       nameserver1: ["", Validators.pattern(this.ipRegex)],
       nameserver2: ["", Validators.pattern(this.ipRegex)],
@@ -233,6 +238,7 @@ export class NetworkComponent implements OnInit {
     });
     this.Eth1Form = this.formBuilder.group({
       enabled: false,
+      mac: [{ value: "", disabled: false }, [Validators.required, Validators.pattern(this.macRegex)]],
       gateway: ["", Validators.pattern(this.ipRegex)],
       nameserver1: ["", Validators.pattern(this.ipRegex)],
       nameserver2: ["", Validators.pattern(this.ipRegex)],
@@ -253,6 +259,8 @@ export class NetworkComponent implements OnInit {
       this.bridgeGridEnabled = enabled;
       if (!enabled) {
         // reset fields
+        this.BridgeForm.controls["mac1"].patchValue("");
+        this.BridgeForm.controls["mac2"].patchValue("");
         this.BridgeForm.controls["gateway"].patchValue("");
         this.BridgeForm.controls["nameserver1"].patchValue("");
         this.BridgeForm.controls["nameserver2"].patchValue("");
@@ -271,6 +279,7 @@ export class NetworkComponent implements OnInit {
         this.eth0GridData = [];
       } else {
         // reset fields
+        this.Eth0Form.controls["mac"].patchValue("");
         this.Eth0Form.controls["gateway"].patchValue("");
         this.Eth0Form.controls["nameserver1"].patchValue("");
         this.Eth0Form.controls["nameserver2"].patchValue("");
@@ -298,6 +307,7 @@ export class NetworkComponent implements OnInit {
         this.eth1GridData = [];
       } else {
         // reset fields
+        this.Eth1Form.controls["mac"].patchValue("");
         this.Eth1Form.controls["gateway"].patchValue("");
         this.Eth1Form.controls["nameserver1"].patchValue("");
         this.Eth1Form.controls["nameserver2"].patchValue("");
@@ -373,6 +383,8 @@ export class NetworkComponent implements OnInit {
       // set form data
       this.BridgeForm.setValue({
         "enabled": linuxNetwork.br0_addresses.length ? true : false,
+        "mac1": linuxNetwork.eth0_mac,
+        "mac2": linuxNetwork.eth1_mac,
         "gateway": linuxNetwork.br0_gateway,
         "nameserver1": linuxNetwork.br0_nameservers.length ? linuxNetwork.br0_nameservers[0] : "",
         "nameserver2": linuxNetwork.br0_nameservers.length > 1 ? linuxNetwork.br0_nameservers[1] : "",
@@ -380,6 +392,7 @@ export class NetworkComponent implements OnInit {
       });
       this.Eth0Form.setValue({
         "enabled": linuxNetwork.eth0_addresses.length ? true : false,
+        "mac": linuxNetwork.eth0_mac,
         "gateway": linuxNetwork.eth0_gateway,
         "nameserver1": linuxNetwork.eth0_nameservers.length ? linuxNetwork.eth0_nameservers[0] : "",
         "nameserver2": linuxNetwork.eth0_nameservers.length > 1 ? linuxNetwork.eth0_nameservers[1] : "",
@@ -387,6 +400,7 @@ export class NetworkComponent implements OnInit {
       });
       this.Eth1Form.setValue({
         "enabled": linuxNetwork.eth1_addresses.length ? true : false,
+        "mac": linuxNetwork.eth1_mac,
         "gateway": linuxNetwork.eth1_gateway,
         "nameserver1": linuxNetwork.eth1_nameservers.length ? linuxNetwork.eth1_nameservers[0] : "",
         "nameserver2": linuxNetwork.eth1_nameservers.length > 1 ? linuxNetwork.eth1_nameservers[1] : "",
@@ -506,6 +520,17 @@ export class NetworkComponent implements OnInit {
         this.logger.debug("NetworkComponent.onSubmitBridge >> e.value = " + JSON.stringify(e.value));
       }
 
+      // validate
+      if (!this.validateNetwork()) {
+        return;
+      }
+      if ((this.BridgeForm.get("mac1")?.dirty) || (this.BridgeForm.get("mac2")?.dirty)) {
+        const response: boolean = confirm("MAC Address changed.  Are you sure you meant to change this?");
+        if (!response) {
+          return;
+        }
+      }
+
       // show loading icon
       this.loadingBridge = true;
 
@@ -519,7 +544,7 @@ export class NetworkComponent implements OnInit {
       }
 
       // send data
-      await this.netplanguiService.submitBridge(e.value.gateway, e.value.addresses, nameservers);
+      await this.netplanguiService.submitBridge(e.value.mac1, e.value.mac2, e.value.gateway, e.value.addresses, nameservers);
 
       // show popup
       this.notificationService.show({
@@ -676,6 +701,12 @@ export class NetworkComponent implements OnInit {
       if (!this.validateNetwork()) {
         return;
       }
+      if (this.Eth0Form.get("mac")?.dirty) {
+        const response: boolean = confirm("MAC Address changed.  Are you sure you meant to change this?");
+        if (!response) {
+          return;
+        }
+      }
 
       // show loading icon
       this.loadingEth0 = true;
@@ -690,7 +721,7 @@ export class NetworkComponent implements OnInit {
       }
 
       // send data
-      await this.netplanguiService.submitEth(1, e.value.gateway, e.value.addresses, nameservers, !this.eth0GridEnabled);
+      await this.netplanguiService.submitEth(1, e.value.mac, e.value.gateway, e.value.addresses, nameservers, !this.eth0GridEnabled);
 
       // show popup
       this.notificationService.show({
@@ -845,6 +876,12 @@ export class NetworkComponent implements OnInit {
       if (!this.validateNetwork()) {
         return;
       }
+      if (this.Eth1Form.get("mac")?.dirty) {
+        const response: boolean = confirm("MAC Address changed.  Are you sure you meant to change this?");
+        if (!response) {
+          return;
+        }
+      }
 
       // show loading icon
       this.loadingEth1 = true;
@@ -859,7 +896,7 @@ export class NetworkComponent implements OnInit {
       }
 
       // send data
-      await this.netplanguiService.submitEth(2, e.value.gateway, e.value.addresses, nameservers, !this.eth1GridEnabled);
+      await this.netplanguiService.submitEth(2, e.value.mac, e.value.gateway, e.value.addresses, nameservers, !this.eth1GridEnabled);
 
       // show popup
       this.notificationService.show({
