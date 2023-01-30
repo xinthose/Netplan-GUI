@@ -30,17 +30,17 @@ export class NetworkComponent implements OnInit {
   debug: boolean = true;
   loading: boolean = false;
   loadingBridge: boolean = false;
+  loadingEth0: boolean = false;
   loadingEth1: boolean = false;
-  loadingEth2: boolean = false;
   loadingWiFi: boolean = false;
   private ipRegex: RegExp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
   // forms
   public BridgeForm: FormGroup;
   public BridgeGridForm!: FormGroup;
+  public Eth0Form: FormGroup;
+  public Eth0GridForm!: FormGroup;
   public Eth1Form: FormGroup;
   public Eth1GridForm!: FormGroup;
-  public Eth2Form: FormGroup;
-  public Eth2GridForm!: FormGroup;
   public WiFiForm: FormGroup;
   public WiFiGridForm!: FormGroup;
   // grids
@@ -189,18 +189,18 @@ export class NetworkComponent implements OnInit {
   bridgeGridRow: number = 0;
   bridgeGridEnabled: boolean = false;
   bridgeGridEditing: boolean = false;
+  /// eth0 grid
+  eth0GridData: Array<GridNetworkIntf> = [];
+  eth0GridView!: GridDataResult;
+  eth0GridRow: number = 0;
+  eth0GridEnabled: boolean = false;
+  eth0GridEditing: boolean = false;
   /// eth1 grid
   eth1GridData: Array<GridNetworkIntf> = [];
   eth1GridView!: GridDataResult;
   eth1GridRow: number = 0;
   eth1GridEnabled: boolean = false;
   eth1GridEditing: boolean = false;
-  /// eth2 grid
-  eth2GridData: Array<GridNetworkIntf> = [];
-  eth2GridView!: GridDataResult;
-  eth2GridRow: number = 0;
-  eth2GridEnabled: boolean = false;
-  eth2GridEditing: boolean = false;
   /// wifi grid
   wifiGridData: Array<GridNetworkIntf> = [];
   wifiGridView!: GridDataResult;
@@ -224,14 +224,14 @@ export class NetworkComponent implements OnInit {
       nameserver2: ["", Validators.pattern(this.ipRegex)],
       addresses: [[], Validators.required],
     });
-    this.Eth1Form = this.formBuilder.group({
+    this.Eth0Form = this.formBuilder.group({
       enabled: false,
       gateway: ["", Validators.pattern(this.ipRegex)],
       nameserver1: ["", Validators.pattern(this.ipRegex)],
       nameserver2: ["", Validators.pattern(this.ipRegex)],
       addresses: [[], Validators.required],
     });
-    this.Eth2Form = this.formBuilder.group({
+    this.Eth1Form = this.formBuilder.group({
       enabled: false,
       gateway: ["", Validators.pattern(this.ipRegex)],
       nameserver1: ["", Validators.pattern(this.ipRegex)],
@@ -261,6 +261,33 @@ export class NetworkComponent implements OnInit {
       }
 
     });
+    this.Eth0Form.get("enabled")!.valueChanges.subscribe((enabled: boolean) => {
+      this.eth0GridEnabled = enabled;
+      if (enabled) {
+        // enable required field
+        this.Eth0Form.controls["addresses"].enable();
+
+        // clear fake data
+        this.eth0GridData = [];
+      } else {
+        // reset fields
+        this.Eth0Form.controls["gateway"].patchValue("");
+        this.Eth0Form.controls["nameserver1"].patchValue("");
+        this.Eth0Form.controls["nameserver2"].patchValue("");
+        this.Eth0Form.controls["addresses"].patchValue([]);
+        this.eth0GridData = [];
+
+        // disable required field
+        this.Eth0Form.controls["addresses"].disable();
+
+        // push fake data to allow submit
+        this.eth0GridData.push({
+          "guid": "",
+          "address": "",
+          "cidr": 1,
+        });
+      }
+    });
     this.Eth1Form.get("enabled")!.valueChanges.subscribe((enabled: boolean) => {
       this.eth1GridEnabled = enabled;
       if (enabled) {
@@ -282,33 +309,6 @@ export class NetworkComponent implements OnInit {
 
         // push fake data to allow submit
         this.eth1GridData.push({
-          "guid": "",
-          "address": "",
-          "cidr": 1,
-        });
-      }
-    });
-    this.Eth2Form.get("enabled")!.valueChanges.subscribe((enabled: boolean) => {
-      this.eth2GridEnabled = enabled;
-      if (enabled) {
-        // enable required field
-        this.Eth2Form.controls["addresses"].enable();
-
-        // clear fake data
-        this.eth2GridData = [];
-      } else {
-        // reset fields
-        this.Eth2Form.controls["gateway"].patchValue("");
-        this.Eth2Form.controls["nameserver1"].patchValue("");
-        this.Eth2Form.controls["nameserver2"].patchValue("");
-        this.Eth2Form.controls["addresses"].patchValue([]);
-        this.eth2GridData = [];
-
-        // disable required field
-        this.Eth2Form.controls["addresses"].disable();
-
-        // push fake data to allow submit
-        this.eth2GridData.push({
           "guid": "",
           "address": "",
           "cidr": 1,
@@ -378,19 +378,19 @@ export class NetworkComponent implements OnInit {
         "nameserver2": eBoxNetwork.br0_nameservers.length > 1 ? eBoxNetwork.br0_nameservers[1] : "",
         "addresses": eBoxNetwork.br0_addresses,
       });
+      this.Eth0Form.setValue({
+        "enabled": eBoxNetwork.eth0_addresses.length ? true : false,
+        "gateway": eBoxNetwork.eth0_gateway,
+        "nameserver1": eBoxNetwork.eth0_nameservers.length ? eBoxNetwork.eth0_nameservers[0] : "",
+        "nameserver2": eBoxNetwork.eth0_nameservers.length > 1 ? eBoxNetwork.eth0_nameservers[1] : "",
+        "addresses": eBoxNetwork.eth0_addresses,
+      });
       this.Eth1Form.setValue({
         "enabled": eBoxNetwork.eth1_addresses.length ? true : false,
         "gateway": eBoxNetwork.eth1_gateway,
         "nameserver1": eBoxNetwork.eth1_nameservers.length ? eBoxNetwork.eth1_nameservers[0] : "",
         "nameserver2": eBoxNetwork.eth1_nameservers.length > 1 ? eBoxNetwork.eth1_nameservers[1] : "",
         "addresses": eBoxNetwork.eth1_addresses,
-      });
-      this.Eth2Form.setValue({
-        "enabled": eBoxNetwork.eth2_addresses.length ? true : false,
-        "gateway": eBoxNetwork.eth2_gateway,
-        "nameserver1": eBoxNetwork.eth2_nameservers.length ? eBoxNetwork.eth2_nameservers[0] : "",
-        "nameserver2": eBoxNetwork.eth2_nameservers.length > 1 ? eBoxNetwork.eth2_nameservers[1] : "",
-        "addresses": eBoxNetwork.eth2_addresses,
       });
       this.WiFiForm.setValue({
         "enabled": eBoxNetwork.wifi_addresses.length ? true : false,
@@ -405,17 +405,17 @@ export class NetworkComponent implements OnInit {
       // reset forms
       this.BridgeForm.markAsPristine();
       this.BridgeForm.markAsUntouched();
+      this.Eth0Form.markAsPristine();
+      this.Eth0Form.markAsUntouched();
       this.Eth1Form.markAsPristine();
       this.Eth1Form.markAsUntouched();
-      this.Eth2Form.markAsPristine();
-      this.Eth2Form.markAsUntouched();
       this.WiFiForm.markAsPristine();
       this.WiFiForm.markAsUntouched();
 
       // clear IP address grid data
       this.bridgeGridData = [];
+      this.eth0GridData = [];
       this.eth1GridData = [];
-      this.eth2GridData = [];
       this.wifiGridData = [];
 
       // set IP address grid data
@@ -430,22 +430,22 @@ export class NetworkComponent implements OnInit {
           })
         }
       }
-      for (const data of eBoxNetwork.eth1_addresses) {
+      for (const data of eBoxNetwork.eth0_addresses) {
         const parts: Array<string> = data.split("/");
 
         if (parts.length == 2) {
-          this.eth1GridData.push({
+          this.eth0GridData.push({
             "guid": Chance().guid(),
             "address": parts[0],
             "cidr": parseInt(parts[1]),
           })
         }
       }
-      for (const data of eBoxNetwork.eth2_addresses) {
+      for (const data of eBoxNetwork.eth1_addresses) {
         const parts: Array<string> = data.split("/");
 
         if (parts.length == 2) {
-          this.eth2GridData.push({
+          this.eth1GridData.push({
             "guid": Chance().guid(),
             "address": parts[0],
             "cidr": parseInt(parts[1]),
@@ -663,6 +663,175 @@ export class NetworkComponent implements OnInit {
 
   /* #endregion */
 
+  // Eth0 Grid
+  /* #region */
+
+  async onSubmitEth0(e: any) {
+    try {
+      if (this.debug) {
+        this.logger.debug("NetworkComponent.onSubmitEth0 >> e.value = " + JSON.stringify(e.value));
+      }
+
+      // validate
+      if (!this.validateNetwork()) {
+        return;
+      }
+
+      // show loading icon
+      this.loadingEth0 = true;
+
+      // build nameservers
+      const nameservers: Array<string> = [];
+      if (e.value.nameserver1) {
+        nameservers.push(e.value.nameserver1);
+      }
+      if (e.value.nameserver2) {
+        nameservers.push(e.value.nameserver2);
+      }
+
+      // send data
+      await this.netplanguiService.submitEth(1, e.value.gateway, e.value.addresses, nameservers, !this.eth0GridEnabled);
+
+      // show popup
+      this.notificationService.show({
+        content: "Ethernet 1 saved.  Please wait for settings to take affect.",
+        cssClass: "notification",
+        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
+        type: { style: "success", icon: false },  // none, success, error, warning, info
+        hideAfter: 3000,  // milliseconds
+        animation: {
+          type: "fade",
+          duration: 150, // milliseconds (notif)
+        },
+      });
+
+      // hide loading icon
+      this.loadingEth0 = false;
+
+      // reset form
+      this.Eth0Form.markAsPristine();
+      this.Eth0Form.markAsUntouched();
+    } catch (error: any) {
+      this.logger.error("NetworkComponent.onSubmitEth0 >> error = " + error);
+      this.notificationService.show({
+        content: error,
+        closable: true,
+        cssClass: "notification",
+        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
+        type: { style: "error", icon: false },  // none, success, error, warning, info
+        hideAfter: 10000,  // milliseconds
+        animation: {
+          type: "fade",
+          duration: 150, // milliseconds (notif)
+        },
+      });
+      this.loadingEth0 = false;
+    }
+  }
+
+  public eth0GridAdd({ sender }: any) {
+    this.eth0GridClose(sender);
+
+    this.Eth0GridForm = this.formBuilder.group({
+      guid: [Chance().guid()],
+      address: ["", [Validators.required, Validators.pattern(this.ipRegex)]],
+      cidr: ["", [Validators.required, Validators.min(1)]],
+    });
+
+    sender.addRow(this.Eth0GridForm);
+    this.eth0GridEditing = true;
+  }
+
+  public eth0GridEdit({ sender, rowIndex, dataItem }: any) {
+    if (this.debug) {
+      this.logger.debug(JSON.stringify(dataItem))
+    }
+    this.eth0GridClose(sender);
+
+    this.Eth0GridForm = this.formBuilder.group({
+      guid: [dataItem.guid],
+      address: [dataItem.address, [Validators.required, Validators.pattern(this.ipRegex)]],
+      cidr: [dataItem.cidr, [Validators.required, Validators.min(1)]],
+    });
+
+    this.eth0GridRow = rowIndex;
+
+    sender.editRow(rowIndex, this.Eth0GridForm);
+
+    this.eth0GridEditing = true;
+  }
+
+  public eth0GridCancel({ sender, rowIndex }: any) {
+    this.eth0GridClose(sender, rowIndex);
+  }
+
+  public eth0GridSave({ sender, rowIndex, formGroup, isNew }: any) {
+    if (this.debug) {
+      this.logger.debug("NetworkComponent.eth0GridSave >> formGroup.value = " + JSON.stringify(formGroup.value));
+    }
+
+    // get data
+    const data: GridNetworkIntf = formGroup.value;
+
+    if (isNew) {
+      // add record to array
+      this.eth0GridData.push(data);
+    } else {
+      const row: GridNetworkIntf | undefined = this.eth0GridData.find((obj: GridNetworkIntf) => obj.guid == data.guid);
+
+      if (row) {
+        row.address = data.address;
+        row.cidr = data.cidr;
+      } else {
+        this.logger.warn("NetworkComponent.eth0GridRemove >> could not find row to update in grid data >> data = " + JSON.stringify(data));
+      }
+    }
+
+    // update form
+    this.updateEth0FormAddresses();
+
+    // close editing
+    sender.closeRow(rowIndex);
+    this.eth0GridEditing = false;
+  }
+
+  public eth0GridRemove({ dataItem }: any) {
+    if (this.debug) {
+      this.logger.debug("NetworkComponent.eth0GridRemove >> dataItem = " + JSON.stringify(dataItem));
+    }
+
+    // get data
+    const data: GridNetworkIntf = dataItem;
+
+    // filter out removed row
+    this.eth0GridData = this.eth0GridData.filter((obj: GridNetworkIntf) => {
+      return obj.guid !== data.guid;
+    });
+
+    // update form
+    this.updateEth0FormAddresses();
+  }
+
+  private eth0GridClose(grid: any, rowIndex = this.eth0GridRow) {
+    grid.closeRow(rowIndex);
+    this.eth0GridRow = 0;
+    this.Eth0GridForm = undefined!;
+    this.eth0GridEditing = false;
+  }
+
+  private updateEth0FormAddresses() {
+    // build form data
+    const addresses: Array<string> = [];
+    for (const data of this.eth0GridData) {
+      addresses.push(data.address + "/" + data.cidr.toString());
+    }
+
+    // update form
+    this.Eth0Form.controls["addresses"].patchValue(addresses);
+  }
+
+  /* #endregion */
+
   // Eth1 Grid
   /* #region */
 
@@ -690,11 +859,11 @@ export class NetworkComponent implements OnInit {
       }
 
       // send data
-      await this.netplanguiService.submitEth(1, e.value.gateway, e.value.addresses, nameservers, !this.eth1GridEnabled);
+      await this.netplanguiService.submitEth(2, e.value.gateway, e.value.addresses, nameservers, !this.eth1GridEnabled);
 
       // show popup
       this.notificationService.show({
-        content: "Ethernet 1 saved.  Please wait for settings to take affect.",
+        content: "Ethernet 2 saved.  Please wait for settings to take affect.",
         cssClass: "notification",
         position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
         type: { style: "success", icon: false },  // none, success, error, warning, info
@@ -739,6 +908,7 @@ export class NetworkComponent implements OnInit {
     });
 
     sender.addRow(this.Eth1GridForm);
+
     this.eth1GridEditing = true;
   }
 
@@ -792,6 +962,7 @@ export class NetworkComponent implements OnInit {
 
     // close editing
     sender.closeRow(rowIndex);
+
     this.eth1GridEditing = false;
   }
 
@@ -828,177 +999,6 @@ export class NetworkComponent implements OnInit {
 
     // update form
     this.Eth1Form.controls["addresses"].patchValue(addresses);
-  }
-
-  /* #endregion */
-
-  // Eth2 Grid
-  /* #region */
-
-  async onSubmitEth2(e: any) {
-    try {
-      if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitEth2 >> e.value = " + JSON.stringify(e.value));
-      }
-
-      // validate
-      if (!this.validateNetwork()) {
-        return;
-      }
-
-      // show loading icon
-      this.loadingEth2 = true;
-
-      // build nameservers
-      const nameservers: Array<string> = [];
-      if (e.value.nameserver1) {
-        nameservers.push(e.value.nameserver1);
-      }
-      if (e.value.nameserver2) {
-        nameservers.push(e.value.nameserver2);
-      }
-
-      // send data
-      await this.netplanguiService.submitEth(2, e.value.gateway, e.value.addresses, nameservers, !this.eth2GridEnabled);
-
-      // show popup
-      this.notificationService.show({
-        content: "Ethernet 2 saved.  Please wait for settings to take affect.",
-        cssClass: "notification",
-        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
-        type: { style: "success", icon: false },  // none, success, error, warning, info
-        hideAfter: 3000,  // milliseconds
-        animation: {
-          type: "fade",
-          duration: 150, // milliseconds (notif)
-        },
-      });
-
-      // hide loading icon
-      this.loadingEth2 = false;
-
-      // reset form
-      this.Eth2Form.markAsPristine();
-      this.Eth2Form.markAsUntouched();
-    } catch (error: any) {
-      this.logger.error("NetworkComponent.onSubmitEth2 >> error = " + error);
-      this.notificationService.show({
-        content: error,
-        closable: true,
-        cssClass: "notification",
-        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
-        type: { style: "error", icon: false },  // none, success, error, warning, info
-        hideAfter: 10000,  // milliseconds
-        animation: {
-          type: "fade",
-          duration: 150, // milliseconds (notif)
-        },
-      });
-      this.loadingEth2 = false;
-    }
-  }
-
-  public eth2GridAdd({ sender }: any) {
-    this.eth2GridClose(sender);
-
-    this.Eth2GridForm = this.formBuilder.group({
-      guid: [Chance().guid()],
-      address: ["", [Validators.required, Validators.pattern(this.ipRegex)]],
-      cidr: ["", [Validators.required, Validators.min(1)]],
-    });
-
-    sender.addRow(this.Eth2GridForm);
-
-    this.eth2GridEditing = true;
-  }
-
-  public eth2GridEdit({ sender, rowIndex, dataItem }: any) {
-    if (this.debug) {
-      this.logger.debug(JSON.stringify(dataItem))
-    }
-    this.eth2GridClose(sender);
-
-    this.Eth2GridForm = this.formBuilder.group({
-      guid: [dataItem.guid],
-      address: [dataItem.address, [Validators.required, Validators.pattern(this.ipRegex)]],
-      cidr: [dataItem.cidr, [Validators.required, Validators.min(1)]],
-    });
-
-    this.eth2GridRow = rowIndex;
-
-    sender.editRow(rowIndex, this.Eth2GridForm);
-
-    this.eth2GridEditing = true;
-  }
-
-  public eth2GridCancel({ sender, rowIndex }: any) {
-    this.eth2GridClose(sender, rowIndex);
-  }
-
-  public eth2GridSave({ sender, rowIndex, formGroup, isNew }: any) {
-    if (this.debug) {
-      this.logger.debug("NetworkComponent.eth2GridSave >> formGroup.value = " + JSON.stringify(formGroup.value));
-    }
-
-    // get data
-    const data: GridNetworkIntf = formGroup.value;
-
-    if (isNew) {
-      // add record to array
-      this.eth2GridData.push(data);
-    } else {
-      const row: GridNetworkIntf | undefined = this.eth2GridData.find((obj: GridNetworkIntf) => obj.guid == data.guid);
-
-      if (row) {
-        row.address = data.address;
-        row.cidr = data.cidr;
-      } else {
-        this.logger.warn("NetworkComponent.eth2GridRemove >> could not find row to update in grid data >> data = " + JSON.stringify(data));
-      }
-    }
-
-    // update form
-    this.updateEth2FormAddresses();
-
-    // close editing
-    sender.closeRow(rowIndex);
-
-    this.eth2GridEditing = false;
-  }
-
-  public eth2GridRemove({ dataItem }: any) {
-    if (this.debug) {
-      this.logger.debug("NetworkComponent.eth2GridRemove >> dataItem = " + JSON.stringify(dataItem));
-    }
-
-    // get data
-    const data: GridNetworkIntf = dataItem;
-
-    // filter out removed row
-    this.eth2GridData = this.eth2GridData.filter((obj: GridNetworkIntf) => {
-      return obj.guid !== data.guid;
-    });
-
-    // update form
-    this.updateEth2FormAddresses();
-  }
-
-  private eth2GridClose(grid: any, rowIndex = this.eth2GridRow) {
-    grid.closeRow(rowIndex);
-    this.eth2GridRow = 0;
-    this.Eth2GridForm = undefined!;
-    this.eth2GridEditing = false;
-  }
-
-  private updateEth2FormAddresses() {
-    // build form data
-    const addresses: Array<string> = [];
-    for (const data of this.eth2GridData) {
-      addresses.push(data.address + "/" + data.cidr.toString());
-    }
-
-    // update form
-    this.Eth2Form.controls["addresses"].patchValue(addresses);
   }
 
   /* #endregion */
@@ -1182,12 +1182,12 @@ export class NetworkComponent implements OnInit {
 
   private validateNetwork(): boolean {
     const bridgeGatewayUsed: boolean = this.BridgeForm.controls["gateway"].value.length ? true : false;
+    const eth0GatewayUsed: boolean = this.Eth0Form.controls["gateway"].value.length ? true : false;
     const eth1GatewayUsed: boolean = this.Eth1Form.controls["gateway"].value.length ? true : false;
-    const eth2GatewayUsed: boolean = this.Eth2Form.controls["gateway"].value.length ? true : false;
     const wifiGatewayUsed: boolean = this.WiFiForm.controls["gateway"].value.length ? true : false;
 
     // check for multiple gateways
-    const multipleGatewaysUsed: boolean = [bridgeGatewayUsed, eth1GatewayUsed, eth2GatewayUsed, wifiGatewayUsed].filter(Boolean).length >= 2;
+    const multipleGatewaysUsed: boolean = [bridgeGatewayUsed, eth0GatewayUsed, eth1GatewayUsed, wifiGatewayUsed].filter(Boolean).length >= 2;
     if (multipleGatewaysUsed) {
       this.notificationService.show({
         content: "Only one gateway is allowed.",
@@ -1204,7 +1204,7 @@ export class NetworkComponent implements OnInit {
     }
 
     // make sure at least one option is selected
-    if (!this.bridgeGridEnabled && !this.eth1GridEnabled && !this.eth2GridEnabled) {
+    if (!this.bridgeGridEnabled && !this.eth0GridEnabled && !this.eth1GridEnabled) {
       this.notificationService.show({
         content: "Please enable at least one ethernet port.",
         cssClass: "notification",

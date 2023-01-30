@@ -135,8 +135,118 @@
             <h4 class="card-title">
               <div kendoTooltip tooltipClass="tooltip-info" filter="i">
                 Ethernet 1
-                <i class="fa fa-info-circle text-left" aria-hidden="true"
-                  title="Port LAN1 on the computer (enp3s0)."></i>
+                <i class="fa fa-info-circle text-left" aria-hidden="true" title="Port LAN1 on the computer."></i>
+              </div>
+            </h4>
+            <div class="card-text">
+              <form [formGroup]="Eth0Form" (ngSubmit)="onSubmitEth0(Eth0Form)">
+                <!-- Enabled -->
+                <div class="row justify-content-center">
+                  <div class="col">
+                    <h6>Enabled</h6>
+                    <kendo-switch formControlName="enabled" [onLabel]="'Yes'" [offLabel]="'No'"></kendo-switch>
+                  </div>
+                </div>
+                <!-- Gateway -->
+                <div class="row justify-content-center mt-2" *ngIf="eth0GridEnabled">
+                  <div class="col">
+                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                      Gateway
+                      <i class="fa fa-info-circle text-left" aria-hidden="true"
+                        title="The IP Address of the network's router.  Only one Gateway is allowed."></i>
+                    </div>
+                    <kendo-maskedtextbox formControlName="gateway">
+                    </kendo-maskedtextbox>
+                  </div>
+                </div>
+                <!-- Nameserver -->
+                <div class="row justify-content-center mt-2" *ngIf="eth0GridEnabled">
+                  <div class="col">
+                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                      Nameserver
+                      <i class="fa fa-info-circle text-left" aria-hidden="true"
+                        title="The IP Address of the network's DNS server (default: 8.8.8.8)."></i>
+                    </div>
+                    <kendo-maskedtextbox formControlName="nameserver1">
+                    </kendo-maskedtextbox>
+                  </div>
+                </div>
+                <!-- Backup Nameserver -->
+                <div class="row justify-content-center mt-2" *ngIf="eth0GridEnabled">
+                  <div class="col">
+                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                      Backup Nameserver
+                      <i class="fa fa-info-circle text-left" aria-hidden="true"
+                        title="The IP Address of the network's backup DNS server (default: 8.8.4.4)."></i>
+                    </div>
+                    <kendo-maskedtextbox formControlName="nameserver2">
+                    </kendo-maskedtextbox>
+                  </div>
+                </div>
+                <!-- Addresses -->
+                <div class="row justify-content-center mt-2" *ngIf="eth0GridEnabled">
+                  <div class="col">
+                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                      Addresses
+                      <i class="fa fa-info-circle text-left" aria-hidden="true" title="IP addresses of the port."></i>
+                    </div>
+                    <kendo-grid [data]="eth0GridData" [height]="200" [sortable]="{ allowUnsort: true, mode: 'single' }"
+                      [sort]="sort" (add)="eth0GridAdd($event)" (cancel)="eth0GridCancel($event)"
+                      (save)="eth0GridSave($event)" (remove)="eth0GridRemove($event)" (edit)="eth0GridEdit($event)">
+                      <!-- Toolbar -->
+                      <ng-template kendoGridToolbarTemplate>
+                        <button type="button" kendoGridAddCommand icon="plus" class="float-left">New IP Address</button>
+                      </ng-template>
+                      <!-- Columns -->
+                      <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
+                      <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
+                        </ng-template>
+                        <ng-template kendoGridEditTemplate let-formGroup="Eth0GridForm">
+                          <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
+                            [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
+                            [formControl]="Eth0GridForm.get('cidr')">
+                          </kendo-dropdownlist>
+                        </ng-template>
+                      </kendo-grid-column>
+                      <kendo-grid-command-column title="Command" [width]="220">
+                        <ng-template kendoGridCellTemplate let-isNew="isNew">
+                          <button kendoGridEditCommand themeColor="primary">Edit</button>
+                          <button kendoGridRemoveCommand>Remove</button>
+                          <button kendoGridSaveCommand [disabled]="Eth0GridForm?.invalid">{{ isNew ? 'Add' : 'Update'
+                            }}</button>
+                          <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                        </ng-template>
+                      </kendo-grid-command-column>
+                    </kendo-grid>
+                  </div>
+                </div>
+                <!-- Submit -->
+                <div class="row mt-4 justify-content-center">
+                  <div class="col">
+                    <button kendoButton
+                      [disabled]="!Eth0Form.valid || !eth0GridData.length || eth0GridEditing || loadingEth0"
+                      themeColor="primary" type="submit">
+                      <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingEth0"></span>
+                      <span>Submit</span>
+                    </button>
+                    <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="Eth0Form.dirty"></fa-icon>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Ethernet 2 -->
+      <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-12 col-sm-12 col-12" *ngIf="!bridgeGridEnabled">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">
+              <div kendoTooltip tooltipClass="tooltip-info" filter="i">
+                Ethernet 2
+                <i class="fa fa-info-circle text-left" aria-hidden="true" title="Port LAN2 on the computer."></i>
               </div>
             </h4>
             <div class="card-text">
@@ -233,118 +343,6 @@
                       <span>Submit</span>
                     </button>
                     <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="Eth1Form.dirty"></fa-icon>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Ethernet 2 -->
-      <div class="col-xxl-6 col-xl-7 col-lg-8 col-md-12 col-sm-12 col-12" *ngIf="!bridgeGridEnabled">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">
-              <div kendoTooltip tooltipClass="tooltip-info" filter="i">
-                Ethernet 2
-                <i class="fa fa-info-circle text-left" aria-hidden="true"
-                  title="Port LAN2 on the computer (enp4s0)."></i>
-              </div>
-            </h4>
-            <div class="card-text">
-              <form [formGroup]="Eth2Form" (ngSubmit)="onSubmitEth2(Eth2Form)">
-                <!-- Enabled -->
-                <div class="row justify-content-center">
-                  <div class="col">
-                    <h6>Enabled</h6>
-                    <kendo-switch formControlName="enabled" [onLabel]="'Yes'" [offLabel]="'No'"></kendo-switch>
-                  </div>
-                </div>
-                <!-- Gateway -->
-                <div class="row justify-content-center mt-2" *ngIf="eth2GridEnabled">
-                  <div class="col">
-                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
-                      Gateway
-                      <i class="fa fa-info-circle text-left" aria-hidden="true"
-                        title="The IP Address of the network's router.  Only one Gateway is allowed."></i>
-                    </div>
-                    <kendo-maskedtextbox formControlName="gateway">
-                    </kendo-maskedtextbox>
-                  </div>
-                </div>
-                <!-- Nameserver -->
-                <div class="row justify-content-center mt-2" *ngIf="eth2GridEnabled">
-                  <div class="col">
-                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
-                      Nameserver
-                      <i class="fa fa-info-circle text-left" aria-hidden="true"
-                        title="The IP Address of the network's DNS server (default: 8.8.8.8)."></i>
-                    </div>
-                    <kendo-maskedtextbox formControlName="nameserver1">
-                    </kendo-maskedtextbox>
-                  </div>
-                </div>
-                <!-- Backup Nameserver -->
-                <div class="row justify-content-center mt-2" *ngIf="eth2GridEnabled">
-                  <div class="col">
-                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
-                      Backup Nameserver
-                      <i class="fa fa-info-circle text-left" aria-hidden="true"
-                        title="The IP Address of the network's backup DNS server (default: 8.8.4.4)."></i>
-                    </div>
-                    <kendo-maskedtextbox formControlName="nameserver2">
-                    </kendo-maskedtextbox>
-                  </div>
-                </div>
-                <!-- Addresses -->
-                <div class="row justify-content-center mt-2" *ngIf="eth2GridEnabled">
-                  <div class="col">
-                    <div kendoTooltip tooltipClass="tooltip-info" filter="i">
-                      Addresses
-                      <i class="fa fa-info-circle text-left" aria-hidden="true" title="IP addresses of the port."></i>
-                    </div>
-                    <kendo-grid [data]="eth2GridData" [height]="200" [sortable]="{ allowUnsort: true, mode: 'single' }"
-                      [sort]="sort" (add)="eth2GridAdd($event)" (cancel)="eth2GridCancel($event)"
-                      (save)="eth2GridSave($event)" (remove)="eth2GridRemove($event)" (edit)="eth2GridEdit($event)">
-                      <!-- Toolbar -->
-                      <ng-template kendoGridToolbarTemplate>
-                        <button type="button" kendoGridAddCommand icon="plus" class="float-left">New IP Address</button>
-                      </ng-template>
-                      <!-- Columns -->
-                      <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
-                      <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
-                        <ng-template kendoGridCellTemplate let-dataItem>
-                          {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
-                        </ng-template>
-                        <ng-template kendoGridEditTemplate let-formGroup="Eth2GridForm">
-                          <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
-                            [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
-                            [formControl]="Eth2GridForm.get('cidr')">
-                          </kendo-dropdownlist>
-                        </ng-template>
-                      </kendo-grid-column>
-                      <kendo-grid-command-column title="Command" [width]="220">
-                        <ng-template kendoGridCellTemplate let-isNew="isNew">
-                          <button kendoGridEditCommand themeColor="primary">Edit</button>
-                          <button kendoGridRemoveCommand>Remove</button>
-                          <button kendoGridSaveCommand [disabled]="Eth2GridForm?.invalid">{{ isNew ? 'Add' : 'Update'
-                            }}</button>
-                          <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
-                        </ng-template>
-                      </kendo-grid-command-column>
-                    </kendo-grid>
-                  </div>
-                </div>
-                <!-- Submit -->
-                <div class="row mt-4 justify-content-center">
-                  <div class="col">
-                    <button kendoButton
-                      [disabled]="!Eth2Form.valid || !eth2GridData.length || eth2GridEditing || loadingEth2"
-                      themeColor="primary" type="submit">
-                      <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingEth2"></span>
-                      <span>Submit</span>
-                    </button>
-                    <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="Eth2Form.dirty"></fa-icon>
                   </div>
                 </div>
               </form>

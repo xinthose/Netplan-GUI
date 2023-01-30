@@ -7,19 +7,19 @@ from typing import List  # needed for python 3.8 and below
 class SetDate(BaseModel):
     ServerTime: str
 
-
 class SubmitBridge(BaseModel):
+    mac1: str
+    mac2: str
     gateway: str
     addresses: List[str]
     nameservers: List[str]
 
-
 class SubmitEth(BaseModel):
+    mac: str
     gateway: str
     addresses: List[str]
     nameservers: List[str]
     deleteEth: bool
-
 
 class SubmitWiFi(BaseModel):
     gateway: str
@@ -28,7 +28,6 @@ class SubmitWiFi(BaseModel):
     deleteWiFi: bool
     ssid: str
     ssidPassword: str
-
 
 class UpdateStationWifi(BaseModel):
     enabled: str    # 1/0

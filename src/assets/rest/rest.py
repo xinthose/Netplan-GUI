@@ -27,7 +27,7 @@ import models   # models.py
 
 # region
 
-VERSION = "1.0.4"
+VERSION = "1.0.5"
 NETPLAN = "/etc/netplan/01-network-manager-all.yaml"
 
 logger = log.setup_custom_logger('root')
@@ -57,7 +57,7 @@ logger.info(f"netplan gui REST started; version = {VERSION}")
 # GET requests
 
 
-@ app.get("/get_interfaces1")
+@app.get("/get_interfaces1")
 async def get_interfaces1():
     try:
         debug = False
@@ -98,35 +98,43 @@ async def get_interfaces1():
                     br0_nameservers = nameservers.get("addresses", "")
 
         # Ethernet Ports
+        eth0_mac = ""
+        eth0_addresses = ""
+        eth0_gateway = ""
+        eth0_nameservers = ""
+        eth1_mac = ""
         eth1_addresses = ""
         eth1_gateway = ""
         eth1_nameservers = ""
-        eth2_addresses = ""
-        eth2_gateway = ""
-        eth2_nameservers = ""
 
         ethernets = network.get("ethernets", "")
         if ethernets:
             if (debug):
                 logger.debug("ethernets = " + json.dumps(ethernets))
-            eth1 = ethernets.get("enp3s0", "")  # LAN1
+            eth0 = ethernets.get("eth0", "")  # LAN1
+            eth1 = ethernets.get("eth1", "")
+            if eth0:
+                eth0_addresses = eth0.get("addresses", "")
+                routes = eth0.get("routes", "")
+                nameservers = eth0.get("nameservers", "")
+                match = eth0.get("match", "")
+                if routes:
+                    eth0_gateway = routes[0].get("via", "")
+                if nameservers:
+                    eth0_nameservers = nameservers.get("addresses", "")
+                if match:
+                    eth0_mac = match.get("macaddress", "")
             if eth1:
                 eth1_addresses = eth1.get("addresses", "")
                 routes = eth1.get("routes", "")
                 nameservers = eth1.get("nameservers", "")
+                match = eth1.get("match", "")
                 if routes:
                     eth1_gateway = routes[0].get("via", "")
                 if nameservers:
                     eth1_nameservers = nameservers.get("addresses", "")
-            eth2 = ethernets.get("enp4s0", "")  # LAN2
-            if eth2:
-                eth2_addresses = eth2.get("addresses", "")
-                routes = eth2.get("routes", "")
-                nameservers = eth2.get("nameservers", "")
-                if routes:
-                    eth2_gateway = routes[0].get("via", "")
-                if nameservers:
-                    eth2_nameservers = nameservers.get("addresses", "")
+                if match:
+                    eth1_mac = match.get("macaddress", "")
 
         # Wi-Fi
         wifi_addresses = ""
@@ -159,13 +167,15 @@ async def get_interfaces1():
         ret_obj["br0_gateway"] = br0_gateway
         ret_obj["br0_nameservers"] = br0_nameservers
 
+        ret_obj["eth0_mac"] = eth0_mac
+        ret_obj["eth0_addresses"] = eth0_addresses
+        ret_obj["eth0_gateway"] = eth0_gateway
+        ret_obj["eth0_nameservers"] = eth0_nameservers
+
+        ret_obj["eth1_mac"] = eth1_mac
         ret_obj["eth1_addresses"] = eth1_addresses
         ret_obj["eth1_gateway"] = eth1_gateway
         ret_obj["eth1_nameservers"] = eth1_nameservers
-
-        ret_obj["eth2_addresses"] = eth2_addresses
-        ret_obj["eth2_gateway"] = eth2_gateway
-        ret_obj["eth2_nameservers"] = eth2_nameservers
 
         ret_obj["wifi_addresses"] = wifi_addresses
         ret_obj["wifi_gateway"] = wifi_gateway
@@ -183,7 +193,7 @@ async def get_interfaces1():
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@ app.get("/get_date_time")
+@app.get("/get_date_time")
 async def get_date_time():
     try:
         debug = False
@@ -207,8 +217,7 @@ async def get_date_time():
 
 # GET requests - commands
 
-
-@ app.get("/clear_all_log_files")
+@app.get("/clear_all_log_files")
 async def clear_all_log_files():
     try:
         EXECUTABLE = "rm -f /var/www/html/logs/*.log"
@@ -218,8 +227,7 @@ async def clear_all_log_files():
         logger.error(f"error = {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
-@ app.get("/change_log_file_perm")
+@app.get("/change_log_file_perm")
 async def change_log_file_perm():
     try:
         EXECUTABLE = "chmod -R 777 /var/www/html/logs"
@@ -229,8 +237,7 @@ async def change_log_file_perm():
         logger.error(f"error = {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
-@ app.get("/reboot_station")
+@app.get("/reboot_station")
 async def reboot_station():
     try:
         thr = threading.Thread(target=delayed_reboot)
@@ -240,8 +247,7 @@ async def reboot_station():
         logger.error(f"error = {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
-@ app.get("/shutdown_station")
+@app.get("/shutdown_station")
 async def shutdown_station():
     try:
         thr = threading.Thread(target=delayed_shutdown)
@@ -251,13 +257,12 @@ async def shutdown_station():
         logger.error(f"error = {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
 # POST requests
 
 @app.post("/submitBridge")
 async def submitBridge(data: models.SubmitBridge):
     try:
-        debug = False
+        debug = True
         data = jsonable_encoder(data)
 
         if (debug):
@@ -267,8 +272,8 @@ async def submitBridge(data: models.SubmitBridge):
         netplan_bridge = {
             "br0": {
                 "interfaces": [
-                    "enp3s0",
-                    "enp4s0"
+                    "eth0",
+                    "eth1"
                 ],
                 "routes": [
                     {
@@ -283,11 +288,19 @@ async def submitBridge(data: models.SubmitBridge):
             }
         }
         netplan_ethernet = {
-            "enp3s0": {
-                "dhcp4": False
+            "eth0": {
+                "dhcp4": False,
+                "match": {
+                    "macaddress": data["mac1"]
+                },
+                "set-name": "eth0",
             },
-            "enp4s0": {
-                "dhcp4": False
+            "eth1": {
+                "dhcp4": False,
+                "match": {
+                    "macaddress": data["mac2"]
+                },
+                "set-name": "eth1",
             }
         }
         if (debug):
@@ -321,7 +334,7 @@ async def submitBridge(data: models.SubmitBridge):
 @app.post("/submitEth1")
 async def submitEth1(data: models.SubmitEth):
     try:
-        debug = False
+        debug = True
         data = jsonable_encoder(data)
 
         if (debug):
@@ -331,10 +344,14 @@ async def submitEth1(data: models.SubmitEth):
         netplan_eth1 = {
             "dhcp4": False,
             "dhcp6": False,
+            "match": {
+                "macaddress": data["mac"]
+            },
+            "set-name": "eth0",
             "routes": [
                 {
                     "to": "default",
-                    "via": data["gateway"]
+                          "via": data["gateway"]
                 }
             ],
             "addresses": data["addresses"],
@@ -349,17 +366,17 @@ async def submitEth1(data: models.SubmitEth):
         netplan_config = benedict.from_yaml(NETPLAN)
 
         # update netplan file
-        netplan_config["network.ethernets.enp3s0"] = netplan_eth1
+        netplan_config["network.ethernets.eth0"] = netplan_eth1
 
         # remove unused values <https://github.com/fabiocaccamo/python-benedict#keylist>
         if data["deleteEth"]:
-            if "network.ethernets.enp3s0" in netplan_config:
-                del netplan_config["network.ethernets.enp3s0"]
+            if "network.ethernets.eth0" in netplan_config:
+                del netplan_config["network.ethernets.eth0"]
         else:
             if "network.bridges" in netplan_config:
                 del netplan_config["network.bridges"]
             if not data["gateway"]:
-                del netplan_config["network.ethernets.enp3s0.routes"]
+                del netplan_config["network.ethernets.eth0.routes"]
 
         # write netplan changes
         netplan_config.to_yaml(filepath=NETPLAN)
@@ -377,7 +394,7 @@ async def submitEth1(data: models.SubmitEth):
 @app.post("/submitEth2")
 async def submitEth2(data: models.SubmitEth):
     try:
-        debug = False
+        debug = True
         data = jsonable_encoder(data)
 
         if (debug):
@@ -387,6 +404,10 @@ async def submitEth2(data: models.SubmitEth):
         netplan_eth2 = {
             "dhcp4": False,
             "dhcp6": False,
+            "match": {
+                "macaddress": data["mac"]
+            },
+            "set-name": "eth1",
             "routes": [
                 {
                     "to": "default",
@@ -405,17 +426,17 @@ async def submitEth2(data: models.SubmitEth):
         netplan_config = benedict.from_yaml(NETPLAN)
 
         # update netplan file
-        netplan_config["network.ethernets.enp4s0"] = netplan_eth2
+        netplan_config["network.ethernets.eth1"] = netplan_eth2
 
         # remove unused values <https://github.com/fabiocaccamo/python-benedict#keylist>
         if data["deleteEth"]:
-            if "network.ethernets.enp4s0" in netplan_config:
-                del netplan_config["network.ethernets.enp4s0"]
+            if "network.ethernets.eth1" in netplan_config:
+                del netplan_config["network.ethernets.eth1"]
         else:
             if "network.bridges" in netplan_config:
                 del netplan_config["network.bridges"]
             if not data["gateway"]:
-                del netplan_config["network.ethernets.enp4s0.routes"]
+                del netplan_config["network.ethernets.eth1.routes"]
 
         # write netplan changes
         netplan_config.to_yaml(filepath=NETPLAN)
@@ -495,7 +516,7 @@ async def submitWiFi(data: models.SubmitWiFi):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@ app.post("/setdate")
+@app.post("/setdate")
 async def setdate(data: models.SetDate):
     try:
         data = jsonable_encoder(data)
