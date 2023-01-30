@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { firstValueFrom } from "rxjs";
 
 // interfaces
-import { eBoxNetworkIntf } from "./interfaces/linuxNetworkIntf";
+import { LinuxNetworkIntf } from "./interfaces/LinuxNetworkIntf";
 
 // Other
 import { environment } from "../environments/environment";
@@ -63,7 +63,7 @@ export class NetplanGUIService {
 
   // GET requests
 
-  public async getNetwork(): Promise<eBoxNetworkIntf> {
+  public async getNetwork(): Promise<LinuxNetworkIntf> {
     try {
       return await this.get("get_interfaces1");
     } catch (error: any) {

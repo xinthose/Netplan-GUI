@@ -11,7 +11,7 @@ import { SortDescriptor, orderBy } from "@progress/kendo-data-query";
 
 // interfaces
 import { GridNetworkIntf } from "../interfaces/GridNetworkIntf";
-import { eBoxNetworkIntf } from "../interfaces/linuxNetworkIntf";
+import { linuxNetworkIntf } from "../interfaces/LinuxNetworkIntf";
 import { SubnetDropdownIntf } from "../interfaces/SubnetDropdownIntf";
 
 // Icons
@@ -368,38 +368,38 @@ export class NetworkComponent implements OnInit {
       this.loading = true;
 
       // get eBox network
-      const eBoxNetwork: eBoxNetworkIntf = await this.netplanguiService.getNetwork();
+      const linuxNetwork: linuxNetworkIntf = await this.netplanguiService.getNetwork();
 
       // set form data
       this.BridgeForm.setValue({
-        "enabled": eBoxNetwork.br0_addresses.length ? true : false,
-        "gateway": eBoxNetwork.br0_gateway,
-        "nameserver1": eBoxNetwork.br0_nameservers.length ? eBoxNetwork.br0_nameservers[0] : "",
-        "nameserver2": eBoxNetwork.br0_nameservers.length > 1 ? eBoxNetwork.br0_nameservers[1] : "",
-        "addresses": eBoxNetwork.br0_addresses,
+        "enabled": linuxNetwork.br0_addresses.length ? true : false,
+        "gateway": linuxNetwork.br0_gateway,
+        "nameserver1": linuxNetwork.br0_nameservers.length ? linuxNetwork.br0_nameservers[0] : "",
+        "nameserver2": linuxNetwork.br0_nameservers.length > 1 ? linuxNetwork.br0_nameservers[1] : "",
+        "addresses": linuxNetwork.br0_addresses,
       });
       this.Eth0Form.setValue({
-        "enabled": eBoxNetwork.eth0_addresses.length ? true : false,
-        "gateway": eBoxNetwork.eth0_gateway,
-        "nameserver1": eBoxNetwork.eth0_nameservers.length ? eBoxNetwork.eth0_nameservers[0] : "",
-        "nameserver2": eBoxNetwork.eth0_nameservers.length > 1 ? eBoxNetwork.eth0_nameservers[1] : "",
-        "addresses": eBoxNetwork.eth0_addresses,
+        "enabled": linuxNetwork.eth0_addresses.length ? true : false,
+        "gateway": linuxNetwork.eth0_gateway,
+        "nameserver1": linuxNetwork.eth0_nameservers.length ? linuxNetwork.eth0_nameservers[0] : "",
+        "nameserver2": linuxNetwork.eth0_nameservers.length > 1 ? linuxNetwork.eth0_nameservers[1] : "",
+        "addresses": linuxNetwork.eth0_addresses,
       });
       this.Eth1Form.setValue({
-        "enabled": eBoxNetwork.eth1_addresses.length ? true : false,
-        "gateway": eBoxNetwork.eth1_gateway,
-        "nameserver1": eBoxNetwork.eth1_nameservers.length ? eBoxNetwork.eth1_nameservers[0] : "",
-        "nameserver2": eBoxNetwork.eth1_nameservers.length > 1 ? eBoxNetwork.eth1_nameservers[1] : "",
-        "addresses": eBoxNetwork.eth1_addresses,
+        "enabled": linuxNetwork.eth1_addresses.length ? true : false,
+        "gateway": linuxNetwork.eth1_gateway,
+        "nameserver1": linuxNetwork.eth1_nameservers.length ? linuxNetwork.eth1_nameservers[0] : "",
+        "nameserver2": linuxNetwork.eth1_nameservers.length > 1 ? linuxNetwork.eth1_nameservers[1] : "",
+        "addresses": linuxNetwork.eth1_addresses,
       });
       this.WiFiForm.setValue({
-        "enabled": eBoxNetwork.wifi_addresses.length ? true : false,
-        "gateway": eBoxNetwork.wifi_gateway,
-        "nameserver1": eBoxNetwork.wifi_nameservers.length ? eBoxNetwork.wifi_nameservers[0] : "",
-        "nameserver2": eBoxNetwork.wifi_nameservers.length > 1 ? eBoxNetwork.wifi_nameservers[1] : "",
-        "ssid": eBoxNetwork.wifi_ssid,
-        "ssidPassword": eBoxNetwork.wifi_ssid_password,
-        "addresses": eBoxNetwork.wifi_addresses,
+        "enabled": linuxNetwork.wifi_addresses.length ? true : false,
+        "gateway": linuxNetwork.wifi_gateway,
+        "nameserver1": linuxNetwork.wifi_nameservers.length ? linuxNetwork.wifi_nameservers[0] : "",
+        "nameserver2": linuxNetwork.wifi_nameservers.length > 1 ? linuxNetwork.wifi_nameservers[1] : "",
+        "ssid": linuxNetwork.wifi_ssid,
+        "ssidPassword": linuxNetwork.wifi_ssid_password,
+        "addresses": linuxNetwork.wifi_addresses,
       });
 
       // reset forms
@@ -419,7 +419,7 @@ export class NetworkComponent implements OnInit {
       this.wifiGridData = [];
 
       // set IP address grid data
-      for (const data of eBoxNetwork.br0_addresses) {
+      for (const data of linuxNetwork.br0_addresses) {
         const parts: Array<string> = data.split("/");
 
         if (parts.length == 2) {
@@ -430,7 +430,7 @@ export class NetworkComponent implements OnInit {
           })
         }
       }
-      for (const data of eBoxNetwork.eth0_addresses) {
+      for (const data of linuxNetwork.eth0_addresses) {
         const parts: Array<string> = data.split("/");
 
         if (parts.length == 2) {
@@ -441,7 +441,7 @@ export class NetworkComponent implements OnInit {
           })
         }
       }
-      for (const data of eBoxNetwork.eth1_addresses) {
+      for (const data of linuxNetwork.eth1_addresses) {
         const parts: Array<string> = data.split("/");
 
         if (parts.length == 2) {
@@ -452,7 +452,7 @@ export class NetworkComponent implements OnInit {
           })
         }
       }
-      for (const data of eBoxNetwork.wifi_addresses) {
+      for (const data of linuxNetwork.wifi_addresses) {
         const parts: Array<string> = data.split("/");
 
         if (parts.length == 2) {

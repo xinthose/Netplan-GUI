@@ -60,6 +60,7 @@ logger.info(f"netplan gui REST started; version = {VERSION}")
 @app.get("/get_interfaces1")
 async def get_interfaces1():
     try:
+        # test: http://localhost:8080/get_interfaces1
         debug = False
         ret_obj = {}
 

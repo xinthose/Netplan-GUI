@@ -1,4 +1,4 @@
-export interface eBoxNetworkIntf {
+export interface LinuxNetworkIntf {
   "br0_addresses": Array<string>,
   "br0_gateway": string,
   "br0_nameservers": Array<string>,
