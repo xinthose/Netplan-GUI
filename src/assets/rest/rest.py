@@ -49,12 +49,67 @@ logger.info(f"netplan gui REST started; version = {VERSION}")
 
 # endregion
 
+# Threads
+
+# region
+
+def delayed_reboot():
+    try:
+        time.sleep(3)
+        EXECUTABLE = "reboot"
+        os.system(EXECUTABLE)
+    except Exception as e:
+        logger.error(f"error = {str(e)}")
+
+
+def delayed_shutdown():
+    try:
+        time.sleep(3)
+        EXECUTABLE = "shutdown now"
+        os.system(EXECUTABLE)
+    except Exception as e:
+        logger.error(f"error = {str(e)}")
+
+
+def delayed_netplan_change():
+    try:
+        time.sleep(1)
+        os.system("sync")  # commit buffer cache to disk
+        # generate config for the renderers
+        os.system("netplan generate")
+        time.sleep(1)
+        # apply config for the renderers
+        # os.system("netplan apply")
+    except Exception as e:
+        logger.error(f"error = {str(e)}")
+
+
+def delayed_vpn_server_change():
+    try:
+        os.system("sync")  # Synchronize cached writes to persistent storage
+
+        time.sleep(1)
+
+        os.system("service openvpn@server restart")
+
+        time.sleep(3)
+
+        os.system("brctl addif br0 tap0")
+
+        time.sleep(1)
+
+        os.system("ifconfig tap0 0.0.0.0 promisc up")
+    except Exception as e:
+        logger.error(f"error = {str(e)}")
+
+
+# endregion
+
 # Netplan GUI
 
 # region
 
 # GET requests
-
 
 @app.get("/get_interfaces1")
 async def get_interfaces1():
@@ -281,15 +336,16 @@ async def submitBridge(data: models.SubmitBridge):
             except yaml.YAMLError as e:
                 logger.error(f"error = {str(e)}")
                 raise HTTPException(status_code=500, detail=str(e))
+        netplan_config = dict(netplan_config.items())
 
         # update netplan file
-        netplan_config["network.bridges"] = netplan_bridge
-        netplan_config["network.ethernets"] = netplan_ethernet
+        netplan_config["network"]["bridges"] = netplan_bridge
+        netplan_config["network"]["ethernets"] = netplan_ethernet
 
         # remove unused values
         if not data["gateway"]:
-            del netplan_config["network.bridges.br0.routes"]
-            del netplan_config["network.bridges.br0.nameservers"]
+            del netplan_config["network"]["bridges"]["br0"]["routes"]
+            del netplan_config["network"]["bridges"]["br0"]["nameservers"]
 
         # write netplan changes
         with io.open(NETPLAN, "w", encoding="utf8") as outfile:
@@ -339,19 +395,20 @@ async def submitEth1(data: models.SubmitEth):
             except yaml.YAMLError as e:
                 logger.error(f"error = {str(e)}")
                 raise HTTPException(status_code=500, detail=str(e))
+        netplan_config = dict(netplan_config.items())
 
         # update netplan file
-        netplan_config["network.ethernets.eth0"] = netplan_eth1
+        netplan_config["network"]["ethernets"]["eth0"] = netplan_eth1
 
         # remove unused values
         if data["deleteEth"]:
-            if "network.ethernets.eth0" in netplan_config:
-                del netplan_config["network.ethernets.eth0"]
+            if ["network"]["ethernets"]["eth0"] in netplan_config:
+                del netplan_config["network"]["ethernets"]["eth0"]
         else:
-            if "network.bridges" in netplan_config:
-                del netplan_config["network.bridges"]
+            if ["network"]["bridges"] in netplan_config:
+                del netplan_config["network"]["bridges"]
             if not data["gateway"]:
-                del netplan_config["network.ethernets.eth0.routes"]
+                del netplan_config["network"]["ethernets"]["eth0"]["routes"]
 
         # write netplan changes
         with io.open(NETPLAN, "w", encoding="utf8") as outfile:
@@ -401,19 +458,20 @@ async def submitEth2(data: models.SubmitEth):
             except yaml.YAMLError as e:
                 logger.error(f"error = {str(e)}")
                 raise HTTPException(status_code=500, detail=str(e))
+        netplan_config = dict(netplan_config.items())
 
         # update netplan file
-        netplan_config["network.ethernets.eth1"] = netplan_eth2
+        netplan_config["network"]["ethernets"]eth1"] = netplan_eth2
 
         # remove unused values
         if data["deleteEth"]:
-            if "network.ethernets.eth1" in netplan_config:
-                del netplan_config["network.ethernets.eth1"]
+            if ["network"]ethernets.eth1" in netplan_config:
+                del netplan_config["network"]["ethernets"]eth1"]
         else:
-            if "network.bridges" in netplan_config:
-                del netplan_config["network.bridges"]
+            if ["network"]["bridges"] in netplan_config:
+                del netplan_config["network"]["bridges"]
             if not data["gateway"]:
-                del netplan_config["network.ethernets.eth1.routes"]
+                del netplan_config["network"]["ethernets"]eth1["routes"]
 
         # write netplan changes
         with io.open(NETPLAN, "w", encoding="utf8") as outfile:
@@ -464,21 +522,22 @@ async def submitWiFi(data: models.SubmitWiFi):
             except yaml.YAMLError as e:
                 logger.error(f"error = {str(e)}")
                 raise HTTPException(status_code=500, detail=str(e))
+        netplan_config = dict(netplan_config.items())
 
         # update netplan file
         netplan_config["network.wifis.wlp1s0"] = netplan_wifi
         if not data["ssidPassword"]:
             netplan_config[
-                "network.wifis.wlp1s0.access-points"
+                ["network"]wifis.wlp1s0.access-points"
             ] = netplan_ap_no_password
 
         # remove unused values
         if data["deleteWiFi"]:
-            if "network.wifis" in netplan_config:
+            if ["network"]wifis" in netplan_config:
                 del netplan_config["network.wifis"]
         else:
             if not data["gateway"]:
-                del netplan_config["network.wifis.wlp1s0.routes"]
+                del netplan_config["network.wifis.wlp1s0["routes"]
 
         # write netplan changes
         with io.open(NETPLAN, "w", encoding="utf8") as outfile:
@@ -497,64 +556,6 @@ async def submitWiFi(data: models.SubmitWiFi):
 
 
 # endregion
-
-# Threads
-
-# region
-
-
-def delayed_reboot():
-    try:
-        time.sleep(3)
-        EXECUTABLE = "reboot"
-        os.system(EXECUTABLE)
-    except Exception as e:
-        logger.error(f"error = {str(e)}")
-
-
-def delayed_shutdown():
-    try:
-        time.sleep(3)
-        EXECUTABLE = "shutdown now"
-        os.system(EXECUTABLE)
-    except Exception as e:
-        logger.error(f"error = {str(e)}")
-
-
-def delayed_netplan_change():
-    try:
-        time.sleep(1)
-        os.system("sync")  # commit buffer cache to disk
-        # generate config for the renderers
-        os.system("netplan generate")
-        time.sleep(1)
-        # apply config for the renderers
-        # os.system("netplan apply")
-    except Exception as e:
-        logger.error(f"error = {str(e)}")
-
-
-def delayed_vpn_server_change():
-    try:
-        os.system("sync")  # Synchronize cached writes to persistent storage
-
-        time.sleep(1)
-
-        os.system("service openvpn@server restart")
-
-        time.sleep(3)
-
-        os.system("brctl addif br0 tap0")
-
-        time.sleep(1)
-
-        os.system("ifconfig tap0 0.0.0.0 promisc up")
-    except Exception as e:
-        logger.error(f"error = {str(e)}")
-
-
-# endregion
-
 
 # Notes
 # logger.info("")		// Detailed information, typically of interest only when diagnosing problems.

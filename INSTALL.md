@@ -11,7 +11,7 @@
 
 - `sudo apt update`
 - `sudo apt install npm nodejs php libapache2-mod-php apache2-utils`
-- `sudo pip install simplejson python-benedict fastapi gunicorn`
+- `sudo pip install fastapi gunicorn simplejson`
   - Ubuntu 23 instructions
     - `apt install python3-fastapi python3-gunicorn python3-simplejson`
     - 
