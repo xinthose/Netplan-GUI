@@ -524,12 +524,6 @@ export class NetworkComponent implements OnInit {
       if (!this.validateNetwork()) {
         return;
       }
-      if ((this.BridgeForm.get("mac1")?.dirty) || (this.BridgeForm.get("mac2")?.dirty)) {
-        const response: boolean = confirm("MAC Address changed.  Are you sure you meant to change this?");
-        if (!response) {
-          return;
-        }
-      }
 
       // show loading icon
       this.loadingBridge = true;
@@ -701,12 +695,6 @@ export class NetworkComponent implements OnInit {
       if (!this.validateNetwork()) {
         return;
       }
-      if (this.Eth0Form.get("mac")?.dirty) {
-        const response: boolean = confirm("MAC Address changed.  Are you sure you meant to change this?");
-        if (!response) {
-          return;
-        }
-      }
 
       // show loading icon
       this.loadingEth0 = true;
@@ -875,12 +863,6 @@ export class NetworkComponent implements OnInit {
       // validate
       if (!this.validateNetwork()) {
         return;
-      }
-      if (this.Eth1Form.get("mac")?.dirty) {
-        const response: boolean = confirm("MAC Address changed.  Are you sure you meant to change this?");
-        if (!response) {
-          return;
-        }
       }
 
       // show loading icon

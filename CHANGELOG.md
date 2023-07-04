@@ -1,5 +1,10 @@
 # Netplan GUI Changelog
 
+## 1.0.6 (7/4/2023)
+
+- update packages
+- remove popup warning about the MAC address being changed (doesn't always work right and is annoying IMO)
+
 ## 1.0.5 (1/29/2023)
 
 - in `network` component, add a Mac Address field for each interface; use more generic `eth0` and `eth1` names instead of hardware specific names like `enp3s0` and `enp4s0`, which can change between devices
