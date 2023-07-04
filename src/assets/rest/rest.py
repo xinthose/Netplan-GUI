@@ -27,7 +27,7 @@ import models   # models.py
 
 # region
 
-VERSION = "1.0.5"
+VERSION = "1.0.6"
 NETPLAN = "/etc/netplan/01-network-manager-all.yaml"
 
 logger = log.setup_custom_logger('root')
@@ -218,6 +218,7 @@ async def get_date_time():
 
 # GET requests - commands
 
+
 @app.get("/clear_all_log_files")
 async def clear_all_log_files():
     try:
@@ -227,6 +228,7 @@ async def clear_all_log_files():
     except Exception as e:
         logger.error(f"error = {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get("/change_log_file_perm")
 async def change_log_file_perm():
@@ -238,6 +240,7 @@ async def change_log_file_perm():
         logger.error(f"error = {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
 @app.get("/reboot_station")
 async def reboot_station():
     try:
@@ -247,6 +250,7 @@ async def reboot_station():
     except Exception as e:
         logger.error(f"error = {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get("/shutdown_station")
 async def shutdown_station():
@@ -259,6 +263,7 @@ async def shutdown_station():
         raise HTTPException(status_code=500, detail=str(e))
 
 # POST requests
+
 
 @app.post("/submitBridge")
 async def submitBridge(data: models.SubmitBridge):
