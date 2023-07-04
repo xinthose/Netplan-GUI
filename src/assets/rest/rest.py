@@ -112,6 +112,8 @@ def delayed_vpn_server_change():
 
 # GET requests
 
+# region
+
 
 @app.get("/get_interfaces1")
 async def get_interfaces1():
@@ -292,7 +294,11 @@ async def shutdown_station():
         raise HTTPException(status_code=500, detail=str(e))
 
 
+# endregion
+
 # POST requests
+
+# region
 
 
 @app.post("/submitBridge")
@@ -338,7 +344,6 @@ async def submitBridge(data: models.SubmitBridge):
             except yaml.YAMLError as e:
                 logger.error(f"error = {str(e)}")
                 raise HTTPException(status_code=500, detail=str(e))
-        netplan_config = dict(netplan_config.items())
 
         # update netplan file
         netplan_config["network"]["bridges"] = netplan_bridge
@@ -397,17 +402,16 @@ async def submitEth1(data: models.SubmitEth):
             except yaml.YAMLError as e:
                 logger.error(f"error = {str(e)}")
                 raise HTTPException(status_code=500, detail=str(e))
-        netplan_config = dict(netplan_config.items())
 
         # update netplan file
         netplan_config["network"]["ethernets"]["eth0"] = netplan_eth1
 
         # remove unused values
         if data["deleteEth"]:
-            if ["network"]["ethernets"]["eth0"] in netplan_config:
+            if hasattr(netplan_config["network"]["ethernets"], "eth0"):
                 del netplan_config["network"]["ethernets"]["eth0"]
         else:
-            if ["network"]["bridges"] in netplan_config:
+            if hasattr(netplan_config["network"], "bridges"):
                 del netplan_config["network"]["bridges"]
             if not data["gateway"]:
                 del netplan_config["network"]["ethernets"]["eth0"]["routes"]
@@ -460,17 +464,16 @@ async def submitEth2(data: models.SubmitEth):
             except yaml.YAMLError as e:
                 logger.error(f"error = {str(e)}")
                 raise HTTPException(status_code=500, detail=str(e))
-        netplan_config = dict(netplan_config.items())
 
         # update netplan file
         netplan_config["network"]["ethernets"]["eth1"] = netplan_eth2
 
         # remove unused values
         if data["deleteEth"]:
-            if ["network"]["ethernets"]["eth1"] in netplan_config:
+            if hasattr(netplan_config["network"]["ethernets"], "eth1"):
                 del netplan_config["network"]["ethernets"]["eth1"]
         else:
-            if ["network"]["bridges"] in netplan_config:
+            if hasattr(netplan_config["network"], "bridges"):
                 del netplan_config["network"]["bridges"]
             if not data["gateway"]:
                 del netplan_config["network"]["ethernets"]["eth1"]["routes"]
@@ -524,7 +527,6 @@ async def submitWiFi(data: models.SubmitWiFi):
             except yaml.YAMLError as e:
                 logger.error(f"error = {str(e)}")
                 raise HTTPException(status_code=500, detail=str(e))
-        netplan_config = dict(netplan_config.items())
 
         # update netplan file
         netplan_config["network"]["wifis"]["wlp1s0"] = netplan_wifi
@@ -535,7 +537,7 @@ async def submitWiFi(data: models.SubmitWiFi):
 
         # remove unused values
         if data["deleteWiFi"]:
-            if ["network"]["wifis"] in netplan_config:
+            if hasattr(netplan_config["network"], "wifis"):
                 del netplan_config["network"]["wifis"]
         else:
             if not data["gateway"]:
@@ -556,6 +558,8 @@ async def submitWiFi(data: models.SubmitWiFi):
         logger.error(f"error = {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
+# endregion
 
 # endregion
 
