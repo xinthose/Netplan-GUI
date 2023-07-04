@@ -304,7 +304,7 @@ async def shutdown_station():
 @app.post("/submitBridge")
 async def submitBridge(data: models.SubmitBridge):
     try:
-        debug = True
+        debug = False
         data = jsonable_encoder(data)
 
         if debug:
@@ -373,7 +373,7 @@ async def submitBridge(data: models.SubmitBridge):
 @app.post("/submitEth1")
 async def submitEth1(data: models.SubmitEth):
     try:
-        debug = True
+        debug = False
         data = jsonable_encoder(data)
 
         if debug:
@@ -435,7 +435,7 @@ async def submitEth1(data: models.SubmitEth):
 @app.post("/submitEth2")
 async def submitEth2(data: models.SubmitEth):
     try:
-        debug = True
+        debug = False
         data = jsonable_encoder(data)
 
         if debug:
