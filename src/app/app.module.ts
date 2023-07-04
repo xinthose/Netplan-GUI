@@ -24,9 +24,6 @@ import { NavigationModule } from '@progress/kendo-angular-navigation';
 import { IndicatorsModule } from '@progress/kendo-angular-indicators';
 import { IconsModule } from '@progress/kendo-angular-icons';
 
-// MDBootstrap
-import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
-
 // Other
 import { HttpErrorInterceptor } from './http-error.interceptor';
 import { LoggerModule, NgxLoggerLevel } from "ngx-logger";
@@ -81,7 +78,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
     // other
     FontAwesomeModule,
-    MdbCollapseModule,
   ],
   providers: [
     FilterService,

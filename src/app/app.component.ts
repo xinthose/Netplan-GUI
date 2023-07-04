@@ -24,10 +24,10 @@ export class AppComponent implements AfterViewInit {
   public commandsSelected: boolean = false;
   public filesSelected: boolean = false;
   // subscriptions
-  networkSelected$!: Subscription;
-  commandsSelected$!: Subscription;
-  alarmsSelected$!: Subscription;
-  filesSelected$!: Subscription;
+  private networkSelected$!: Subscription;
+  private commandsSelected$!: Subscription;
+  private alarmsSelected$!: Subscription;
+  private filesSelected$!: Subscription;
 
   constructor(
     private netplanguiService: NetplanGUIService,

@@ -4,6 +4,7 @@
 
 - update packages
 - remove popup warning about the MAC address being changed (doesn't always work right and is annoying IMO)
+- replace `mdb-angular-ui-kit` with `bootstrap`
 
 ## 1.0.5 (1/29/2023)
 
