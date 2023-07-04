@@ -53,6 +53,7 @@ logger.info(f"netplan gui REST started; version = {VERSION}")
 
 # region
 
+
 def delayed_reboot():
     try:
         time.sleep(3)
@@ -110,6 +111,7 @@ def delayed_vpn_server_change():
 # region
 
 # GET requests
+
 
 @app.get("/get_interfaces1")
 async def get_interfaces1():
@@ -461,17 +463,17 @@ async def submitEth2(data: models.SubmitEth):
         netplan_config = dict(netplan_config.items())
 
         # update netplan file
-        netplan_config["network"]["ethernets"]eth1"] = netplan_eth2
+        netplan_config["network"]["ethernets"]["eth1"] = netplan_eth2
 
         # remove unused values
         if data["deleteEth"]:
-            if ["network"]ethernets.eth1" in netplan_config:
-                del netplan_config["network"]["ethernets"]eth1"]
+            if ["network"]["ethernets"]["eth1"] in netplan_config:
+                del netplan_config["network"]["ethernets"]["eth1"]
         else:
             if ["network"]["bridges"] in netplan_config:
                 del netplan_config["network"]["bridges"]
             if not data["gateway"]:
-                del netplan_config["network"]["ethernets"]eth1["routes"]
+                del netplan_config["network"]["ethernets"]["eth1"]["routes"]
 
         # write netplan changes
         with io.open(NETPLAN, "w", encoding="utf8") as outfile:
@@ -525,19 +527,19 @@ async def submitWiFi(data: models.SubmitWiFi):
         netplan_config = dict(netplan_config.items())
 
         # update netplan file
-        netplan_config["network.wifis.wlp1s0"] = netplan_wifi
+        netplan_config["network"]["wifis"]["wlp1s0"] = netplan_wifi
         if not data["ssidPassword"]:
             netplan_config[
-                ["network"]wifis.wlp1s0.access-points"
+                ["network"]["wifis"]["wlp1s0"]["access-points"]
             ] = netplan_ap_no_password
 
         # remove unused values
         if data["deleteWiFi"]:
-            if ["network"]wifis" in netplan_config:
-                del netplan_config["network.wifis"]
+            if ["network"]["wifis"] in netplan_config:
+                del netplan_config["network"]["wifis"]
         else:
             if not data["gateway"]:
-                del netplan_config["network.wifis.wlp1s0["routes"]
+                del netplan_config["network"]["wifis"]["wlp1s0"]["routes"]
 
         # write netplan changes
         with io.open(NETPLAN, "w", encoding="utf8") as outfile:

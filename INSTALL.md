@@ -14,7 +14,6 @@
 - `sudo pip install fastapi gunicorn simplejson`
   - Ubuntu 23 instructions
     - `apt install python3-fastapi python3-gunicorn python3-simplejson`
-    - 
 - `npm i -g pm2`
 
 ## Install Netplan GUI
