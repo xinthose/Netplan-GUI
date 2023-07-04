@@ -7,15 +7,17 @@
   <kendo-appbar-spacer width="32px"></kendo-appbar-spacer>
   <!-- Navigation -->
   <kendo-appbar-section>
-    <button kendoButton (click)="router.navigate(['network'])" [themeColor]="networkSelected ? 'primary' : 'base'">
+    <button kendoButton (click)="router.navigate(['network'])" [themeColor]="networkSelected ? 'primary' : 'base'"
+      [svgIcon]="faNetworkWiredKendo">
       Network
     </button>
     <kendo-appbar-spacer width="15px"></kendo-appbar-spacer>
-    <button kendoButton (click)="router.navigate(['commands'])" [themeColor]="commandsSelected ? 'primary' : 'base'">
+    <button kendoButton (click)="router.navigate(['commands'])" [themeColor]="commandsSelected ? 'primary' : 'base'"
+      [svgIcon]="faTerminaldKendo">
       Commands
     </button>
     <kendo-appbar-spacer width="15px"></kendo-appbar-spacer>
-    <button kendoButton (click)="logsClick()">
+    <button kendoButton (click)="logsClick()" [svgIcon]="faArrowUpRightFromSquareKendo">
       Logs
     </button>
   </kendo-appbar-section>
