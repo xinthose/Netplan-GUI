@@ -1,10 +1,11 @@
 # Netplan GUI Changelog
 
-## 1.0.6 (7/4/2023)
+## 1.1.0 (7/4/2023)
 
 - update packages
 - remove popup warning about the MAC address being changed (doesn't always work right and is annoying IMO)
 - replace `mdb-angular-ui-kit` with `bootstrap`
+- allow REST app to run in Ubuntu 23 due to move away from `pip install`
 
 ## 1.0.5 (1/29/2023)
 
