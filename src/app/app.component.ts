@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Router } from "@angular/router";
 
 // services
 import { NetplanGUIService } from "./netplan-gui.service";
@@ -18,7 +19,6 @@ import { environment } from "../environments/environment";
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements AfterViewInit {
-  public LogsURL: string = "http://" + (environment.production ? window.location.hostname : "localhost") + "/logs";
   // navigation selected
   public networkSelected: boolean = false;
   public commandsSelected: boolean = false;
@@ -33,6 +33,7 @@ export class AppComponent implements AfterViewInit {
     private netplanguiService: NetplanGUIService,
     private notificationService: NotificationService,
     private logger: NGXLogger,
+    public router: Router,
   ) {
   }
 
@@ -52,6 +53,19 @@ export class AppComponent implements AfterViewInit {
     });
 
     this.logger.info("NetplanGUI is running");
+  }
+
+  logsClick() {
+    // get logs URL
+    let logsURL: string = "";
+    if (environment.production) {
+      logsURL = `${window.location.origin}/logs`;
+    } else {
+      logsURL = `http://localhost/logs`;
+    }
+
+    // navigate
+    window.open(logsURL, "_blank");
   }
 
   private resetSelection(): void {
