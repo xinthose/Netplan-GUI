@@ -83,7 +83,7 @@ export class AppComponent implements AfterViewInit {
     // get logs URL
     let logsURL: string = "";
     if (environment.production) {
-      logsURL = `${window.location.origin}/logs`;
+      logsURL = `http://${window.location.hostname}/logs`;
     } else {
       logsURL = `http://localhost/logs`;
     }

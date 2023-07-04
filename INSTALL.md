@@ -12,7 +12,7 @@
 - `sudo apt update`
 - `sudo apt install npm nodejs php libapache2-mod-php apache2-utils`
 - `sudo pip install fastapi gunicorn simplejson`
-  - If using Ubuntu 23 / Debian 11+, run this command instead: `apt install python3-fastapi python3-gunicorn python3-simplejson`
+  - If using Ubuntu 23 / Debian 11+, run this command instead: `sudo apt install python3-fastapi python3-gunicorn python3-simplejson`
 - `npm i -g pm2`
 
 ## Install Netplan GUI
