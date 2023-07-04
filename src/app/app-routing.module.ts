@@ -8,9 +8,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const routes: Routes = [
   { path: "", redirectTo: "/network", pathMatch: "full" },
-  { path: "network", component: NetworkComponent },
-  { path: "commands", component: CommandsComponent },
-  { path: '**', component: PageNotFoundComponent },
+  { path: "network", component: NetworkComponent, title: "Netplan GUI - Network" },
+  { path: "commands", component: CommandsComponent, title: "Netplan GUI - Commands" },
+  { path: '**', component: PageNotFoundComponent, title: "Page Not Found" },
 ];
 
 @NgModule({
