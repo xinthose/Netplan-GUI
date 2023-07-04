@@ -16,7 +16,6 @@ import threading
 import time
 import simplejson as json
 import yaml
-from datetime import datetime
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -192,32 +191,6 @@ async def get_interfaces1():
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.get("/get_date_time")
-async def get_date_time():
-    try:
-        debug = False
-        ret_obj = {}
-
-        # datetime object containing current date and time
-        now = datetime.now()
-
-        # Sun Sep 8 07:06:05 2013
-        dt_string = now.strftime("%c")
-
-        ret_obj["data"] = dt_string
-
-        # return data
-        if debug:
-            logger.info(f"ret_obj = {json.dumps(ret_obj)}")
-        return ret_obj
-    except Exception as e:
-        logger.error(f"error = {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-# GET requests - commands
-
-
 @app.get("/clear_all_log_files")
 async def clear_all_log_files():
     try:
@@ -300,7 +273,14 @@ async def submitBridge(data: models.SubmitBridge):
 
         # get netplan file
         with open(NETPLAN, "r") as stream:
-            netplan_config = yaml.safe_load(stream)
+            try:
+                netplan_config = yaml.safe_load(stream)
+                if debug:
+                    logger.debug("netplan_config = " + json.dumps(netplan_config))
+                stream.close()
+            except yaml.YAMLError as e:
+                logger.error(f"error = {str(e)}")
+                raise HTTPException(status_code=500, detail=str(e))
 
         # update netplan file
         netplan_config["network.bridges"] = netplan_bridge
@@ -351,7 +331,14 @@ async def submitEth1(data: models.SubmitEth):
 
         # get netplan file
         with open(NETPLAN, "r") as stream:
-            netplan_config = yaml.safe_load(stream)
+            try:
+                netplan_config = yaml.safe_load(stream)
+                if debug:
+                    logger.debug("netplan_config = " + json.dumps(netplan_config))
+                stream.close()
+            except yaml.YAMLError as e:
+                logger.error(f"error = {str(e)}")
+                raise HTTPException(status_code=500, detail=str(e))
 
         # update netplan file
         netplan_config["network.ethernets.eth0"] = netplan_eth1
@@ -406,7 +393,14 @@ async def submitEth2(data: models.SubmitEth):
 
         # get netplan file
         with open(NETPLAN, "r") as stream:
-            netplan_config = yaml.safe_load(stream)
+            try:
+                netplan_config = yaml.safe_load(stream)
+                if debug:
+                    logger.debug("netplan_config = " + json.dumps(netplan_config))
+                stream.close()
+            except yaml.YAMLError as e:
+                logger.error(f"error = {str(e)}")
+                raise HTTPException(status_code=500, detail=str(e))
 
         # update netplan file
         netplan_config["network.ethernets.eth1"] = netplan_eth2
@@ -462,7 +456,14 @@ async def submitWiFi(data: models.SubmitWiFi):
 
         # get netplan file
         with open(NETPLAN, "r") as stream:
-            netplan_config = yaml.safe_load(stream)
+            try:
+                netplan_config = yaml.safe_load(stream)
+                if debug:
+                    logger.debug("netplan_config = " + json.dumps(netplan_config))
+                stream.close()
+            except yaml.YAMLError as e:
+                logger.error(f"error = {str(e)}")
+                raise HTTPException(status_code=500, detail=str(e))
 
         # update netplan file
         netplan_config["network.wifis.wlp1s0"] = netplan_wifi
@@ -489,26 +490,6 @@ async def submitWiFi(data: models.SubmitWiFi):
         thr = threading.Thread(target=delayed_netplan_change)
         thr.start()
 
-        return {"response": "OK"}
-    except Exception as e:
-        logger.error(f"error = {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.post("/setdate")
-async def setdate(data: models.SetDate):
-    try:
-        data = jsonable_encoder(data)
-
-        # set new date/time
-        EXECUTABLE = f"date --set '{data['ServerTime']}'"
-        os.system(EXECUTABLE)
-
-        # permanently save new date/time
-        EXECUTABLE2 = "hwclock -w"
-        os.system(EXECUTABLE2)
-
-        # return success
         return {"response": "OK"}
     except Exception as e:
         logger.error(f"error = {str(e)}")

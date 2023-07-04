@@ -81,15 +81,6 @@ export class NetplanGUIService {
     }
   }
 
-  public async getDateTime(): Promise<{ data: string }> {
-    try {
-      // test: http://10.0.0.2:8080/get_date_time
-      return await this.get("get_date_time");
-    } catch (error: any) {
-      this.logger.error(`${this.logID}getDateTime >> error = ${error}`);
-      throw new Error(error.toString());
-    }
-  }
 
   // POST requests
 
@@ -138,18 +129,6 @@ export class NetplanGUIService {
       return await this.post("submitWiFi", data);
     } catch (error: any) {
       this.logger.error(`${this.logID}submitEth >> error = ${error}`);
-      throw new Error(error.toString());
-    }
-  }
-
-  public async setDate(serverTime: string): Promise<void> {
-    try {
-      const data = {
-        "ServerTime": serverTime
-      }
-      return await this.post("setdate", data);
-    } catch (error: any) {
-      this.logger.error(`${this.logID}setDate >> error = ${error}`);
       throw new Error(error.toString());
     }
   }
