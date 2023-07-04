@@ -3,7 +3,6 @@
     {
       "name": "netplan-gui",
       "script": "./server.js",
-      "watch": false,
       "max_memory_restart": "256M",
       "out_file": "/var/www/html/logs/netplan-gui-out.log",
       "error_file": "/var/www/html/logs/netplan-gui-error.log",
