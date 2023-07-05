@@ -23,5 +23,4 @@
 
 ## Use Cases
 
-- linux unattended kiosk that needs easy network configuration
-  - especially for those without programming knowledge
+- Linux unattended kiosk that needs easy network configuration via the browser (especially for those without programming knowledge)
