@@ -27,7 +27,7 @@
 - `pm2 start pm2.json`  // start client app
 - `cd assets/rest`  // pm2 start command needs to be run from the same directory as the app, so change directories to it
 - `pm2 start pm2.json`  // start REST app
-  - both apps should show a status of `online`, consult Troubleshooting steps below if it is `errored`
+  - both apps should show a status of `online`, consult [Troubleshooting](#troubleshooting) steps below if it is `errored`
 - `pm2 save`  // save these applications so that `pm2 resurrect` can easily bring them up again on boot
 - `chmod -R 777 /etc/netplan`  // allow 01-network-manager-all.yaml file to be changed by non-root app
 - Netplan GUI can now be accessed locally from this URL: <http://localhost:3000>
