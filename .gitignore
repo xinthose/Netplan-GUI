@@ -82,3 +82,4 @@ back_end/crontab/UpdateCapbalance/build/
 # other
 .angular
 __pycache__
+kendo-ui-license.txt

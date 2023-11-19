@@ -1,5 +1,9 @@
 # Netplan GUI Changelog
 
+## 1.1.1 (11/19/2023)
+
+- update packages (Angular 17)
+
 ## 1.1.0 (7/4/2023)
 
 - update packages (Angular 16)
