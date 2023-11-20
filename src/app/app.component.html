@@ -8,16 +8,19 @@
   <!-- Navigation -->
   <kendo-appbar-section>
     <button kendoButton (click)="router.navigate(['network'])" [themeColor]="networkSelected ? 'primary' : 'base'"
-      [svgIcon]="faNetworkWiredKendo">
+      class="navbar_button">
+      <fa-icon [icon]="faNetworkWired" class="me-2"></fa-icon>
       Network
     </button>
     <kendo-appbar-spacer width="15px"></kendo-appbar-spacer>
     <button kendoButton (click)="router.navigate(['commands'])" [themeColor]="commandsSelected ? 'primary' : 'base'"
-      [svgIcon]="faTerminaldKendo">
+      class="navbar_button">
+      <fa-icon [icon]="faTerminal" class="me-2"></fa-icon>
       Commands
     </button>
     <kendo-appbar-spacer width="15px"></kendo-appbar-spacer>
-    <button kendoButton (click)="logsClick()" [svgIcon]="faArrowUpRightFromSquareKendo">
+    <button kendoButton (click)="logsClick()" class="navbar_button">
+      <fa-icon [icon]="faArrowUpRightFromSquare" class="me-2"></fa-icon>
       Logs
     </button>
   </kendo-appbar-section>

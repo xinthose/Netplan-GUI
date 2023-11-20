@@ -6,7 +6,6 @@ import { NetplanGUIService } from "./netplan-gui.service";
 import { NotificationService } from "@progress/kendo-angular-notification";
 
 // icons
-import { SVGIcon } from '@progress/kendo-svg-icons';
 import { faNetworkWired, faTerminal, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
 // rxjs
@@ -31,22 +30,6 @@ export class AppComponent implements AfterViewInit {
   public faNetworkWired = faNetworkWired;
   public faTerminal = faTerminal;
   public faArrowUpRightFromSquare = faArrowUpRightFromSquare;
-  // Kendo
-  public faNetworkWiredKendo: SVGIcon = {
-    name: faNetworkWired.iconName,
-    content: `<path d="${faNetworkWired.icon[4]}" />`,
-    viewBox: `0 0 ${faNetworkWired.icon[0]} ${faNetworkWired.icon[1]}`,
-  };
-  public faTerminaldKendo: SVGIcon = {
-    name: faTerminal.iconName,
-    content: `<path d="${faTerminal.icon[4]}" />`,
-    viewBox: `0 0 ${faTerminal.icon[0]} ${faTerminal.icon[1]}`,
-  };
-  public faArrowUpRightFromSquareKendo: SVGIcon = {
-    name: faArrowUpRightFromSquare.iconName,
-    content: `<path d="${faArrowUpRightFromSquare.icon[4]}" />`,
-    viewBox: `0 0 ${faArrowUpRightFromSquare.icon[0]} ${faArrowUpRightFromSquare.icon[1]}`,
-  };
   // subscriptions
   private networkSelected$!: Subscription;
   private commandsSelected$!: Subscription;
