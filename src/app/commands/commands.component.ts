@@ -80,18 +80,6 @@ export class CommandsComponent implements OnInit {
       this.loadingClrLogFiles = false;
     } catch (error: any) {
       this.logger.error("CommandsComponent.clearLogFiles >> error = " + error);
-      this.notificationService.show({
-        content: error,
-        closable: true,
-        cssClass: "notification",
-        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
-        type: { style: "error", icon: false },  // none, success, error, warning, info
-        hideAfter: 10000,  // milliseconds
-        animation: {
-          type: "fade",
-          duration: 150, // milliseconds (notif)
-        },
-      });
       this.loadingClrLogFiles = false;
     }
   }
@@ -121,18 +109,6 @@ export class CommandsComponent implements OnInit {
       this.loadingChngLogFilePerm = false;
     } catch (error: any) {
       this.logger.error("CommandsComponent.changeLogFilePermissions >> error = " + error);
-      this.notificationService.show({
-        content: error,
-        closable: true,
-        cssClass: "notification",
-        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
-        type: { style: "error", icon: false },  // none, success, error, warning, info
-        hideAfter: 10000,  // milliseconds
-        animation: {
-          type: "fade",
-          duration: 150, // milliseconds (notif)
-        },
-      });
       this.loadingChngLogFilePerm = false;
     }
   }
@@ -218,18 +194,6 @@ export class CommandsComponent implements OnInit {
       }
     } catch (error: any) {
       this.logger.error("CommandsComponent.rebootComputerConfirm >> error = " + error);
-      this.notificationService.show({
-        content: error,
-        closable: true,
-        cssClass: "notification",
-        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
-        type: { style: "error", icon: false },  // none, success, error, warning, info
-        hideAfter: 10000,  // milliseconds
-        animation: {
-          type: "fade",
-          duration: 150, // milliseconds (notif)
-        },
-      });
       this.rebootComputerConfirmOpen = false;
     }
   }
@@ -253,18 +217,6 @@ export class CommandsComponent implements OnInit {
       }
     } catch (error: any) {
       this.logger.error("CommandsComponent.shutdownComputerConfirm >> error = " + error);
-      this.notificationService.show({
-        content: error,
-        closable: true,
-        cssClass: "notification",
-        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
-        type: { style: "error", icon: false },  // none, success, error, warning, info
-        hideAfter: 10000,  // milliseconds
-        animation: {
-          type: "fade",
-          duration: 150, // milliseconds (notif)
-        },
-      });
       this.shutdownComputerConfirmOpen = false;
     }
   }

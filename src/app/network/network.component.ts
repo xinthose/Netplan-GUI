@@ -495,18 +495,6 @@ export class NetworkComponent implements OnInit {
       this.loading = false;
     } catch (error: any) {
       this.logger.error("NetworkComponent.refreshNetwork >> error = " + error);
-      this.notificationService.show({
-        content: error,
-        closable: true,
-        cssClass: "notification",
-        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
-        type: { style: "error", icon: false },  // none, success, error, warning, info
-        hideAfter: 10000,  // milliseconds
-        animation: {
-          type: "fade",
-          duration: 150, // milliseconds (notif)
-        },
-      });
       this.loading = false;
     }
   }
@@ -561,18 +549,6 @@ export class NetworkComponent implements OnInit {
       this.BridgeForm.markAsUntouched();
     } catch (error: any) {
       this.logger.error("NetworkComponent.onSubmitBridge >> error = " + error);
-      this.notificationService.show({
-        content: error,
-        closable: true,
-        cssClass: "notification",
-        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
-        type: { style: "error", icon: false },  // none, success, error, warning, info
-        hideAfter: 10000,  // milliseconds
-        animation: {
-          type: "fade",
-          duration: 150, // milliseconds (notif)
-        },
-      });
       this.loadingBridge = false;
     }
   }
@@ -732,18 +708,6 @@ export class NetworkComponent implements OnInit {
       this.Eth0Form.markAsUntouched();
     } catch (error: any) {
       this.logger.error("NetworkComponent.onSubmitEth0 >> error = " + error);
-      this.notificationService.show({
-        content: error,
-        closable: true,
-        cssClass: "notification",
-        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
-        type: { style: "error", icon: false },  // none, success, error, warning, info
-        hideAfter: 10000,  // milliseconds
-        animation: {
-          type: "fade",
-          duration: 150, // milliseconds (notif)
-        },
-      });
       this.loadingEth0 = false;
     }
   }
@@ -901,18 +865,6 @@ export class NetworkComponent implements OnInit {
       this.Eth1Form.markAsUntouched();
     } catch (error: any) {
       this.logger.error("NetworkComponent.onSubmitEth1 >> error = " + error);
-      this.notificationService.show({
-        content: error,
-        closable: true,
-        cssClass: "notification",
-        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
-        type: { style: "error", icon: false },  // none, success, error, warning, info
-        hideAfter: 10000,  // milliseconds
-        animation: {
-          type: "fade",
-          duration: 150, // milliseconds (notif)
-        },
-      });
       this.loadingEth1 = false;
     }
   }
@@ -1072,18 +1024,6 @@ export class NetworkComponent implements OnInit {
       this.WiFiForm.markAsUntouched();
     } catch (error: any) {
       this.logger.error("NetworkComponent.onSubmitWiFi >> error = " + error);
-      this.notificationService.show({
-        content: error,
-        closable: true,
-        cssClass: "notification",
-        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
-        type: { style: "error", icon: false },  // none, success, error, warning, info
-        hideAfter: 10000,  // milliseconds
-        animation: {
-          type: "fade",
-          duration: 150, // milliseconds (notif)
-        },
-      });
       this.loadingWiFi = false;
     }
   }
