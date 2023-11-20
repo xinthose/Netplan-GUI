@@ -105,7 +105,8 @@
                       (remove)="bridgeGridRemove($event)" (edit)="bridgeGridEdit($event)">
                       <!-- Toolbar -->
                       <ng-template kendoGridToolbarTemplate>
-                        <button type="button" kendoGridAddCommand icon="plus" class="float-left">New IP Address</button>
+                        <button type="button" kendoGridAddCommand [svgIcon]="plusIcon" class="float-left">New IP
+                          Address</button>
                       </ng-template>
                       <!-- Columns -->
                       <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
@@ -231,7 +232,8 @@
                       (save)="eth0GridSave($event)" (remove)="eth0GridRemove($event)" (edit)="eth0GridEdit($event)">
                       <!-- Toolbar -->
                       <ng-template kendoGridToolbarTemplate>
-                        <button type="button" kendoGridAddCommand icon="plus" class="float-left">New IP Address</button>
+                        <button type="button" kendoGridAddCommand [svgIcon]="plusIcon" class="float-left">New IP
+                          Address</button>
                       </ng-template>
                       <!-- Columns -->
                       <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
@@ -354,7 +356,8 @@
                       (save)="eth1GridSave($event)" (remove)="eth1GridRemove($event)" (edit)="eth1GridEdit($event)">
                       <!-- Toolbar -->
                       <ng-template kendoGridToolbarTemplate>
-                        <button type="button" kendoGridAddCommand icon="plus" class="float-left">New IP Address</button>
+                        <button type="button" kendoGridAddCommand [svgIcon]="plusIcon" class="float-left">New IP
+                          Address</button>
                       </ng-template>
                       <!-- Columns -->
                       <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
@@ -493,7 +496,8 @@
                       (save)="wifiGridSave($event)" (remove)="wifiGridRemove($event)" (edit)="wifiGridEdit($event)">
                       <!-- Toolbar -->
                       <ng-template kendoGridToolbarTemplate>
-                        <button type="button" kendoGridAddCommand icon="plus" class="float-left">New IP Address</button>
+                        <button type="button" kendoGridAddCommand [svgIcon]="plusIcon" class="float-left">New IP
+                          Address</button>
                       </ng-template>
                       <!-- Columns -->
                       <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>

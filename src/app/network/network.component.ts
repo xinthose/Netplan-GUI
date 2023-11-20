@@ -8,6 +8,7 @@ import { NotificationService } from "@progress/kendo-angular-notification";
 // progress
 import { GridDataResult } from "@progress/kendo-angular-grid";
 import { SortDescriptor, orderBy } from "@progress/kendo-data-query";
+import { SVGIcon, plusIcon } from '@progress/kendo-svg-icons';
 
 // interfaces
 import { GridNetworkIntf } from "../interfaces/GridNetworkIntf";
@@ -210,7 +211,8 @@ export class NetworkComponent implements OnInit {
   wifiGridEnabled: boolean = false;
   wifiGridEditing: boolean = false;
   // icons
-  faPencilAlt = faPencilAlt;
+  public faPencilAlt = faPencilAlt;
+  public plusIcon: SVGIcon = plusIcon;
 
   constructor(
     private netplanguiService: NetplanGUIService,
