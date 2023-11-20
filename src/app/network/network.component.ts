@@ -259,6 +259,7 @@ export class NetworkComponent implements OnInit {
     // subscribe to form changes
     this.BridgeForm.get("enabled")!.valueChanges.subscribe((enabled: boolean) => {
       this.bridgeGridEnabled = enabled;
+
       if (!enabled) {
         // reset fields
         this.BridgeForm.controls["mac1"].patchValue("");
@@ -269,12 +270,12 @@ export class NetworkComponent implements OnInit {
         this.BridgeForm.controls["addresses"].patchValue([]);
         this.bridgeGridData = [];
       }
-
     });
     this.Eth0Form.get("enabled")!.valueChanges.subscribe((enabled: boolean) => {
       this.eth0GridEnabled = enabled;
       if (enabled) {
-        // enable required field
+        // enable required fields
+        this.Eth0Form.controls["mac"].enable();
         this.Eth0Form.controls["addresses"].enable();
 
         // clear fake data
@@ -288,7 +289,7 @@ export class NetworkComponent implements OnInit {
         this.Eth0Form.controls["addresses"].patchValue([]);
         this.eth0GridData = [];
 
-        // disable required field
+        // disable required fields
         this.Eth0Form.controls["mac"].disable();
         this.Eth0Form.controls["addresses"].disable();
 
@@ -303,7 +304,8 @@ export class NetworkComponent implements OnInit {
     this.Eth1Form.get("enabled")!.valueChanges.subscribe((enabled: boolean) => {
       this.eth1GridEnabled = enabled;
       if (enabled) {
-        // enable required field
+        // enable required fields
+        this.Eth1Form.controls["mac"].enable();
         this.Eth1Form.controls["addresses"].enable();
 
         // clear fake data
@@ -317,7 +319,7 @@ export class NetworkComponent implements OnInit {
         this.Eth1Form.controls["addresses"].patchValue([]);
         this.eth1GridData = [];
 
-        // disable required field
+        // disable required fields
         this.Eth1Form.controls["mac"].disable();
         this.Eth1Form.controls["addresses"].disable();
 
