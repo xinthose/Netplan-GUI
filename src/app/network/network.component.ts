@@ -222,7 +222,7 @@ export class NetworkComponent implements OnInit {
   ) {
     // setup forms
     this.BridgeForm = this.formBuilder.group({
-      enabled: [false, Validators.requiredTrue],
+      enabled: false,
       mac1: [{ value: "", disabled: false }, [Validators.required, Validators.pattern(this.macRegex)]],
       mac2: [{ value: "", disabled: false }, [Validators.required, Validators.pattern(this.macRegex)]],
       gateway: ["", Validators.pattern(this.ipRegex)],
