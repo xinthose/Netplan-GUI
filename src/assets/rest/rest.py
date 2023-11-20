@@ -404,7 +404,11 @@ async def submitEth1(data: models.SubmitEth):
                 raise HTTPException(status_code=500, detail=str(e))
 
         # update netplan file
-        netplan_config["network"]["ethernets"]["eth0"] = netplan_eth1
+        if hasattr(netplan_config["network"], "ethernets"):
+            netplan_config["network"]["ethernets"]["eth0"] = netplan_eth1
+        else:
+            netplan_config["network"]["ethernets"] = {}
+            netplan_config["network"]["ethernets"]["eth0"] = netplan_eth1
 
         # remove unused values
         if data["deleteEth"]:
