@@ -4,7 +4,9 @@
 
 - update packages (Angular 17)
 - *Bug*: when a `01-network-manager-all.yaml` file has the default contents (e.g. only `version` and `renderer`) and nothing else, in functions `submitEth1` and `submitEth2` check if `netplan_config` has the `ethernets` attribute before trying to set `eth0` or `eth1` on it ([Issue #11](https://github.com/xinthose/Netplan-GUI/issues/11))
-- Only show error popup in `http-error.interceptor.ts`
+- *Bug*: Only show error popup in `http-error.interceptor.ts`
+- *Bug*: allow Submit button to be clicked on Ethernet port if it was disabled
+- Style changes
 
 ## 1.1.0 (7/4/2023)
 
