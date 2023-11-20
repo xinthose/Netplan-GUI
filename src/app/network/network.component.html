@@ -69,41 +69,42 @@
                 <!-- Addresses -->
                 <kendo-formfield *ngIf="bridgeGridEnabled">
                   <kendo-label labelCssClass="kendoFormLabel" text="Addresses"></kendo-label>
-                  <kendo-grid [data]="bridgeGridData" [height]="200" [sortable]="{ allowUnsort: true, mode: 'single' }"
-                    [sort]="sort" (add)="bridgeGridAdd($event)" (cancel)="bridgeGridCancel($event)"
-                    (save)="bridgeGridSave($event)" (remove)="bridgeGridRemove($event)" (edit)="bridgeGridEdit($event)">
-                    <!-- Toolbar -->
-                    <ng-template kendoGridToolbarTemplate>
-                      <button type="button" kendoGridAddCommand [svgIcon]="plusIcon">New IP
-                        Address</button>
-                    </ng-template>
-                    <!-- Columns -->
-                    <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
-                    <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
-                      <ng-template kendoGridCellTemplate let-dataItem>
-                        {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
-                      </ng-template>
-                      <ng-template kendoGridEditTemplate let-formGroup="BridgeGridForm">
-                        <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
-                          [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
-                          [formControl]="BridgeGridForm.get('cidr')" [adaptiveMode]="true">
-                        </kendo-dropdownlist>
-                      </ng-template>
-                    </kendo-grid-column>
-                    <kendo-grid-command-column title="Command" [width]="220">
-                      <ng-template kendoGridCellTemplate let-isNew="isNew">
-                        <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
-                        <button kendoGridRemoveCommand type="button">Remove</button>
-                        <button kendoGridSaveCommand [disabled]="BridgeGridForm?.invalid" type="button">{{ isNew ? 'Add'
-                          : 'Update'
-                          }}</button>
-                        <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
-                      </ng-template>
-                    </kendo-grid-command-column>
-                  </kendo-grid>
                   <kendo-formhint>IP addresses of the bridge (can add multiple).</kendo-formhint>
                   <kendo-formerror>Error: Address is required.</kendo-formerror>
                 </kendo-formfield>
+                <kendo-grid *ngIf="bridgeGridEnabled" [data]="bridgeGridData" [height]="200"
+                  [sortable]="{ allowUnsort: true, mode: 'single' }" [sort]="sort" (add)="bridgeGridAdd($event)"
+                  (cancel)="bridgeGridCancel($event)" (save)="bridgeGridSave($event)"
+                  (remove)="bridgeGridRemove($event)" (edit)="bridgeGridEdit($event)">
+                  <!-- Toolbar -->
+                  <ng-template kendoGridToolbarTemplate>
+                    <button type="button" kendoGridAddCommand [svgIcon]="plusIcon">New IP
+                      Address</button>
+                  </ng-template>
+                  <!-- Columns -->
+                  <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
+                  <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
+                    </ng-template>
+                    <ng-template kendoGridEditTemplate let-formGroup="BridgeGridForm">
+                      <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
+                        [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
+                        [formControl]="BridgeGridForm.get('cidr')" [adaptiveMode]="true">
+                      </kendo-dropdownlist>
+                    </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-command-column title="Command" [width]="220">
+                    <ng-template kendoGridCellTemplate let-isNew="isNew">
+                      <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
+                      <button kendoGridRemoveCommand type="button">Remove</button>
+                      <button kendoGridSaveCommand [disabled]="BridgeGridForm?.invalid" type="button">{{ isNew ? 'Add'
+                        : 'Update'
+                        }}</button>
+                      <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                    </ng-template>
+                  </kendo-grid-command-column>
+                </kendo-grid>
                 <!-- Submit -->
                 <br />
                 <button kendoButton
@@ -171,41 +172,42 @@
                 <!-- Addresses -->
                 <kendo-formfield *ngIf="eth0GridEnabled">
                   <kendo-label labelCssClass="kendoFormLabel" text="Addresses"></kendo-label>
-                  <kendo-grid [data]="eth0GridData" [height]="200" [sortable]="{ allowUnsort: true, mode: 'single' }"
-                    [sort]="sort" (add)="eth0GridAdd($event)" (cancel)="eth0GridCancel($event)"
-                    (save)="eth0GridSave($event)" (remove)="eth0GridRemove($event)" (edit)="eth0GridEdit($event)">
-                    <!-- Toolbar -->
-                    <ng-template kendoGridToolbarTemplate>
-                      <button type="button" kendoGridAddCommand [svgIcon]="plusIcon">New IP
-                        Address</button>
-                    </ng-template>
-                    <!-- Columns -->
-                    <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
-                    <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
-                      <ng-template kendoGridCellTemplate let-dataItem>
-                        {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
-                      </ng-template>
-                      <ng-template kendoGridEditTemplate let-formGroup="Eth0GridForm">
-                        <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
-                          [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
-                          [formControl]="Eth0GridForm.get('cidr')" cc>
-                        </kendo-dropdownlist>
-                      </ng-template>
-                    </kendo-grid-column>
-                    <kendo-grid-command-column title="Command" [width]="220">
-                      <ng-template kendoGridCellTemplate let-isNew="isNew">
-                        <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
-                        <button kendoGridRemoveCommand type="button">Remove</button>
-                        <button kendoGridSaveCommand [disabled]="Eth0GridForm?.invalid" type="button">{{ isNew ? 'Add' :
-                          'Update'
-                          }}</button>
-                        <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
-                      </ng-template>
-                    </kendo-grid-command-column>
-                  </kendo-grid>
                   <kendo-formhint>IP addresses of the port.</kendo-formhint>
                   <kendo-formerror>Error: Address is required.</kendo-formerror>
                 </kendo-formfield>
+                <kendo-grid *ngIf="eth0GridEnabled" [data]="eth0GridData" [height]="200"
+                  [sortable]="{ allowUnsort: true, mode: 'single' }" [sort]="sort" (add)="eth0GridAdd($event)"
+                  (cancel)="eth0GridCancel($event)" (save)="eth0GridSave($event)" (remove)="eth0GridRemove($event)"
+                  (edit)="eth0GridEdit($event)">
+                  <!-- Toolbar -->
+                  <ng-template kendoGridToolbarTemplate>
+                    <button type="button" kendoGridAddCommand [svgIcon]="plusIcon">New IP
+                      Address</button>
+                  </ng-template>
+                  <!-- Columns -->
+                  <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
+                  <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
+                    </ng-template>
+                    <ng-template kendoGridEditTemplate let-formGroup="Eth0GridForm">
+                      <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
+                        [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
+                        [formControl]="Eth0GridForm.get('cidr')" cc>
+                      </kendo-dropdownlist>
+                    </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-command-column title="Command" [width]="220">
+                    <ng-template kendoGridCellTemplate let-isNew="isNew">
+                      <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
+                      <button kendoGridRemoveCommand type="button">Remove</button>
+                      <button kendoGridSaveCommand [disabled]="Eth0GridForm?.invalid" type="button">{{ isNew ? 'Add' :
+                        'Update'
+                        }}</button>
+                      <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                    </ng-template>
+                  </kendo-grid-command-column>
+                </kendo-grid>
                 <!-- Submit -->
                 <br />
                 <button kendoButton
@@ -270,41 +272,42 @@
                 <!-- Addresses -->
                 <kendo-formfield *ngIf="eth1GridEnabled">
                   <kendo-label labelCssClass="kendoFormLabel" text="Addresses"></kendo-label>
-                  <kendo-grid [data]="eth1GridData" [height]="200" [sortable]="{ allowUnsort: true, mode: 'single' }"
-                    [sort]="sort" (add)="eth1GridAdd($event)" (cancel)="eth1GridCancel($event)"
-                    (save)="eth1GridSave($event)" (remove)="eth1GridRemove($event)" (edit)="eth1GridEdit($event)">
-                    <!-- Toolbar -->
-                    <ng-template kendoGridToolbarTemplate>
-                      <button type="button" kendoGridAddCommand [svgIcon]="plusIcon">New IP
-                        Address</button>
-                    </ng-template>
-                    <!-- Columns -->
-                    <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
-                    <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
-                      <ng-template kendoGridCellTemplate let-dataItem>
-                        {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
-                      </ng-template>
-                      <ng-template kendoGridEditTemplate let-formGroup="Eth1GridForm">
-                        <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
-                          [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
-                          [formControl]="Eth1GridForm.get('cidr')" cc>
-                        </kendo-dropdownlist>
-                      </ng-template>
-                    </kendo-grid-column>
-                    <kendo-grid-command-column title="Command" [width]="220">
-                      <ng-template kendoGridCellTemplate let-isNew="isNew">
-                        <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
-                        <button kendoGridRemoveCommand type="button">Remove</button>
-                        <button kendoGridSaveCommand [disabled]="Eth1GridForm?.invalid" type="button">{{ isNew ? 'Add' :
-                          'Update'
-                          }}</button>
-                        <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
-                      </ng-template>
-                    </kendo-grid-command-column>
-                  </kendo-grid>
                   <kendo-formhint>IP addresses of the port.</kendo-formhint>
                   <kendo-formerror>Error: Address is required.</kendo-formerror>
                 </kendo-formfield>
+                <kendo-grid *ngIf="eth1GridEnabled" [data]="eth1GridData" [height]="200"
+                  [sortable]="{ allowUnsort: true, mode: 'single' }" [sort]="sort" (add)="eth1GridAdd($event)"
+                  (cancel)="eth1GridCancel($event)" (save)="eth1GridSave($event)" (remove)="eth1GridRemove($event)"
+                  (edit)="eth1GridEdit($event)">
+                  <!-- Toolbar -->
+                  <ng-template kendoGridToolbarTemplate>
+                    <button type="button" kendoGridAddCommand [svgIcon]="plusIcon">New IP
+                      Address</button>
+                  </ng-template>
+                  <!-- Columns -->
+                  <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
+                  <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
+                    </ng-template>
+                    <ng-template kendoGridEditTemplate let-formGroup="Eth1GridForm">
+                      <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
+                        [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
+                        [formControl]="Eth1GridForm.get('cidr')" cc>
+                      </kendo-dropdownlist>
+                    </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-command-column title="Command" [width]="220">
+                    <ng-template kendoGridCellTemplate let-isNew="isNew">
+                      <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
+                      <button kendoGridRemoveCommand type="button">Remove</button>
+                      <button kendoGridSaveCommand [disabled]="Eth1GridForm?.invalid" type="button">{{ isNew ? 'Add' :
+                        'Update'
+                        }}</button>
+                      <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                    </ng-template>
+                  </kendo-grid-command-column>
+                </kendo-grid>
                 <!-- Submit -->
                 <br />
                 <button kendoButton
@@ -381,41 +384,42 @@
                 <!-- Addresses -->
                 <kendo-formfield *ngIf="wifiGridEnabled">
                   <kendo-label labelCssClass="kendoFormLabel" text="Addresses"></kendo-label>
-                  <kendo-grid [data]="wifiGridData" [height]="200" [sortable]="{ allowUnsort: true, mode: 'single' }"
-                    [sort]="sort" (add)="wifiGridAdd($event)" (cancel)="wifiGridCancel($event)"
-                    (save)="wifiGridSave($event)" (remove)="wifiGridRemove($event)" (edit)="wifiGridEdit($event)">
-                    <!-- Toolbar -->
-                    <ng-template kendoGridToolbarTemplate>
-                      <button type="button" kendoGridAddCommand [svgIcon]="plusIcon">New IP
-                        Address</button>
-                    </ng-template>
-                    <!-- Columns -->
-                    <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
-                    <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
-                      <ng-template kendoGridCellTemplate let-dataItem>
-                        {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
-                      </ng-template>
-                      <ng-template kendoGridEditTemplate let-formGroup="WiFiGridForm">
-                        <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
-                          [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
-                          [formControl]="WiFiGridForm.get('cidr')" [adaptiveMode]="true">
-                        </kendo-dropdownlist>
-                      </ng-template>
-                    </kendo-grid-column>
-                    <kendo-grid-command-column title="Command" [width]="220">
-                      <ng-template kendoGridCellTemplate let-isNew="isNew">
-                        <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
-                        <button kendoGridRemoveCommand type="button">Remove</button>
-                        <button kendoGridSaveCommand [disabled]="WiFiGridForm?.invalid" type="button">{{ isNew ? 'Add' :
-                          'Update'
-                          }}</button>
-                        <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
-                      </ng-template>
-                    </kendo-grid-command-column>
-                  </kendo-grid>
                   <kendo-formhint>IP addresses of the network.</kendo-formhint>
                   <kendo-formerror>Error: Address is required.</kendo-formerror>
                 </kendo-formfield>
+                <kendo-grid *ngIf="wifiGridEnabled" [data]="wifiGridData" [height]="200"
+                  [sortable]="{ allowUnsort: true, mode: 'single' }" [sort]="sort" (add)="wifiGridAdd($event)"
+                  (cancel)="wifiGridCancel($event)" (save)="wifiGridSave($event)" (remove)="wifiGridRemove($event)"
+                  (edit)="wifiGridEdit($event)">
+                  <!-- Toolbar -->
+                  <ng-template kendoGridToolbarTemplate>
+                    <button type="button" kendoGridAddCommand [svgIcon]="plusIcon">New IP
+                      Address</button>
+                  </ng-template>
+                  <!-- Columns -->
+                  <kendo-grid-column field="address" title="Address" [width]="150"> </kendo-grid-column>
+                  <kendo-grid-column field="cidr" title="Subnet Mask" [width]="170">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      {{ getSubnetMask(dataItem.cidr)?.subnetMask }}
+                    </ng-template>
+                    <ng-template kendoGridEditTemplate let-formGroup="WiFiGridForm">
+                      <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
+                        [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
+                        [formControl]="WiFiGridForm.get('cidr')" [adaptiveMode]="true">
+                      </kendo-dropdownlist>
+                    </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-command-column title="Command" [width]="220">
+                    <ng-template kendoGridCellTemplate let-isNew="isNew">
+                      <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
+                      <button kendoGridRemoveCommand type="button">Remove</button>
+                      <button kendoGridSaveCommand [disabled]="WiFiGridForm?.invalid" type="button">{{ isNew ? 'Add' :
+                        'Update'
+                        }}</button>
+                      <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                    </ng-template>
+                  </kendo-grid-command-column>
+                </kendo-grid>
                 <!-- Submit -->
                 <br />
                 <button kendoButton
