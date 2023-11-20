@@ -289,6 +289,7 @@ export class NetworkComponent implements OnInit {
         this.eth0GridData = [];
 
         // disable required field
+        this.Eth0Form.controls["mac"].disable();
         this.Eth0Form.controls["addresses"].disable();
 
         // push fake data to allow submit
@@ -317,6 +318,7 @@ export class NetworkComponent implements OnInit {
         this.eth1GridData = [];
 
         // disable required field
+        this.Eth1Form.controls["mac"].disable();
         this.Eth1Form.controls["addresses"].disable();
 
         // push fake data to allow submit

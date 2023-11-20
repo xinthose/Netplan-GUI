@@ -3,7 +3,7 @@
     <!-- Refresh -->
     <div class="row justify-content-center mb-3">
       <div class="col text-center">
-        <button kendoButton (click)="refreshNetwork()" [disabled]="loading">
+        <button kendoButton (click)="refreshNetwork()" [disabled]="loading" style="width: 120px;" type="button">
           <span class="spinner-border spinner-border-sm me-2" *ngIf="loading"></span>
           Refresh
         </button>
@@ -74,7 +74,7 @@
                     (save)="bridgeGridSave($event)" (remove)="bridgeGridRemove($event)" (edit)="bridgeGridEdit($event)">
                     <!-- Toolbar -->
                     <ng-template kendoGridToolbarTemplate>
-                      <button type="button" kendoGridAddCommand [svgIcon]="plusIcon" class="float-left">New IP
+                      <button type="button" kendoGridAddCommand [svgIcon]="plusIcon">New IP
                         Address</button>
                     </ng-template>
                     <!-- Columns -->
@@ -92,11 +92,12 @@
                     </kendo-grid-column>
                     <kendo-grid-command-column title="Command" [width]="220">
                       <ng-template kendoGridCellTemplate let-isNew="isNew">
-                        <button kendoGridEditCommand themeColor="primary">Edit</button>
-                        <button kendoGridRemoveCommand>Remove</button>
-                        <button kendoGridSaveCommand [disabled]="BridgeGridForm?.invalid">{{ isNew ? 'Add' : 'Update'
+                        <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
+                        <button kendoGridRemoveCommand type="button">Remove</button>
+                        <button kendoGridSaveCommand [disabled]="BridgeGridForm?.invalid" type="button">{{ isNew ? 'Add'
+                          : 'Update'
                           }}</button>
-                        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                        <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
                       </ng-template>
                     </kendo-grid-command-column>
                   </kendo-grid>
@@ -175,7 +176,7 @@
                     (save)="eth0GridSave($event)" (remove)="eth0GridRemove($event)" (edit)="eth0GridEdit($event)">
                     <!-- Toolbar -->
                     <ng-template kendoGridToolbarTemplate>
-                      <button type="button" kendoGridAddCommand [svgIcon]="plusIcon" class="float-left">New IP
+                      <button type="button" kendoGridAddCommand [svgIcon]="plusIcon">New IP
                         Address</button>
                     </ng-template>
                     <!-- Columns -->
@@ -193,11 +194,12 @@
                     </kendo-grid-column>
                     <kendo-grid-command-column title="Command" [width]="220">
                       <ng-template kendoGridCellTemplate let-isNew="isNew">
-                        <button kendoGridEditCommand themeColor="primary">Edit</button>
-                        <button kendoGridRemoveCommand>Remove</button>
-                        <button kendoGridSaveCommand [disabled]="Eth0GridForm?.invalid">{{ isNew ? 'Add' : 'Update'
+                        <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
+                        <button kendoGridRemoveCommand type="button">Remove</button>
+                        <button kendoGridSaveCommand [disabled]="Eth0GridForm?.invalid" type="button">{{ isNew ? 'Add' :
+                          'Update'
                           }}</button>
-                        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                        <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
                       </ng-template>
                     </kendo-grid-command-column>
                   </kendo-grid>
@@ -273,7 +275,7 @@
                     (save)="eth1GridSave($event)" (remove)="eth1GridRemove($event)" (edit)="eth1GridEdit($event)">
                     <!-- Toolbar -->
                     <ng-template kendoGridToolbarTemplate>
-                      <button type="button" kendoGridAddCommand [svgIcon]="plusIcon" class="float-left">New IP
+                      <button type="button" kendoGridAddCommand [svgIcon]="plusIcon">New IP
                         Address</button>
                     </ng-template>
                     <!-- Columns -->
@@ -291,11 +293,12 @@
                     </kendo-grid-column>
                     <kendo-grid-command-column title="Command" [width]="220">
                       <ng-template kendoGridCellTemplate let-isNew="isNew">
-                        <button kendoGridEditCommand themeColor="primary">Edit</button>
-                        <button kendoGridRemoveCommand>Remove</button>
-                        <button kendoGridSaveCommand [disabled]="Eth1GridForm?.invalid">{{ isNew ? 'Add' : 'Update'
+                        <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
+                        <button kendoGridRemoveCommand type="button">Remove</button>
+                        <button kendoGridSaveCommand [disabled]="Eth1GridForm?.invalid" type="button">{{ isNew ? 'Add' :
+                          'Update'
                           }}</button>
-                        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                        <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
                       </ng-template>
                     </kendo-grid-command-column>
                   </kendo-grid>
@@ -383,7 +386,7 @@
                     (save)="wifiGridSave($event)" (remove)="wifiGridRemove($event)" (edit)="wifiGridEdit($event)">
                     <!-- Toolbar -->
                     <ng-template kendoGridToolbarTemplate>
-                      <button type="button" kendoGridAddCommand [svgIcon]="plusIcon" class="float-left">New IP
+                      <button type="button" kendoGridAddCommand [svgIcon]="plusIcon">New IP
                         Address</button>
                     </ng-template>
                     <!-- Columns -->
@@ -401,11 +404,12 @@
                     </kendo-grid-column>
                     <kendo-grid-command-column title="Command" [width]="220">
                       <ng-template kendoGridCellTemplate let-isNew="isNew">
-                        <button kendoGridEditCommand themeColor="primary">Edit</button>
-                        <button kendoGridRemoveCommand>Remove</button>
-                        <button kendoGridSaveCommand [disabled]="WiFiGridForm?.invalid">{{ isNew ? 'Add' : 'Update'
+                        <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
+                        <button kendoGridRemoveCommand type="button">Remove</button>
+                        <button kendoGridSaveCommand [disabled]="WiFiGridForm?.invalid" type="button">{{ isNew ? 'Add' :
+                          'Update'
                           }}</button>
-                        <button kendoGridCancelCommand>{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+                        <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
                       </ng-template>
                     </kendo-grid-command-column>
                   </kendo-grid>
