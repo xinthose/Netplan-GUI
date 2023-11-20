@@ -3,6 +3,7 @@
 ## 1.1.1 (11/19/2023)
 
 - update packages (Angular 17)
+- *Bug*: when a `01-network-manager-all.yaml` file has the default contents (e.g. only `version` and `renderer`) and nothing else, in functions `submitEth1` and `submitEth2` check if `netplan_config` has the `ethernets` attribute before trying to set `eth0` or `eth1` on it ([Issue #11](https://github.com/xinthose/Netplan-GUI/issues/11))
 
 ## 1.1.0 (7/4/2023)
 
@@ -20,7 +21,7 @@
 
 ## 1.0.4 (8/31/2022)
 
-- *Bug*: in file `models.py`, use python `List` instead of `list` to allow for backwards compatibility for python versions lower than 3.9: [PEP 585](https://docs.python.org/3/whatsnew/3.9.html#type-hinting-generics-in-standard-collections)
+- *Bug*: in file `models.py`, use python `List` instead of `list` to allow for backwards compatibility for python versions lower than 3.9: [PEP 585](https://docs.python.org/3/whatsnew/3.9.html#type-hinting-generics-in-standard-collections) ([Issue #9](https://github.com/xinthose/Netplan-GUI/issues/9))
 
 ## 1.0.3 (8/7/2022)
 
@@ -37,7 +38,7 @@
 
 ## 1.0.1 (1/2/2022)
 
-- *Bug*: in file `netplan-gui.service.ts`, `SERVER` should have been `localhost`
+- *Bug*: in file `netplan-gui.service.ts`, `SERVER` should have been `localhost` ([Issue #1](https://github.com/xinthose/Netplan-GUI/issues/1))
 
 ## 1.0.0 (9/26/2021)
 
