@@ -15,8 +15,9 @@ def setup_custom_logger(name):
     log_filemode = "w"  # w: overwrite; a: append
 
     # setup logger
-    logging.basicConfig(filename=log_file, format=log_format,
-                        filemode=log_filemode, level=logging.DEBUG)
+    logging.basicConfig(
+        filename=log_file, format=log_format, filemode=log_filemode, level=logging.DEBUG
+    )
     rotate_file = logging.handlers.RotatingFileHandler(
         log_file, maxBytes=log_file_max_size, backupCount=log_num_backups
     )
@@ -30,6 +31,7 @@ def setup_custom_logger(name):
     logger.addHandler(consoleHandler)
 
     return logger
+
 
 # source: https://docs.python.org/2/howto/logging.html
 # logger.info("")		// Detailed information, typically of interest only when diagnosing problems.

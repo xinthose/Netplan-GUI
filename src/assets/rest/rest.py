@@ -373,7 +373,7 @@ async def submitBridge(data: models.SubmitBridge):
 @app.post("/submitEth1")
 async def submitEth1(data: models.SubmitEth):
     try:
-        debug = False
+        debug = True
         data = jsonable_encoder(data)
 
         if debug:
@@ -439,7 +439,7 @@ async def submitEth1(data: models.SubmitEth):
 @app.post("/submitEth2")
 async def submitEth2(data: models.SubmitEth):
     try:
-        debug = False
+        debug = True
         data = jsonable_encoder(data)
 
         if debug:
