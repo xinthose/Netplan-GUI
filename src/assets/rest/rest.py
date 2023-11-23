@@ -395,7 +395,7 @@ async def submitEth1(data: models.SubmitEth):
         # get netplan file
         with open(NETPLAN, "r") as stream:
             try:
-                netplan_config = yaml.safe_load(stream)
+                netplan_config = yaml.safe_load(stream)  # dictionary, not list
                 if debug:
                     logger.debug("netplan_config = " + json.dumps(netplan_config))
                 stream.close()
