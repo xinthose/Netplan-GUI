@@ -445,9 +445,20 @@ export class NetworkComponent implements OnInit {
       // get eBox network
       const linuxNetwork: LinuxNetworkIntf = await this.netplanGuiService.getNetwork();
 
+      // get enabled states
+      const bridgeEnabled: boolean = linuxNetwork.br0_addresses.length ? true : false;
+      let eth0Enabled: boolean = false;
+      if (linuxNetwork.eth0_addresses.length || linuxNetwork.eth0_dhcp) {
+        eth0Enabled = true;
+      }
+      let eth1Enabled: boolean = false;
+      if (linuxNetwork.eth1_addresses.length || linuxNetwork.eth1_dhcp) {
+        eth1Enabled = true;
+      }
+
       // set form data
       this.BridgeForm.setValue({
-        "enabled": linuxNetwork.br0_addresses.length ? true : false,
+        "enabled": bridgeEnabled,
         "mac1": linuxNetwork.eth0_mac,
         "mac2": linuxNetwork.eth1_mac,
         "gateway": linuxNetwork.br0_gateway,
@@ -456,7 +467,7 @@ export class NetworkComponent implements OnInit {
         "addresses": linuxNetwork.br0_addresses,
       });
       this.Eth0Form.setValue({
-        "enabled": linuxNetwork.eth0_addresses.length ? true : false,
+        "enabled": eth0Enabled,
         "mac": linuxNetwork.eth0_mac,
         "dhcp": linuxNetwork.eth0_dhcp,
         "gateway": linuxNetwork.eth0_gateway,
@@ -465,7 +476,7 @@ export class NetworkComponent implements OnInit {
         "addresses": linuxNetwork.eth0_addresses,
       });
       this.Eth1Form.setValue({
-        "enabled": linuxNetwork.eth1_addresses.length ? true : false,
+        "enabled": eth1Enabled,
         "mac": linuxNetwork.eth1_mac,
         "dhcp": linuxNetwork.eth1_dhcp,
         "gateway": linuxNetwork.eth1_gateway,
