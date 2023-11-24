@@ -752,7 +752,7 @@ export class NetworkComponent implements OnInit {
       }
 
       // send data
-      await this.netplanGuiService.submitEth(1, e.value.mac, e.value.gateway, e.value.addresses, nameservers, !this.eth0GridEnabled);
+      await this.netplanGuiService.submitEth(1, e.value.mac, e.value.dhcp, e.value.gateway, e.value.addresses, nameservers, !this.eth0GridEnabled);
 
       // show popup
       this.notificationService.show({
@@ -909,7 +909,7 @@ export class NetworkComponent implements OnInit {
       }
 
       // send data
-      await this.netplanGuiService.submitEth(2, e.value.mac, e.value.gateway, e.value.addresses, nameservers, !this.eth1GridEnabled);
+      await this.netplanGuiService.submitEth(2, e.value.mac, e.value.dhcp, e.value.gateway, e.value.addresses, nameservers, !this.eth1GridEnabled);
 
       // show popup
       this.notificationService.show({

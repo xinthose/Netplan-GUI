@@ -442,15 +442,23 @@ async def submitEth1(data: models.SubmitEth):
             logger.debug(f"data = {json.dumps(data)}")
 
         # create netplan objects (https://netplan.io/)
-        netplan_eth1 = {
-            "dhcp4": False,
-            "dhcp6": False,
-            "match": {"macaddress": data["mac"]},
-            "set-name": "eth0",
-            "routes": [{"to": "default", "via": data["gateway"]}],
-            "addresses": data["addresses"],
-            "nameservers": {"addresses": data["nameservers"]},
-        }
+        if data["dhcp"]:
+            netplan_eth1 = {
+                "dhcp4": True,
+                "dhcp6": False,
+                "match": {"macaddress": data["mac"]},
+                "set-name": "eth0",
+            }
+        else:
+            netplan_eth1 = {
+                "dhcp4": False,
+                "dhcp6": False,
+                "match": {"macaddress": data["mac"]},
+                "set-name": "eth0",
+                "routes": [{"to": "default", "via": data["gateway"]}],
+                "addresses": data["addresses"],
+                "nameservers": {"addresses": data["nameservers"]},
+            }
         if debug:
             logger.debug("netplan_eth1 = " + json.dumps(netplan_eth1))
 
@@ -481,7 +489,8 @@ async def submitEth1(data: models.SubmitEth):
             if "bridges" in netplan_config["network"]:
                 del netplan_config["network"]["bridges"]
             if not data["gateway"]:
-                del netplan_config["network"]["ethernets"]["eth0"]["routes"]
+                if "routes" in netplan_config["network"]["ethernets"]["eth0"]:
+                    del netplan_config["network"]["ethernets"]["eth0"]["routes"]
 
         # write netplan changes
         with io.open(NETPLAN, "w", encoding="utf8") as outfile:
@@ -509,15 +518,23 @@ async def submitEth2(data: models.SubmitEth):
             logger.debug(f"data = {json.dumps(data)}")
 
         # create netplan objects (https://netplan.io/)
-        netplan_eth2 = {
-            "dhcp4": False,
-            "dhcp6": False,
-            "match": {"macaddress": data["mac"]},
-            "set-name": "eth1",
-            "routes": [{"to": "default", "via": data["gateway"]}],
-            "addresses": data["addresses"],
-            "nameservers": {"addresses": data["nameservers"]},
-        }
+        if data["dhcp"]:
+            netplan_eth2 = {
+                "dhcp4": True,
+                "dhcp6": False,
+                "match": {"macaddress": data["mac"]},
+                "set-name": "eth1",
+            }
+        else:
+            netplan_eth2 = {
+                "dhcp4": False,
+                "dhcp6": False,
+                "match": {"macaddress": data["mac"]},
+                "set-name": "eth1",
+                "routes": [{"to": "default", "via": data["gateway"]}],
+                "addresses": data["addresses"],
+                "nameservers": {"addresses": data["nameservers"]},
+            }
         if debug:
             logger.debug("netplan_eth2 = " + json.dumps(netplan_eth2))
 
@@ -548,7 +565,8 @@ async def submitEth2(data: models.SubmitEth):
             if "bridges" in netplan_config["network"]:
                 del netplan_config["network"]["bridges"]
             if not data["gateway"]:
-                del netplan_config["network"]["ethernets"]["eth1"]["routes"]
+                if "routes" in netplan_config["network"]["ethernets"]["eth1"]:
+                    del netplan_config["network"]["ethernets"]["eth1"]["routes"]
 
         # write netplan changes
         with io.open(NETPLAN, "w", encoding="utf8") as outfile:

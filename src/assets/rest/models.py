@@ -15,6 +15,7 @@ class SubmitBridge(BaseModel):
 
 class SubmitEth(BaseModel):
     mac: str
+    dhcp: bool
     gateway: str
     addresses: List[str]
     nameservers: List[str]

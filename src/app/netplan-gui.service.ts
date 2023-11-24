@@ -126,10 +126,11 @@ export class NetplanGUIService {
     }
   }
 
-  public async submitEth(port: 1 | 2, mac: string, gateway: string, addresses: Array<string>, nameservers: Array<string>, deleteEth: boolean): Promise<void> {
+  public async submitEth(port: 1 | 2, mac: string, dhcp: boolean, gateway: string, addresses: Array<string>, nameservers: Array<string>, deleteEth: boolean): Promise<void> {
     try {
       const data = {
         "mac": mac ?? "",
+        "dhcp": dhcp ?? false,
         "gateway": gateway ?? "",
         "addresses": addresses ?? [],
         "nameservers": nameservers ?? [],
