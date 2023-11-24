@@ -19,7 +19,8 @@
 - Can run helpful commands (`reboot`, `shutdown`, clear logs, change log file persmissions so that they can be viewed remotely over apache).
 - Mobile friendly and works in all modern browsers.
 
-![Screenshot](https://github.com/xinthose/Netplan-GUI/raw/master/ref/screenshot_network.png)\
+![Screenshot](https://github.com/xinthose/Netplan-GUI/raw/master/ref/screenshot_network.png)
+&nbsp;
 ![Screenshot](https://github.com/xinthose/Netplan-GUI/raw/master/ref/screenshot_commands.png)
 
 ## Use Cases
