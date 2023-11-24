@@ -144,8 +144,14 @@
                   <kendo-formhint>The MAC Address of the first ethernet port on the computer.</kendo-formhint>
                   <kendo-formerror>Error: MAC Address is required.</kendo-formerror>
                 </kendo-formfield>
-                <!-- Gateway -->
+                <!-- DHCP -->
                 <kendo-formfield *ngIf="eth0GridEnabled">
+                  <kendo-label labelCssClass="kendoFormLabel" [for]="dhcp" text="DHCP"></kendo-label>
+                  <kendo-switch formControlName="dhcp" [onLabel]="'Yes'" [offLabel]="'No'" #dhcp></kendo-switch>
+                  <kendo-formhint>Let network automatically assign IP Address.</kendo-formhint>
+                </kendo-formfield>
+                <!-- Gateway -->
+                <kendo-formfield *ngIf="eth0GridEnabled && !eth0DHCP">
                   <kendo-label labelCssClass="kendoFormLabel" [for]="gateway" text="Gateway"
                     [optional]="true"></kendo-label>
                   <kendo-maskedtextbox formControlName="gateway" #gateway>
@@ -153,7 +159,7 @@
                   <kendo-formhint>The IP Address of the network's router. Only one Gateway is allowed.</kendo-formhint>
                 </kendo-formfield>
                 <!-- Nameserver -->
-                <kendo-formfield *ngIf="eth0GridEnabled">
+                <kendo-formfield *ngIf="eth0GridEnabled && !eth0DHCP">
                   <kendo-label labelCssClass="kendoFormLabel" [for]="nameserver1" text="Nameserver"
                     [optional]="true"></kendo-label>
                   <kendo-maskedtextbox formControlName="nameserver1" #nameserver1>
@@ -161,7 +167,7 @@
                   <kendo-formhint>The IP Address of the network's DNS server (default: 8.8.8.8).</kendo-formhint>
                 </kendo-formfield>
                 <!-- Backup Nameserver -->
-                <kendo-formfield *ngIf="eth0GridEnabled">
+                <kendo-formfield *ngIf="eth0GridEnabled && !eth0DHCP">
                   <kendo-label labelCssClass="kendoFormLabel" [for]="nameserver2" text="Backup Nameserver"
                     [optional]="true"></kendo-label>
                   <kendo-maskedtextbox formControlName="nameserver2" #nameserver2>
@@ -169,7 +175,7 @@
                   <kendo-formhint>The IP Address of the network's backup DNS server (default: 8.8.4.4).</kendo-formhint>
                 </kendo-formfield>
                 <!-- Addresses -->
-                <div *ngIf="eth0GridEnabled" class="mt-2">
+                <div *ngIf="eth0GridEnabled && !eth0DHCP" class="mt-2">
                   <span>Addresses</span>
                   <br />
                   <i style="font-size: 10pt;">IP addresses of the port.</i>
@@ -244,8 +250,14 @@
                   <kendo-formhint>The MAC Address of the second ethernet port on the computer.</kendo-formhint>
                   <kendo-formerror>Error: MAC Address is required.</kendo-formerror>
                 </kendo-formfield>
-                <!-- Gateway -->
+                <!-- DHCP -->
                 <kendo-formfield *ngIf="eth1GridEnabled">
+                  <kendo-label labelCssClass="kendoFormLabel" [for]="dhcp" text="DHCP"></kendo-label>
+                  <kendo-switch formControlName="dhcp" [onLabel]="'Yes'" [offLabel]="'No'" #dhcp></kendo-switch>
+                  <kendo-formhint>Let network automatically assign IP Address.</kendo-formhint>
+                </kendo-formfield>
+                <!-- Gateway -->
+                <kendo-formfield *ngIf="eth1GridEnabled && !eth1DHCP">
                   <kendo-label labelCssClass="kendoFormLabel" [for]="gateway" text="Gateway"
                     [optional]="true"></kendo-label>
                   <kendo-maskedtextbox formControlName="gateway" #gateway>
@@ -253,7 +265,7 @@
                   <kendo-formhint>The IP Address of the network's router. Only one Gateway is allowed.</kendo-formhint>
                 </kendo-formfield>
                 <!-- Nameserver -->
-                <kendo-formfield *ngIf="eth1GridEnabled">
+                <kendo-formfield *ngIf="eth1GridEnabled && !eth1DHCP">
                   <kendo-label labelCssClass="kendoFormLabel" [for]="nameserver1" text="Nameserver"
                     [optional]="true"></kendo-label>
                   <kendo-maskedtextbox formControlName="nameserver1" #nameserver1>
@@ -261,7 +273,7 @@
                   <kendo-formhint>The IP Address of the network's DNS server (default: 8.8.8.8).</kendo-formhint>
                 </kendo-formfield>
                 <!-- Backup Nameserver -->
-                <kendo-formfield *ngIf="eth1GridEnabled">
+                <kendo-formfield *ngIf="eth1GridEnabled && !eth1DHCP">
                   <kendo-label labelCssClass="kendoFormLabel" [for]="nameserver2" text="Backup Nameserver"
                     [optional]="true"></kendo-label>
                   <kendo-maskedtextbox formControlName="nameserver2" #nameserver2>
@@ -269,7 +281,7 @@
                   <kendo-formhint>The IP Address of the network's backup DNS server (default: 8.8.4.4).</kendo-formhint>
                 </kendo-formfield>
                 <!-- Addresses -->
-                <div *ngIf="eth1GridEnabled" class="mt-2">
+                <div *ngIf="eth1GridEnabled && !eth1DHCP" class="mt-2">
                   <span>Addresses</span>
                   <br />
                   <i style="font-size: 10pt;">IP addresses of the port.</i>

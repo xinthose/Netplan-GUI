@@ -158,10 +158,12 @@ async def get_interfaces1():
 
         # Ethernet Ports
         eth0_mac = ""
+        eth0_dhcp = False
         eth0_addresses = ""
         eth0_gateway = ""
         eth0_nameservers = ""
         eth1_mac = ""
+        eth1_dhcp = False
         eth1_addresses = ""
         eth1_gateway = ""
         eth1_nameservers = ""
@@ -173,6 +175,7 @@ async def get_interfaces1():
             eth0 = ethernets.get("eth0", "")  # LAN1
             eth1 = ethernets.get("eth1", "")
             if eth0:
+                eth0_dhcp = eth0.get("dhcp4", False)
                 eth0_addresses = eth0.get("addresses", "")
                 routes = eth0.get("routes", "")
                 nameservers = eth0.get("nameservers", "")
@@ -184,6 +187,7 @@ async def get_interfaces1():
                 if match:
                     eth0_mac = match.get("macaddress", "")
             if eth1:
+                eth1_dhcp = eth1.get("dhcp4", False)
                 eth1_addresses = eth1.get("addresses", "")
                 routes = eth1.get("routes", "")
                 nameservers = eth1.get("nameservers", "")
@@ -226,11 +230,13 @@ async def get_interfaces1():
         ret_obj["br0_nameservers"] = br0_nameservers
 
         ret_obj["eth0_mac"] = eth0_mac
+        ret_obj["eth0_dhcp"] = eth0_dhcp
         ret_obj["eth0_addresses"] = eth0_addresses
         ret_obj["eth0_gateway"] = eth0_gateway
         ret_obj["eth0_nameservers"] = eth0_nameservers
 
         ret_obj["eth1_mac"] = eth1_mac
+        ret_obj["eth1_dhcp"] = eth1_dhcp
         ret_obj["eth1_addresses"] = eth1_addresses
         ret_obj["eth1_gateway"] = eth1_gateway
         ret_obj["eth1_nameservers"] = eth1_nameservers

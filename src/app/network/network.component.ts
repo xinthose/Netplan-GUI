@@ -198,12 +198,14 @@ export class NetworkComponent implements OnInit {
   eth0GridRow: number = 0;
   eth0GridEnabled: boolean = false;
   eth0GridEditing: boolean = false;
+  eth0DHCP: boolean = false;
   /// eth1 grid
   eth1GridData: Array<GridNetworkIntf> = [];
   eth1GridView!: GridDataResult;
   eth1GridRow: number = 0;
   eth1GridEnabled: boolean = false;
   eth1GridEditing: boolean = false;
+  eth1DHCP: boolean = false;
   /// wifi grid
   wifiGridData: Array<GridNetworkIntf> = [];
   wifiGridView!: GridDataResult;
@@ -233,6 +235,7 @@ export class NetworkComponent implements OnInit {
     this.Eth0Form = this.formBuilder.group({
       enabled: false,
       mac: [{ value: "", disabled: false }, [Validators.required, Validators.pattern(this.macRegex)]],
+      dhcp: false,
       gateway: ["", Validators.pattern(this.ipRegex)],
       nameserver1: ["", Validators.pattern(this.ipRegex)],
       nameserver2: ["", Validators.pattern(this.ipRegex)],
@@ -241,6 +244,7 @@ export class NetworkComponent implements OnInit {
     this.Eth1Form = this.formBuilder.group({
       enabled: false,
       mac: [{ value: "", disabled: false }, [Validators.required, Validators.pattern(this.macRegex)]],
+      dhcp: false,
       gateway: ["", Validators.pattern(this.ipRegex)],
       nameserver1: ["", Validators.pattern(this.ipRegex)],
       nameserver2: ["", Validators.pattern(this.ipRegex)],
@@ -301,6 +305,34 @@ export class NetworkComponent implements OnInit {
         });
       }
     });
+    this.Eth0Form.get("dhcp")!.valueChanges.subscribe((dhcp: boolean) => {
+      this.eth0DHCP = dhcp;
+
+      if (dhcp) {
+        // reset fields
+        this.Eth0Form.controls["gateway"].patchValue("");
+        this.Eth0Form.controls["nameserver1"].patchValue("");
+        this.Eth0Form.controls["nameserver2"].patchValue("");
+        this.Eth0Form.controls["addresses"].patchValue([]);
+        this.eth0GridData = [];
+
+        // disable required fields
+        this.Eth0Form.controls["addresses"].disable();
+
+        // push fake data to allow submit
+        this.eth0GridData.push({
+          "guid": "",
+          "address": "",
+          "cidr": 1,
+        });
+      } else {
+        // enable required fields
+        this.Eth0Form.controls["addresses"].enable();
+
+        // clear fake data
+        this.eth0GridData = [];
+      }
+    });
     this.Eth1Form.get("enabled")!.valueChanges.subscribe((enabled: boolean) => {
       this.eth1GridEnabled = enabled;
       if (enabled) {
@@ -329,6 +361,33 @@ export class NetworkComponent implements OnInit {
           "address": "",
           "cidr": 1,
         });
+      }
+    });
+    this.Eth1Form.get("dhcp")!.valueChanges.subscribe((dhcp: boolean) => {
+      this.eth1DHCP = dhcp;
+      if (dhcp) {
+        // reset fields
+        this.Eth1Form.controls["gateway"].patchValue("");
+        this.Eth1Form.controls["nameserver1"].patchValue("");
+        this.Eth1Form.controls["nameserver2"].patchValue("");
+        this.Eth1Form.controls["addresses"].patchValue([]);
+        this.eth1GridData = [];
+
+        // disable required fields
+        this.Eth1Form.controls["addresses"].disable();
+
+        // push fake data to allow submit
+        this.eth1GridData.push({
+          "guid": "",
+          "address": "",
+          "cidr": 1,
+        });
+      } else {
+        // enable required fields
+        this.Eth1Form.controls["addresses"].enable();
+
+        // clear fake data
+        this.eth1GridData = [];
       }
     });
     this.WiFiForm.get("enabled")!.valueChanges.subscribe((enabled: boolean) => {
@@ -399,6 +458,7 @@ export class NetworkComponent implements OnInit {
       this.Eth0Form.setValue({
         "enabled": linuxNetwork.eth0_addresses.length ? true : false,
         "mac": linuxNetwork.eth0_mac,
+        "dhcp": linuxNetwork.eth0_dhcp,
         "gateway": linuxNetwork.eth0_gateway,
         "nameserver1": linuxNetwork.eth0_nameservers.length ? linuxNetwork.eth0_nameservers[0] : "",
         "nameserver2": linuxNetwork.eth0_nameservers.length > 1 ? linuxNetwork.eth0_nameservers[1] : "",
@@ -407,6 +467,7 @@ export class NetworkComponent implements OnInit {
       this.Eth1Form.setValue({
         "enabled": linuxNetwork.eth1_addresses.length ? true : false,
         "mac": linuxNetwork.eth1_mac,
+        "dhcp": linuxNetwork.eth1_dhcp,
         "gateway": linuxNetwork.eth1_gateway,
         "nameserver1": linuxNetwork.eth1_nameservers.length ? linuxNetwork.eth1_nameservers[0] : "",
         "nameserver2": linuxNetwork.eth1_nameservers.length > 1 ? linuxNetwork.eth1_nameservers[1] : "",
