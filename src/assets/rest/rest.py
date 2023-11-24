@@ -474,7 +474,6 @@ async def submitEth2(data: models.SubmitEth):
         if "ethernets" in netplan_config["network"]:
             netplan_config["network"]["ethernets"]["eth1"] = netplan_eth2
         else:
-            logger.debug("mark1")
             netplan_config["network"]["ethernets"] = {}
             netplan_config["network"]["ethernets"]["eth1"] = netplan_eth2
 
