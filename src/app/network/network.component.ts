@@ -287,6 +287,7 @@ export class NetworkComponent implements OnInit {
       } else {
         // reset fields
         this.Eth0Form.controls["mac"].patchValue("");
+        this.Eth0Form.controls["dhcp"].patchValue(false);
         this.Eth0Form.controls["gateway"].patchValue("");
         this.Eth0Form.controls["nameserver1"].patchValue("");
         this.Eth0Form.controls["nameserver2"].patchValue("");
@@ -345,6 +346,7 @@ export class NetworkComponent implements OnInit {
       } else {
         // reset fields
         this.Eth1Form.controls["mac"].patchValue("");
+        this.Eth1Form.controls["dhcp"].patchValue(false);
         this.Eth1Form.controls["gateway"].patchValue("");
         this.Eth1Form.controls["nameserver1"].patchValue("");
         this.Eth1Form.controls["nameserver2"].patchValue("");
