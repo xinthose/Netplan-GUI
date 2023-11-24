@@ -27,7 +27,7 @@ import models  # models.py
 
 # region
 
-VERSION = "1.1.1"
+VERSION = "1.2.0"
 NETPLAN = "/etc/netplan/01-network-manager-all.yaml"
 
 logger = log.setup_custom_logger("root")

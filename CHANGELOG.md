@@ -1,6 +1,6 @@
 # Netplan GUI Changelog
 
-## 1.1.1 (11/19/2023) - [Issue #11](https://github.com/xinthose/Netplan-GUI/issues/11))
+## 1.2.0 (11/19/2023) - [Issue #11](https://github.com/xinthose/Netplan-GUI/issues/11))
 
 - update packages (Angular 17)
 - **Feat**: in commands, add new buttons "Get Ethernet 1 Status", "Get Ethernet 2 Status", "Get 'ip a'"
