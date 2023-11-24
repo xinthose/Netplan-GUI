@@ -4,6 +4,7 @@
 
 - update packages (Angular 17)
 - **Feat**: in commands, add new buttons "Get Ethernet 1 Status", "Get Ethernet 2 Status", "Get 'ip a'"
+- **Feat**: add DHCP option for Ethernet 1 and 2
 - *Bug*: in file `rest.py` do not use `hasattr`, as `yaml.safe_load` returns a dictionary and not a list ([SO Post](https://stackoverflow.com/a/77538548/4056146)) - (
 - *Bug*: Only show error popup in `http-error.interceptor.ts`
 - *Bug*: allow Submit button to be clicked on Ethernet port if it was disabled
