@@ -5,9 +5,9 @@
 - Graphical User Interface to configure Netplan YAML file on Ubuntu 18+ specifically (other linux OS should work too)
   - Netplan Documentation: <https://netplan.io/>
 - Front end uses Angular and the back end uses Python
-  - pm2 is used to run two apps:
-    - Node.js express app serving the compiled Angular application
-    - REST web service using [FastAPI](https://github.com/tiangolo/fastapi)
+  - [pm2](https://pm2.keymetrics.io/) is used to run two apps:
+    - [Node.js](https://nodejs.org/en/) [express](https://expressjs.com/) app serving the compiled Angular application
+    - [REST](https://www.geeksforgeeks.org/rest-api-introduction/#) web service using [FastAPI](https://github.com/tiangolo/fastapi)
 - Read [`INSTALL.md`](https://github.com/xinthose/Netplan-GUI/blob/master/INSTALL.md) for installation instructions
 
 ## Features
@@ -19,7 +19,8 @@
 - Can run helpful commands (`reboot`, `shutdown`, clear logs, change log file persmissions so that they can be viewed remotely over apache).
 - Mobile friendly and works in all modern browsers.
 
-![Screenshot](https://github.com/xinthose/Netplan-GUI/raw/master/ref/screenshot.png)
+![Screenshot](https://github.com/xinthose/Netplan-GUI/raw/master/ref/screenshot_network.png)
+![Screenshot](https://github.com/xinthose/Netplan-GUI/raw/master/ref/screenshot_commands.png)
 
 ## Use Cases
 
