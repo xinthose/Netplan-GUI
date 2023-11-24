@@ -3,10 +3,10 @@
 ## 1.1.1 (11/19/2023)
 
 - update packages (Angular 17)
-- *Bug*: when a `01-network-manager-all.yaml` file has the default contents (e.g. only `version` and `renderer`) and nothing else, in functions `submitEth1` and `submitEth2` check if `netplan_config` has the `ethernets` attribute before trying to set `eth0` or `eth1` on it ([Issue #11](https://github.com/xinthose/Netplan-GUI/issues/11))
+- *Bug*: in file `rest.py` do not use `hasattr`, as `yaml.safe_load` returns a dictionary and not a list ([SO Post](https://stackoverflow.com/a/77538548/4056146)) - ([Issue #11](https://github.com/xinthose/Netplan-GUI/issues/11))
 - *Bug*: Only show error popup in `http-error.interceptor.ts`
 - *Bug*: allow Submit button to be clicked on Ethernet port if it was disabled
-- Style changes
+- Style changes to GUI
 
 ## 1.1.0 (7/4/2023)
 

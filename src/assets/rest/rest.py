@@ -404,7 +404,7 @@ async def submitEth1(data: models.SubmitEth):
                 raise HTTPException(status_code=500, detail=str(e))
 
         # update netplan file
-        if hasattr(netplan_config["network"], "ethernets"):
+        if "ethernets" in netplan_config["network"]:
             netplan_config["network"]["ethernets"]["eth0"] = netplan_eth1
         else:
             netplan_config["network"]["ethernets"] = {}
@@ -412,10 +412,11 @@ async def submitEth1(data: models.SubmitEth):
 
         # remove unused values
         if data["deleteEth"]:
-            if hasattr(netplan_config["network"]["ethernets"], "eth0"):
-                del netplan_config["network"]["ethernets"]["eth0"]
+            if "ethernets" in netplan_config["network"]:
+                if "eth0" in netplan_config["network"]["ethernets"]:
+                    del netplan_config["network"]["ethernets"]["eth0"]
         else:
-            if hasattr(netplan_config["network"], "bridges"):
+            if "bridges" in netplan_config["network"]:
                 del netplan_config["network"]["bridges"]
             if not data["gateway"]:
                 del netplan_config["network"]["ethernets"]["eth0"]["routes"]
@@ -470,7 +471,7 @@ async def submitEth2(data: models.SubmitEth):
                 raise HTTPException(status_code=500, detail=str(e))
 
         # update netplan file
-        if hasattr(netplan_config["network"], "ethernets"):
+        if "ethernets" in netplan_config["network"]:
             netplan_config["network"]["ethernets"]["eth1"] = netplan_eth2
         else:
             logger.debug("mark1")
@@ -479,10 +480,11 @@ async def submitEth2(data: models.SubmitEth):
 
         # remove unused values
         if data["deleteEth"]:
-            if hasattr(netplan_config["network"]["ethernets"], "eth1"):
-                del netplan_config["network"]["ethernets"]["eth1"]
+            if "ethernets" in netplan_config["network"]:
+                if "eth1" in netplan_config["network"]["ethernets"]:
+                    del netplan_config["network"]["ethernets"]["eth1"]
         else:
-            if hasattr(netplan_config["network"], "bridges"):
+            if "bridges" in netplan_config["network"]:
                 del netplan_config["network"]["bridges"]
             if not data["gateway"]:
                 del netplan_config["network"]["ethernets"]["eth1"]["routes"]
@@ -546,7 +548,7 @@ async def submitWiFi(data: models.SubmitWiFi):
 
         # remove unused values
         if data["deleteWiFi"]:
-            if hasattr(netplan_config["network"], "wifis"):
+            if "wifis" in netplan_config["network"]:
                 del netplan_config["network"]["wifis"]
         else:
             if not data["gateway"]:
