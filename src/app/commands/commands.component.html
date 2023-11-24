@@ -70,8 +70,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <!-- Other Commands -->
+    <div class="row justify-content-center">
       <!-- Other Commands -->
-      <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12 mt-2">
+      <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
         <div class="card border shadow">
           <div class="card-body">
             <h4 class="card-title">
@@ -88,6 +91,9 @@
                       Get "ip a"
                     </span>
                   </button>
+                  <br />
+                  <br />
+                  <kendo-textarea [rows]="20" [readonly]="true" [value]="ipAResponse"></kendo-textarea>
                 </li>
               </ul>
             </div>

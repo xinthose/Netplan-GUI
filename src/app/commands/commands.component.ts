@@ -35,6 +35,8 @@ export class CommandsComponent implements OnInit {
   // dialog open status
   rebootComputerConfirmOpen: boolean = false;
   shutdownComputerConfirmOpen: boolean = false;
+  // data
+  public ipAResponse: string = "";
   // icons
   public faTrash = faTrash;
   public faLockOpen = faLockOpen;
@@ -179,16 +181,17 @@ export class CommandsComponent implements OnInit {
   async getIpA() {
     try {
       // show loading icon
-      this.loadingClrLogFiles = true;
+      this.loadingGetIpA = true;
 
-      // submit
+      // get data
       const data: { "response": string } = await this.netplanGuiService.getIpA();
 
-
+      // set data
+      this.ipAResponse = data.response;
 
       // show popup
       this.notificationService.show({
-        content: "All log files cleared.",
+        content: "Network received.",
         cssClass: "notification",
         position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
         type: { style: "success", icon: false },  // none, success, error, warning, info
@@ -200,10 +203,10 @@ export class CommandsComponent implements OnInit {
       });
 
       // hide loading icon
-      this.loadingClrLogFiles = false;
+      this.loadingGetIpA = false;
     } catch (error: any) {
       this.logger.error(`${this.logID}getIpA >> error = ${error}`);
-      this.loadingClrLogFiles = false;
+      this.loadingGetIpA = false;
     }
   }
 
