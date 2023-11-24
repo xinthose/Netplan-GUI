@@ -86,7 +86,7 @@ wlp3s0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 ## Updating to New Version
 
 - `sudo rm -r /var/www/html/netplan-gui`
-- Download new release and follow the steps in [Install Netplan GUI](#Install Netplan GUI) again
+- Download new release and follow the steps in [Install Netplan GUI](#install-netplan-gui) again
 
 ## Troubleshooting
 
