@@ -90,6 +90,24 @@ export class NetplanGUIService {
     }
   }
 
+  public async getEth0Status(): Promise<{ "response": string }> {
+    try {
+      return await this.get("get_eth0_status");
+    } catch (error: any) {
+      this.logger.error(`${this.logID}getEth0Status >> error = ${error}`);
+      throw new Error(error.toString());
+    }
+  }
+
+  public async getEth1Status(): Promise<{ "response": string }> {
+    try {
+      return await this.get("get_eth1_status");
+    } catch (error: any) {
+      this.logger.error(`${this.logID}getEth1Status >> error = ${error}`);
+      throw new Error(error.toString());
+    }
+  }
+
   // POST requests
 
   public async submitBridge(mac1: string, mac2: string, gateway: string, addresses: Array<string>, nameservers: Array<string>): Promise<void> {

@@ -70,6 +70,40 @@
           </div>
         </div>
       </div>
+      <!-- Status Commands -->
+      <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12 mt-2">
+        <div class="card border shadow">
+          <div class="card-body">
+            <h4 class="card-title">
+              Status Commands
+            </h4>
+            <div class="card-text">
+              <ul class="list-group list-group-flush">
+                <!-- Get Ethernet 1 Status -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingGetEth0Status" (click)="getEth0Status()">
+                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingGetEth0Status"></span>
+                    <fa-icon [icon]="faDownload" class="me-2"></fa-icon>
+                    <span>
+                      Get Ethernet 1 Status
+                    </span>
+                  </button>
+                </li>
+                <!-- Get Ethernet 2 Status -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingGetEth1Status" (click)="getEth1Status()">
+                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingGetEth1Status"></span>
+                    <fa-icon [icon]="faDownload" class="me-2"></fa-icon>
+                    <span>
+                      Get Ethernet 2 Status
+                    </span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- Other Commands -->
     <div class="row justify-content-center">

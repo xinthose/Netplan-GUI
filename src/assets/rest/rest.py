@@ -312,6 +312,44 @@ async def get_ip_a():
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/get_eth0_status")
+async def get_eth0_status():
+    try:
+        # test: http://localhost:8080/get_eth0_status
+        debug = False
+        ret_obj = {}
+
+        ret_obj["response"] = subprocess.getoutput(
+            "grep '' /sys/class/net/eth0/operstate"
+        )
+        if debug:
+            logger.info(f"ret_obj = {json.dumps(ret_obj)}")
+
+        return ret_obj
+    except Exception as e:
+        logger.error(f"error = {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/get_eth1_status")
+async def get_eth1_status():
+    try:
+        # test: http://localhost:8080/get_eth1_status
+        debug = False
+        ret_obj = {}
+
+        ret_obj["response"] = subprocess.getoutput(
+            "grep '' /sys/class/net/eth1/operstate"
+        )
+        if debug:
+            logger.info(f"ret_obj = {json.dumps(ret_obj)}")
+
+        return ret_obj
+    except Exception as e:
+        logger.error(f"error = {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 # endregion
 
 # POST requests

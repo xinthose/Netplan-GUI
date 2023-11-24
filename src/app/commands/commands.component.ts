@@ -27,6 +27,8 @@ export class CommandsComponent implements OnInit {
   loadingRebootComputer: boolean = false;
   loadingShutdownComputer: boolean = false;
   loadingGetIpA: boolean = false;
+  loadingGetEth0Status: boolean = false;
+  loadingGetEth1Status: boolean = false;
   // insert test alarm button loading
   loadingInsertInfoAlarm: boolean = false;
   loadingInsertWarningAlarm: boolean = false;
@@ -207,6 +209,66 @@ export class CommandsComponent implements OnInit {
     } catch (error: any) {
       this.logger.error(`${this.logID}getIpA >> error = ${error}`);
       this.loadingGetIpA = false;
+    }
+  }
+
+  async getEth0Status() {
+    try {
+      // show loading icon
+      this.loadingGetEth1Status = true;
+
+      // submit
+      const data: { "response": string } = await this.netplanGuiService.getEth0Status();
+
+      // show popup
+      this.notificationService.show({
+        content: data.response,
+        cssClass: "notification",
+        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
+        type: { style: "success", icon: false },  // none, success, error, warning, info
+        hideAfter: 3000,  // milliseconds
+        animation: {
+          type: "fade",
+          duration: 150, // milliseconds (notif)
+        },
+      });
+
+      // hide loading icon
+      this.loadingGetEth1Status = false;
+    } catch (error: any) {
+      this.logger.error(`${this.logID}getEth0Status >> error = ${error}`);
+      this.loadingGetEth1Status = false;
+      throw new Error(error);
+    }
+  }
+
+  async getEth1Status() {
+    try {
+      // show loading icon
+      this.loadingGetEth0Status = true;
+
+      // submit
+      const data: { "response": string } = await this.netplanGuiService.getEth1Status();
+
+      // show popup
+      this.notificationService.show({
+        content: data.response,
+        cssClass: "notification",
+        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
+        type: { style: "success", icon: false },  // none, success, error, warning, info
+        hideAfter: 3000,  // milliseconds
+        animation: {
+          type: "fade",
+          duration: 150, // milliseconds (notif)
+        },
+      });
+
+      // hide loading icon
+      this.loadingGetEth0Status = false;
+    } catch (error: any) {
+      this.logger.error(`${this.logID}getEth0Status >> error = ${error}`);
+      this.loadingGetEth0Status = false;
+      throw new Error(error);
     }
   }
 
