@@ -16,6 +16,7 @@ import threading
 import time
 import simplejson as json
 import yaml
+import subprocess
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -289,6 +290,23 @@ async def shutdown_station():
         thr = threading.Thread(target=delayed_shutdown)
         thr.start()
         return {"response": "OK"}
+    except Exception as e:
+        logger.error(f"error = {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/get_ip_a")
+async def get_ip_a():
+    try:
+        # test: http://localhost:8080/get_ip_a
+        debug = False
+        ret_obj = {}
+
+        ret_obj["response"] = subprocess.getoutput("ip a")
+        if debug:
+            logger.info(f"ret_obj = {json.dumps(ret_obj)}")
+
+        return ret_obj
     except Exception as e:
         logger.error(f"error = {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))

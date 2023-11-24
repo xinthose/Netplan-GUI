@@ -5,7 +5,7 @@ import { NetplanGUIService } from "../netplan-gui.service";
 import { NotificationService } from "@progress/kendo-angular-notification";
 
 // Icons
-import { faPowerOff, faTrash, faLockOpen, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons';
+import { faPowerOff, faTrash, faLockOpen, faArrowRotateLeft, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 // other
 import { NGXLogger } from "ngx-logger";
@@ -17,6 +17,7 @@ import { NGXLogger } from "ngx-logger";
 })
 export class CommandsComponent implements OnInit {
   debug: boolean = true;
+  private logID: string = "CommandsComponent.";
   // button command loading
   loadingResPalCode: boolean = false;
   loadingResPortCode: boolean = false;
@@ -25,6 +26,7 @@ export class CommandsComponent implements OnInit {
   loadingRstSampler: boolean = false;
   loadingRebootComputer: boolean = false;
   loadingShutdownComputer: boolean = false;
+  loadingGetIpA: boolean = false;
   // insert test alarm button loading
   loadingInsertInfoAlarm: boolean = false;
   loadingInsertWarningAlarm: boolean = false;
@@ -34,10 +36,11 @@ export class CommandsComponent implements OnInit {
   rebootComputerConfirmOpen: boolean = false;
   shutdownComputerConfirmOpen: boolean = false;
   // icons
-  faTrash = faTrash;
-  faLockOpen = faLockOpen;
-  faArrowRotateLeft = faArrowRotateLeft;
-  faPowerOff = faPowerOff;
+  public faTrash = faTrash;
+  public faLockOpen = faLockOpen;
+  public faArrowRotateLeft = faArrowRotateLeft;
+  public faPowerOff = faPowerOff;
+  public faDownload = faDownload;
 
   constructor(
     private netplanguiService: NetplanGUIService,
@@ -79,7 +82,7 @@ export class CommandsComponent implements OnInit {
       // hide loading icon
       this.loadingClrLogFiles = false;
     } catch (error: any) {
-      this.logger.error("CommandsComponent.clearLogFiles >> error = " + error);
+      this.logger.error(`${this.logID}clearLogFiles >> error = ${error}`);
       this.loadingClrLogFiles = false;
     }
   }
@@ -108,7 +111,7 @@ export class CommandsComponent implements OnInit {
       // hide loading icon
       this.loadingChngLogFilePerm = false;
     } catch (error: any) {
-      this.logger.error("CommandsComponent.changeLogFilePermissions >> error = " + error);
+      this.logger.error(`${this.logID}changeLogFilePermissions >> error = ${error}`);
       this.loadingChngLogFilePerm = false;
     }
   }
@@ -137,7 +140,7 @@ export class CommandsComponent implements OnInit {
       // hide loading icon
       this.loadingRebootComputer = false;
     } catch (error: any) {
-      this.logger.error("CommandsComponent.rebootComputer >> error = " + error);
+      this.logger.error(`${this.logID}rebootComputer >> error = ${error}`);
       this.loadingRebootComputer = false;
       throw new Error(error);
     }
@@ -167,9 +170,38 @@ export class CommandsComponent implements OnInit {
       // hide loading icon
       this.loadingShutdownComputer = false;
     } catch (error: any) {
-      this.logger.error("CommandsComponent.shutdownComputer >> error = " + error);
+      this.logger.error(`${this.logID}shutdownComputer >> error = ${error}`);
       this.loadingShutdownComputer = false;
       throw new Error(error);
+    }
+  }
+
+  async getIpA() {
+    try {
+      // show loading icon
+      this.loadingClrLogFiles = true;
+
+      // submit
+      await this.netplanguiService.runCommand("get_ip_a");
+
+      // show popup
+      this.notificationService.show({
+        content: "All log files cleared.",
+        cssClass: "notification",
+        position: { horizontal: "center", vertical: "top" },  // left/center/right, top/bottom
+        type: { style: "success", icon: false },  // none, success, error, warning, info
+        hideAfter: 3000,  // milliseconds
+        animation: {
+          type: "fade",
+          duration: 150, // milliseconds (notif)
+        },
+      });
+
+      // hide loading icon
+      this.loadingClrLogFiles = false;
+    } catch (error: any) {
+      this.logger.error(`${this.logID}getIpA >> error = ${error}`);
+      this.loadingClrLogFiles = false;
     }
   }
 
@@ -189,11 +221,11 @@ export class CommandsComponent implements OnInit {
           this.rebootComputerConfirmOpen = false;
           break;
         default:
-          this.logger.error("CommandsComponent.rebootComputerConfirm >> status unhandled >> status = " + status);
+          this.logger.error(`${this.logID}rebootComputerConfirm >> status unhandled >> status = ${status}`);
           break;
       }
     } catch (error: any) {
-      this.logger.error("CommandsComponent.rebootComputerConfirm >> error = " + error);
+      this.logger.error(`${this.logID}rebootComputerConfirm >> error = ${error}`);
       this.rebootComputerConfirmOpen = false;
     }
   }
@@ -212,11 +244,11 @@ export class CommandsComponent implements OnInit {
           this.shutdownComputerConfirmOpen = false;
           break;
         default:
-          this.logger.error("CommandsComponent.shutdownComputerConfirm >> status unhandled >> status = " + status);
+          this.logger.error(`${this.logID}shutdownComputerConfirm >> status unhandled >> status = ${status}`);
           break;
       }
     } catch (error: any) {
-      this.logger.error("CommandsComponent.shutdownComputerConfirm >> error = " + error);
+      this.logger.error(`${this.logID}shutdownComputerConfirm >> error = ${error}`);
       this.shutdownComputerConfirmOpen = false;
     }
   }

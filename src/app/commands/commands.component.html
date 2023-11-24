@@ -1,9 +1,9 @@
 <main>
-  <div class="container mb-3 mt-3">
+  <div class="container mb-3 mt-1">
     <!-- Commands, Power Commands-->
     <div class="row justify-content-center">
       <!-- Commands -->
-      <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12">
+      <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12 mt-2">
         <div class="card border shadow">
           <div class="card-body">
             <h4 class="card-title">
@@ -37,7 +37,7 @@
         </div>
       </div>
       <!-- Power Commands -->
-      <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12">
+      <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12 mt-2">
         <div class="card border shadow">
           <div class="card-body">
             <h4 class="card-title">
@@ -62,6 +62,30 @@
                     <fa-icon [icon]="faPowerOff" class="me-2"></fa-icon>
                     <span>
                       Shutdown Computer
+                    </span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Other Commands -->
+      <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-7 col-12 mt-2">
+        <div class="card border shadow">
+          <div class="card-body">
+            <h4 class="card-title">
+              Other Commands
+            </h4>
+            <div class="card-text">
+              <ul class="list-group list-group-flush">
+                <!-- Get "ip a" -->
+                <li class="list-group-item">
+                  <button kendoButton [disabled]="loadingGetIpA" (click)="getIpA()">
+                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingGetIpA"></span>
+                    <fa-icon [icon]="faDownload" class="me-2"></fa-icon>
+                    <span>
+                      Get "ip a"
                     </span>
                   </button>
                 </li>

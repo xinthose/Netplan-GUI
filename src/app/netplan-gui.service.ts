@@ -81,6 +81,14 @@ export class NetplanGUIService {
     }
   }
 
+  public async getIpA(): Promise<{ "response": string }> {
+    try {
+      return await this.get("get_ip_a");
+    } catch (error: any) {
+      this.logger.error(`${this.logID}getIpA >> error = ${error}`);
+      throw new Error(error.toString());
+    }
+  }
 
   // POST requests
 
