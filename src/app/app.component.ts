@@ -37,7 +37,7 @@ export class AppComponent implements AfterViewInit {
   private filesSelected$!: Subscription;
 
   constructor(
-    private netplanguiService: NetplanGUIService,
+    private netplanGuiService: NetplanGUIService,
     private notificationService: NotificationService,
     private logger: NGXLogger,
     public router: Router,
@@ -46,15 +46,15 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     // subscribe to navigation changes to apply `active` class
-    this.networkSelected$ = this.netplanguiService.networkSelected$.subscribe((networkSelected: boolean) => {
+    this.networkSelected$ = this.netplanGuiService.networkSelected$.subscribe((networkSelected: boolean) => {
       this.resetSelection();
       this.networkSelected = networkSelected;
     });
-    this.commandsSelected$ = this.netplanguiService.commandsSelected$.subscribe((commandsSelected: boolean) => {
+    this.commandsSelected$ = this.netplanGuiService.commandsSelected$.subscribe((commandsSelected: boolean) => {
       this.resetSelection();
       this.commandsSelected = commandsSelected;
     });
-    this.filesSelected$ = this.netplanguiService.filesSelected$.subscribe((filesSelected: boolean) => {
+    this.filesSelected$ = this.netplanGuiService.filesSelected$.subscribe((filesSelected: boolean) => {
       this.resetSelection();
       this.filesSelected = filesSelected;
     });

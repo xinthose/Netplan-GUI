@@ -215,7 +215,7 @@ export class NetworkComponent implements OnInit {
   public plusIcon: SVGIcon = plusIcon;
 
   constructor(
-    private netplanguiService: NetplanGUIService,
+    private netplanGuiService: NetplanGUIService,
     private notificationService: NotificationService,
     private logger: NGXLogger,
     private formBuilder: FormBuilder,
@@ -368,7 +368,7 @@ export class NetworkComponent implements OnInit {
     try {
       // set active class in navbar
       setTimeout(() => {
-        this.netplanguiService.networkSelected$.emit(true);
+        this.netplanGuiService.networkSelected$.emit(true);
       });
 
       // get eBox network
@@ -384,7 +384,7 @@ export class NetworkComponent implements OnInit {
       this.loading = true;
 
       // get eBox network
-      const linuxNetwork: LinuxNetworkIntf = await this.netplanguiService.getNetwork();
+      const linuxNetwork: LinuxNetworkIntf = await this.netplanGuiService.getNetwork();
 
       // set form data
       this.BridgeForm.setValue({
@@ -532,7 +532,7 @@ export class NetworkComponent implements OnInit {
       }
 
       // send data
-      await this.netplanguiService.submitBridge(e.value.mac1, e.value.mac2, e.value.gateway, e.value.addresses, nameservers);
+      await this.netplanGuiService.submitBridge(e.value.mac1, e.value.mac2, e.value.gateway, e.value.addresses, nameservers);
 
       // show popup
       this.notificationService.show({
@@ -691,7 +691,7 @@ export class NetworkComponent implements OnInit {
       }
 
       // send data
-      await this.netplanguiService.submitEth(1, e.value.mac, e.value.gateway, e.value.addresses, nameservers, !this.eth0GridEnabled);
+      await this.netplanGuiService.submitEth(1, e.value.mac, e.value.gateway, e.value.addresses, nameservers, !this.eth0GridEnabled);
 
       // show popup
       this.notificationService.show({
@@ -848,7 +848,7 @@ export class NetworkComponent implements OnInit {
       }
 
       // send data
-      await this.netplanguiService.submitEth(2, e.value.mac, e.value.gateway, e.value.addresses, nameservers, !this.eth1GridEnabled);
+      await this.netplanGuiService.submitEth(2, e.value.mac, e.value.gateway, e.value.addresses, nameservers, !this.eth1GridEnabled);
 
       // show popup
       this.notificationService.show({
@@ -1007,7 +1007,7 @@ export class NetworkComponent implements OnInit {
       }
 
       // send data
-      await this.netplanguiService.submitWiFi(e.value.gateway, e.value.addresses, nameservers, !this.wifiGridEnabled, e.value.ssid, e.value.ssidPassword);
+      await this.netplanGuiService.submitWiFi(e.value.gateway, e.value.addresses, nameservers, !this.wifiGridEnabled, e.value.ssid, e.value.ssidPassword);
 
       // show popup
       this.notificationService.show({

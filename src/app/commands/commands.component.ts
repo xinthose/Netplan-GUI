@@ -43,7 +43,7 @@ export class CommandsComponent implements OnInit {
   public faDownload = faDownload;
 
   constructor(
-    private netplanguiService: NetplanGUIService,
+    private netplanGuiService: NetplanGUIService,
     private notificationService: NotificationService,
     private logger: NGXLogger,
   ) {
@@ -52,7 +52,7 @@ export class CommandsComponent implements OnInit {
   ngOnInit() {
     // set active class in navbar
     setTimeout(() => {
-      this.netplanguiService.commandsSelected$.emit(true);
+      this.netplanGuiService.commandsSelected$.emit(true);
     });
   }
 
@@ -64,7 +64,7 @@ export class CommandsComponent implements OnInit {
       this.loadingClrLogFiles = true;
 
       // submit
-      await this.netplanguiService.runCommand("clear_all_log_files");
+      await this.netplanGuiService.runCommand("clear_all_log_files");
 
       // show popup
       this.notificationService.show({
@@ -93,7 +93,7 @@ export class CommandsComponent implements OnInit {
       this.loadingChngLogFilePerm = true;
 
       // submit
-      await this.netplanguiService.runCommand("change_log_file_perm");
+      await this.netplanGuiService.runCommand("change_log_file_perm");
 
       // show popup
       this.notificationService.show({
@@ -122,7 +122,7 @@ export class CommandsComponent implements OnInit {
       this.loadingRebootComputer = true;
 
       // submit
-      await this.netplanguiService.runCommand("reboot_station");
+      await this.netplanGuiService.runCommand("reboot_station");
 
       // show popup
       this.notificationService.show({
@@ -152,7 +152,7 @@ export class CommandsComponent implements OnInit {
       this.loadingShutdownComputer = true;
 
       // submit
-      await this.netplanguiService.runCommand("shutdown_station");
+      await this.netplanGuiService.runCommand("shutdown_station");
 
       // show popup
       this.notificationService.show({
@@ -182,7 +182,9 @@ export class CommandsComponent implements OnInit {
       this.loadingClrLogFiles = true;
 
       // submit
-      await this.netplanguiService.runCommand("get_ip_a");
+      const data: { "response": string } = await this.netplanGuiService.getIpA();
+
+
 
       // show popup
       this.notificationService.show({
