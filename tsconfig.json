@@ -1,40 +1,33 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "es6",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es6",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es6",
-      "dom"
-    ],
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext", "dom"],
     "resolveJsonModule": true,
-    "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "strictPropertyInitialization": true,
-    "noImplicitAny": true,
     "strictNullChecks": true,
-    "noImplicitReturns": true
+    "types": ["node"]
   },
   "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
+    "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": false
-  },
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
-  ]
+    "strictTemplates": true
+  }
 }
