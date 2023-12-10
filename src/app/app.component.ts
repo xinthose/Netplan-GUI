@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewEncapsulation } from '@angular/core';
+import { Component, AfterViewInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Router } from "@angular/router";
 
 // services
@@ -21,7 +21,7 @@ import { environment } from "../environments/environment";
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnDestroy {
   // navigation selected
   public networkSelected: boolean = false;
   public commandsSelected: boolean = false;
@@ -33,7 +33,6 @@ export class AppComponent implements AfterViewInit {
   // subscriptions
   private networkSelected$!: Subscription;
   private commandsSelected$!: Subscription;
-  private alarmsSelected$!: Subscription;
   private filesSelected$!: Subscription;
 
   constructor(
@@ -42,10 +41,7 @@ export class AppComponent implements AfterViewInit {
     private logger: NGXLogger,
     public router: Router,
   ) {
-  }
-
-  ngAfterViewInit() {
-    // subscribe to navigation changes to apply `active` class
+    // subscribe to navigation changes to color button
     this.networkSelected$ = this.netplanGuiService.networkSelected$.subscribe((networkSelected: boolean) => {
       this.resetSelection();
       this.networkSelected = networkSelected;
@@ -58,7 +54,9 @@ export class AppComponent implements AfterViewInit {
       this.resetSelection();
       this.filesSelected = filesSelected;
     });
+  }
 
+  ngAfterViewInit() {
     this.logger.info("NetplanGUI is running");
   }
 
@@ -79,6 +77,12 @@ export class AppComponent implements AfterViewInit {
     this.networkSelected = false;
     this.commandsSelected = false;
     this.filesSelected = false;
+  }
+
+  ngOnDestroy() {
+    this.networkSelected$.unsubscribe();
+    this.commandsSelected$.unsubscribe();
+    this.filesSelected$.unsubscribe();
   }
 
 }

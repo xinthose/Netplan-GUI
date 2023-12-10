@@ -76,7 +76,7 @@ export class NetplanGUIService {
     try {
       return await this.get(command);
     } catch (error: any) {
-      this.logger.error(`${this.logID}getStationAlarms >> error = ${error}`);
+      this.logger.error(`${this.logID}runCommand >> error = ${error}`);
       throw new Error(error.toString());
     }
   }
