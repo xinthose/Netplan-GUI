@@ -10,8 +10,9 @@
 ## Install Linux Software
 
 - `sudo apt update`
-- `sudo apt install npm nodejs php libapache2-mod-php apache2-utils python3-fastapi python3-gunicorn python3-simplejson`
+- `sudo apt install npm nodejs php libapache2-mod-php apache2-utils python3-fastapi gunicorn python3-simplejson`
 - `sudo npm i -g pm2`
+- `npm i express compression`
 
 ## Install Netplan GUI
 
@@ -21,11 +22,11 @@
   - `cd ~/Downloads`
   - `cp -r netplan-gui /var/www/html`  // copy folder
 - `cd /var/www/html/netplan-gui`  // change directories
-- `npm i express compression`  // install packages required for application to run
 - `pm2 start pm2.json`  // start client app
 - `cd assets/rest`  // pm2 start command needs to be run from the same directory as the app, so change directories to it
 - `pm2 start pm2.json`  // start REST app
   - both apps should show a status of `online`, consult [Troubleshooting](#troubleshooting) steps below if it is `errored`
+  - `pm2 ls` shows a status of currently running apps
 - `pm2 save`  // save these applications so that `pm2 resurrect` can easily bring them up again on boot
 - `chmod -R 777 /etc/netplan`  // allow 01-network-manager-all.yaml file to be changed by non-root app
 - Netplan GUI can now be accessed locally from this URL: <http://localhost:3000>
