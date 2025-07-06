@@ -35,21 +35,26 @@ import { CommandsComponent } from './commands/commands.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-@NgModule({ declarations: [
+const LOGGER_MODULE = LoggerModule.forRoot({
+    serverLoggingUrl: "/assets/log.php",
+    level: NgxLoggerLevel.DEBUG,
+    serverLogLevel: environment.production ? NgxLoggerLevel.INFO : NgxLoggerLevel.OFF, // only log to server for production
+    httpResponseType: "json",
+});
+
+@NgModule({ 
+    declarations: [
         AppComponent,
         NetworkComponent,
         CommandsComponent,
         PageNotFoundComponent
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    bootstrap: [AppComponent], 
+    imports: [
+        BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
-        LoggerModule.forRoot({
-            serverLoggingUrl: "/assets/log.php",
-            level: NgxLoggerLevel.DEBUG,
-            serverLogLevel: environment.production ? NgxLoggerLevel.INFO : NgxLoggerLevel.OFF, // only log to server for production
-            httpResponseType: "json",
-        }),
+        LOGGER_MODULE,
         // Progress
         GridModule,
         PDFModule,
@@ -70,7 +75,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         FormsModule,
         ReactiveFormsModule,
         // other
-        FontAwesomeModule], providers: [
+        FontAwesomeModule
+    ], 
+    providers: [
         FilterService,
         {
             provide: HTTP_INTERCEPTORS,
@@ -78,5 +85,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
             multi: true
         },
         provideHttpClient(withInterceptorsFromDi())
-    ] })
+    ] 
+})
 export class AppModule { }
