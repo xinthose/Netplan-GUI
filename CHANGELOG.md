@@ -1,5 +1,9 @@
 # Netplan GUI Changelog
 
+## 1.3.0 (7/5/2025) - [Issue #12](https://github.com/xinthose/Netplan-GUI/issues/12))
+
+- update packages (Angular 20)
+
 ## 1.2.0 (11/24/2023) - [Issue #11](https://github.com/xinthose/Netplan-GUI/issues/11))
 
 - update packages (Angular 17)
