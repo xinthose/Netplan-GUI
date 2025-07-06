@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 // Forms
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -35,58 +35,48 @@ import { CommandsComponent } from './commands/commands.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    NetworkComponent,
-    CommandsComponent,
-    PageNotFoundComponent
-  ],
-  imports: [
-    // General
-    HttpClientModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    LoggerModule.forRoot({
-      serverLoggingUrl: "/assets/log.php",
-      level: NgxLoggerLevel.DEBUG,
-      serverLogLevel: environment.production ? NgxLoggerLevel.INFO : NgxLoggerLevel.OFF,  // only log to server for production
-      httpResponseType: "json",
-    }),
-
-    // Progress
-    GridModule,
-    PDFModule,
-    ExcelModule,
-    InputsModule,
-    ButtonsModule,
-    LabelModule,
-    PopupModule,
-    DialogsModule,
-    DropDownsModule,
-    TooltipModule,
-    RippleModule,
-    NotificationModule,
-    NavigationModule,
-    IndicatorsModule,
-    IconsModule,
-
-    // Forms
-    FormsModule,
-    ReactiveFormsModule,
-
-    // other
-    FontAwesomeModule,
-  ],
-  providers: [
-    FilterService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorInterceptor,
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        NetworkComponent,
+        CommandsComponent,
+        PageNotFoundComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        LoggerModule.forRoot({
+            serverLoggingUrl: "/assets/log.php",
+            level: NgxLoggerLevel.DEBUG,
+            serverLogLevel: environment.production ? NgxLoggerLevel.INFO : NgxLoggerLevel.OFF, // only log to server for production
+            httpResponseType: "json",
+        }),
+        // Progress
+        GridModule,
+        PDFModule,
+        ExcelModule,
+        InputsModule,
+        ButtonsModule,
+        LabelModule,
+        PopupModule,
+        DialogsModule,
+        DropDownsModule,
+        TooltipModule,
+        RippleModule,
+        NotificationModule,
+        NavigationModule,
+        IndicatorsModule,
+        IconsModule,
+        // Forms
+        FormsModule,
+        ReactiveFormsModule,
+        // other
+        FontAwesomeModule], providers: [
+        FilterService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpErrorInterceptor,
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
