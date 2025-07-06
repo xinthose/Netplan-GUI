@@ -11,9 +11,10 @@ import { faPowerOff, faTrash, faLockOpen, faArrowRotateLeft, faDownload } from '
 import { NGXLogger } from "ngx-logger";
 
 @Component({
-  selector: 'app-commands',
-  templateUrl: './commands.component.html',
-  styleUrls: ['./commands.component.scss']
+    selector: 'app-commands',
+    templateUrl: './commands.component.html',
+    styleUrls: ['./commands.component.scss'],
+    standalone: false
 })
 export class CommandsComponent implements OnInit {
   debug: boolean = true;

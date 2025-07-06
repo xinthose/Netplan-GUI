@@ -23,9 +23,10 @@ import { NGXLogger } from "ngx-logger";
 import * as Chance from 'chance';
 
 @Component({
-  selector: "app-network",
-  templateUrl: "./network.component.html",
-  styleUrls: ["./network.component.scss"],
+    selector: "app-network",
+    templateUrl: "./network.component.html",
+    styleUrls: ["./network.component.scss"],
+    standalone: false
 })
 export class NetworkComponent implements OnInit {
   debug: boolean = true;
