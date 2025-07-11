@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
 
 // services
 import { NetplanGUIService } from "../netplan-gui.service";
@@ -20,24 +20,27 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
 // other
 import { NGXLogger } from "ngx-logger";
-import * as Chance from 'chance';
+import Chance from 'chance';
 
 @Component({
-    selector: "app-network",
-    templateUrl: "./network.component.html",
-    styleUrls: ["./network.component.scss"],
-    standalone: false
+  selector: "app-network",
+  templateUrl: "./network.component.html",
+  styleUrls: ["./network.component.scss"],
+  standalone: false
 })
 export class NetworkComponent implements OnInit {
   debug: boolean = true;
+  // loading
   loading: boolean = false;
   loadingBridge: boolean = false;
   loadingEth0: boolean = false;
   loadingEth1: boolean = false;
   loadingWiFi: boolean = false;
+  // other
   private ipRegex: RegExp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
   private macRegex: RegExp = /^([0-9A-Fa-f]{2}[:]){5}([0-9A-Fa-f]{2})|([0-9a-fA-F]{4}\\.[0-9a-fA-F]{4}\\.[0-9a-fA-F]{4})$/
   public macAddressMask: string = "AA:AA:AA:AA:AA:AA";
+  public chance = new Chance();
   // forms
   public BridgeForm: FormGroup;
   public BridgeGridForm!: FormGroup;
@@ -519,7 +522,7 @@ export class NetworkComponent implements OnInit {
 
         if (parts.length == 2) {
           this.bridgeGridData.push({
-            "guid": Chance().guid(),
+            "guid": this.chance.guid(),
             "address": parts[0],
             "cidr": parseInt(parts[1]),
           })
@@ -530,7 +533,7 @@ export class NetworkComponent implements OnInit {
 
         if (parts.length == 2) {
           this.eth0GridData.push({
-            "guid": Chance().guid(),
+            "guid": this.chance.guid(),
             "address": parts[0],
             "cidr": parseInt(parts[1]),
           })
@@ -541,7 +544,7 @@ export class NetworkComponent implements OnInit {
 
         if (parts.length == 2) {
           this.eth1GridData.push({
-            "guid": Chance().guid(),
+            "guid": this.chance.guid(),
             "address": parts[0],
             "cidr": parseInt(parts[1]),
           })
@@ -552,7 +555,7 @@ export class NetworkComponent implements OnInit {
 
         if (parts.length == 2) {
           this.wifiGridData.push({
-            "guid": Chance().guid(),
+            "guid": this.chance.guid(),
             "address": parts[0],
             "cidr": parseInt(parts[1]),
           })
@@ -638,7 +641,7 @@ export class NetworkComponent implements OnInit {
     this.bridgeGridClose(sender);
 
     this.BridgeGridForm = this.formBuilder.group({
-      guid: [Chance().guid()],
+      guid: [this.chance.guid()],
       address: ["", [Validators.required, Validators.pattern(this.ipRegex)]],
       cidr: ["", [Validators.required, Validators.min(1)]],
     });
@@ -646,6 +649,10 @@ export class NetworkComponent implements OnInit {
     sender.addRow(this.BridgeGridForm);
 
     this.bridgeGridEditing = true;
+  }
+
+  get cidr123() {
+    return this.BridgeGridForm.controls["cidr"];
   }
 
   public bridgeGridEdit({ sender, rowIndex, dataItem }: any) {
@@ -797,7 +804,7 @@ export class NetworkComponent implements OnInit {
     this.eth0GridClose(sender);
 
     this.Eth0GridForm = this.formBuilder.group({
-      guid: [Chance().guid()],
+      guid: [this.chance.guid()],
       address: ["", [Validators.required, Validators.pattern(this.ipRegex)]],
       cidr: ["", [Validators.required, Validators.min(1)]],
     });
@@ -954,7 +961,7 @@ export class NetworkComponent implements OnInit {
     this.eth1GridClose(sender);
 
     this.Eth1GridForm = this.formBuilder.group({
-      guid: [Chance().guid()],
+      guid: [this.chance.guid()],
       address: ["", [Validators.required, Validators.pattern(this.ipRegex)]],
       cidr: ["", [Validators.required, Validators.min(1)]],
     });
@@ -1113,7 +1120,7 @@ export class NetworkComponent implements OnInit {
     this.wifiGridClose(sender);
 
     this.WiFiGridForm = this.formBuilder.group({
-      guid: [Chance().guid()],
+      guid: [this.chance.guid()],
       address: ["", [Validators.required, Validators.pattern(this.ipRegex)]],
       cidr: ["", [Validators.required, Validators.min(1)]],
     });
@@ -1262,4 +1269,11 @@ export class NetworkComponent implements OnInit {
     return true;
   }
 
+  /// @brief Converts an AbstractControl to a FormControl.
+  /// @param absCtrl The AbstractControl to convert.
+  /// @return The converted FormControl.
+  public toControl(absCtrl: AbstractControl): FormControl {
+    const ctrl = absCtrl as FormControl;
+    return ctrl;
+  }
 }

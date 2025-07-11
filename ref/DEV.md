@@ -1,15 +1,20 @@
 # Notes for Developers
 
+## Create App
+
+- `npm i -g @angular/cli`
+- `ng new netplan-gui`
+- `npm i change @types/chance`
+
 ## Bench Testing
 
 ### app
 
-- `npm i -g @angular/cli`
 - `ng serve`
 
 ### REST
 
-- install regular packages mentioned in `INSTALL.md`
+- install regular packages mentioned in `INSTRUCTIONS.md`
 - `pip install "uvicorn[standard]"`
 - `cd src/assets/rest`
 - `sudo uvicorn rest:app --reload --host 0.0.0.0 --port 8080`

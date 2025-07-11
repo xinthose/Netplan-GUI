@@ -1,12 +1,12 @@
 // Angular
-import { NgModule } from '@angular/core';
+import { NgModule, Pipe, PipeTransform } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 // Forms
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, AbstractControl, FormControl } from '@angular/forms';
 
 // Progress
 import { GridModule, PDFModule, ExcelModule, FilterService } from '@progress/kendo-angular-grid';
@@ -42,14 +42,23 @@ const LOGGER_MODULE = LoggerModule.forRoot({
     httpResponseType: "json",
 });
 
-@NgModule({ 
+@Pipe({
+    name: 'formControl',
+})
+export class FormControlPipe implements PipeTransform {
+    transform(value: AbstractControl): FormControl<typeof value['value']> {
+        return value as FormControl<typeof value['value']>;
+    }
+}
+
+@NgModule({
     declarations: [
         AppComponent,
         NetworkComponent,
         CommandsComponent,
         PageNotFoundComponent
     ],
-    bootstrap: [AppComponent], 
+    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -75,8 +84,9 @@ const LOGGER_MODULE = LoggerModule.forRoot({
         FormsModule,
         ReactiveFormsModule,
         // other
-        FontAwesomeModule
-    ], 
+        FontAwesomeModule,
+        FormControlPipe
+    ],
     providers: [
         FilterService,
         {
@@ -85,6 +95,6 @@ const LOGGER_MODULE = LoggerModule.forRoot({
             multi: true
         },
         provideHttpClient(withInterceptorsFromDi())
-    ] 
+    ]
 })
 export class AppModule { }
