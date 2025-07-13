@@ -31,6 +31,11 @@
 - `ncu -u`
 - `npm i --force`
 
+## Package Documentation
+
+- [Bootstrap](https://getbootstrap.com)
+- [FastAPI](https://fastapi.tiangolo.com/)
+
 ## Troubleshooting
 
 - `ERROR in The Angular Compiler requires TypeScript >=4.4.2 and <4.6.0 but 4.62 was found instead.`
