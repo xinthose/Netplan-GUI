@@ -6,7 +6,13 @@ import { NetplanGUIService } from "../netplan-gui.service";
 import { NotificationService } from "@progress/kendo-angular-notification";
 
 // progress
-import { GridDataResult } from "@progress/kendo-angular-grid";
+import {   AddEvent,
+  CancelEvent,
+  EditEvent,
+  GridComponent,
+  GridDataResult,
+  RemoveEvent,
+  SaveEvent } from "@progress/kendo-angular-grid";
 import { SortDescriptor, orderBy } from "@progress/kendo-data-query";
 import { SVGIcon, plusIcon } from '@progress/kendo-svg-icons';
 
@@ -263,6 +269,10 @@ export class NetworkComponent implements OnInit {
       ssidPassword: "",
       addresses: [[], Validators.required],
     });
+
+    // set grid forms to empty objects
+    this.Eth0GridForm = this.formBuilder.group({});
+    this.Eth1GridForm = this.formBuilder.group({});
 
     // subscribe to form changes
     this.BridgeForm.get("enabled")!.valueChanges.subscribe((enabled: boolean) => {
@@ -800,7 +810,7 @@ export class NetworkComponent implements OnInit {
     }
   }
 
-  public eth0GridAdd({ sender }: any) {
+  public eth0GridAdd(args: AddEvent) {
     this.eth0GridClose(sender);
 
     this.Eth0GridForm = this.formBuilder.group({
@@ -813,7 +823,7 @@ export class NetworkComponent implements OnInit {
     this.eth0GridEditing = true;
   }
 
-  public eth0GridEdit({ sender, rowIndex, dataItem }: any) {
+  public eth0GridEdit(args: EditEvent) {
     if (this.debug) {
       this.logger.debug(JSON.stringify(dataItem))
     }
@@ -832,11 +842,11 @@ export class NetworkComponent implements OnInit {
     this.eth0GridEditing = true;
   }
 
-  public eth0GridCancel({ sender, rowIndex }: any) {
+  public eth0GridCancel(args: CancelEvent) {
     this.eth0GridClose(sender, rowIndex);
   }
 
-  public eth0GridSave({ sender, rowIndex, formGroup, isNew }: any) {
+  public eth0GridSave({ sender, rowIndex, formGroup, isNew }: SaveEvent) {
     if (this.debug) {
       this.logger.debug("NetworkComponent.eth0GridSave >> formGroup.value = " + JSON.stringify(formGroup.value));
     }
@@ -866,7 +876,7 @@ export class NetworkComponent implements OnInit {
     this.eth0GridEditing = false;
   }
 
-  public eth0GridRemove({ dataItem }: any) {
+  public eth0GridRemove(args: RemoveEvent) {
     if (this.debug) {
       this.logger.debug("NetworkComponent.eth0GridRemove >> dataItem = " + JSON.stringify(dataItem));
     }

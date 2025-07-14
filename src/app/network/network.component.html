@@ -4,7 +4,7 @@
     <div class="row justify-content-center mb-3">
       <div class="col text-center">
         <button kendoButton (click)="refreshNetwork()" [disabled]="loading" style="width: 120px;" type="button">
-          <span class="spinner-border spinner-border-sm me-2" *ngIf="loading"></span>
+          <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loading"></span>
           Refresh
         </button>
       </div>
@@ -109,7 +109,7 @@
                 <button kendoButton
                   [disabled]="!BridgeForm.valid || !bridgeGridData.length || bridgeGridEditing || loadingBridge"
                   themeColor="primary" type="submit">
-                  <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingBridge"></span>
+                  <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loadingBridge"></span>
                   <span>Submit</span>
                 </button>
                 <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="BridgeForm.dirty"></fa-icon>
@@ -218,7 +218,7 @@
                 <button kendoButton
                   [disabled]="!Eth0Form.valid || !eth0GridData.length || eth0GridEditing || loadingEth0"
                   themeColor="primary" type="submit">
-                  <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingEth0"></span>
+                  <span class="spinner-border spinner-border-sm me-2" role="status" role="status" *ngIf="loadingEth0"></span>
                   <span>Submit</span>
                 </button>
                 <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="Eth0Form.dirty"></fa-icon>
@@ -324,7 +324,7 @@
                 <button kendoButton
                   [disabled]="!Eth1Form.valid || !eth1GridData.length || eth1GridEditing || loadingEth1"
                   themeColor="primary" type="submit">
-                  <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingEth1"></span>
+                  <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loadingEth1"></span>
                   <span>Submit</span>
                 </button>
                 <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="Eth1Form.dirty"></fa-icon>
@@ -436,7 +436,7 @@
                 <button kendoButton
                   [disabled]="!WiFiForm.valid || !wifiGridData.length || wifiGridEditing || loadingWiFi"
                   themeColor="primary" type="submit">
-                  <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingWiFi"></span>
+                  <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loadingWiFi"></span>
                   <span>Submit</span>
                 </button>
                 <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="WiFiForm.dirty"></fa-icon>

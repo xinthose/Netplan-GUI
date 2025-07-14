@@ -14,7 +14,7 @@
                 <!-- Clear All Log Files -->
                 <li class="list-group-item">
                   <button kendoButton [disabled]="loadingClrLogFiles" (click)="clearLogFiles()">
-                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingClrLogFiles"></span>
+                    <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loadingClrLogFiles"></span>
                     <fa-icon [icon]="faTrash" class="me-2"></fa-icon>
                     <span>
                       Clear All Log Files
@@ -24,7 +24,7 @@
                 <!-- Change Log File Permissions -->
                 <li class="list-group-item">
                   <button kendoButton [disabled]="loadingChngLogFilePerm" (click)="changeLogFilePermissions()">
-                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingChngLogFilePerm"></span>
+                    <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loadingChngLogFilePerm"></span>
                     <fa-icon [icon]="faLockOpen" class="me-2"></fa-icon>
                     <span>
                       Change Log File Permissions
@@ -48,7 +48,7 @@
                 <!-- Reboot Computer -->
                 <li class="list-group-item">
                   <button kendoButton [disabled]="loadingRebootComputer" (click)="rebootComputerConfirm('open')">
-                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingRebootComputer"></span>
+                    <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loadingRebootComputer"></span>
                     <fa-icon [icon]="faArrowRotateLeft" class="me-2"></fa-icon>
                     <span>
                       Reboot Computer
@@ -58,7 +58,7 @@
                 <!-- Shutdown Computer -->
                 <li class="list-group-item">
                   <button kendoButton [disabled]="loadingShutdownComputer" (click)="shutdownComputerConfirm('open')">
-                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingShutdownComputer"></span>
+                    <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loadingShutdownComputer"></span>
                     <fa-icon [icon]="faPowerOff" class="me-2"></fa-icon>
                     <span>
                       Shutdown Computer
@@ -82,7 +82,7 @@
                 <!-- Get Ethernet 1 Status -->
                 <li class="list-group-item">
                   <button kendoButton [disabled]="loadingGetEth0Status" (click)="getEth0Status()">
-                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingGetEth0Status"></span>
+                    <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loadingGetEth0Status"></span>
                     <fa-icon [icon]="faDownload" class="me-2"></fa-icon>
                     <span>
                       Get Ethernet 1 Status
@@ -92,7 +92,7 @@
                 <!-- Get Ethernet 2 Status -->
                 <li class="list-group-item">
                   <button kendoButton [disabled]="loadingGetEth1Status" (click)="getEth1Status()">
-                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingGetEth1Status"></span>
+                    <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loadingGetEth1Status"></span>
                     <fa-icon [icon]="faDownload" class="me-2"></fa-icon>
                     <span>
                       Get Ethernet 2 Status
@@ -119,7 +119,7 @@
                 <!-- Get "ip a" -->
                 <li class="list-group-item">
                   <button kendoButton [disabled]="loadingGetIpA" (click)="getIpA()">
-                    <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingGetIpA"></span>
+                    <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loadingGetIpA"></span>
                     <fa-icon [icon]="faDownload" class="me-2"></fa-icon>
                     <span>
                       Get "ip a"
