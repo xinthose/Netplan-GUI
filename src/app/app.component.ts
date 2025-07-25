@@ -20,8 +20,11 @@ import { environment } from "../environments/environment";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
+  debug: boolean;
+  private logID: string = "AppComponent.";
   // navigation selected
   public networkSelected: boolean = false;
   public commandsSelected: boolean = false;
@@ -41,6 +44,12 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     private logger: NGXLogger,
     public router: Router,
   ) {
+    if (environment.production) {
+      this.debug = false;
+    } else {
+      this.debug = true;
+    }
+
     // subscribe to navigation changes to color button
     this.networkSelected$ = this.netplanGuiService.networkSelected$.subscribe((networkSelected: boolean) => {
       this.resetSelection();
@@ -57,7 +66,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.logger.info("NetplanGUI is running");
+    if (this.debug) {
+      this.logger.debug(`${this.logID}ngAfterViewInit >> AppComponent initialized`);
+    }
   }
 
   logsClick() {

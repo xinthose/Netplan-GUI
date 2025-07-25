@@ -1,12 +1,12 @@
 // Angular
-import { NgModule } from '@angular/core';
+import { NgModule, Pipe, PipeTransform } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 // Forms
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, AbstractControl, FormControl } from '@angular/forms';
 
 // Progress
 import { GridModule, PDFModule, ExcelModule, FilterService } from '@progress/kendo-angular-grid';
@@ -35,58 +35,66 @@ import { CommandsComponent } from './commands/commands.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    NetworkComponent,
-    CommandsComponent,
-    PageNotFoundComponent
-  ],
-  imports: [
-    // General
-    HttpClientModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    LoggerModule.forRoot({
-      serverLoggingUrl: "/assets/log.php",
-      level: NgxLoggerLevel.DEBUG,
-      serverLogLevel: environment.production ? NgxLoggerLevel.INFO : NgxLoggerLevel.OFF,  // only log to server for production
-      httpResponseType: "json",
-    }),
+const LOGGER_MODULE = LoggerModule.forRoot({
+    serverLoggingUrl: "/assets/log.php",
+    level: NgxLoggerLevel.DEBUG,
+    serverLogLevel: environment.production ? NgxLoggerLevel.INFO : NgxLoggerLevel.OFF, // only log to server for production
+    httpResponseType: "json",
+});
 
-    // Progress
-    GridModule,
-    PDFModule,
-    ExcelModule,
-    InputsModule,
-    ButtonsModule,
-    LabelModule,
-    PopupModule,
-    DialogsModule,
-    DropDownsModule,
-    TooltipModule,
-    RippleModule,
-    NotificationModule,
-    NavigationModule,
-    IndicatorsModule,
-    IconsModule,
-
-    // Forms
-    FormsModule,
-    ReactiveFormsModule,
-
-    // other
-    FontAwesomeModule,
-  ],
-  providers: [
-    FilterService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorInterceptor,
-      multi: true
+@Pipe({
+    name: 'formControl',
+})
+export class FormControlPipe implements PipeTransform {
+    transform(value: AbstractControl): FormControl<typeof value['value']> {
+        return value as FormControl<typeof value['value']>;
     }
-  ],
-  bootstrap: [AppComponent]
+}
+
+@NgModule({
+    declarations: [
+        AppComponent,
+        NetworkComponent,
+        CommandsComponent,
+        PageNotFoundComponent
+    ],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        LOGGER_MODULE,
+        // Progress
+        GridModule,
+        PDFModule,
+        ExcelModule,
+        InputsModule,
+        ButtonsModule,
+        LabelModule,
+        PopupModule,
+        DialogsModule,
+        DropDownsModule,
+        TooltipModule,
+        RippleModule,
+        NotificationModule,
+        NavigationModule,
+        IndicatorsModule,
+        IconsModule,
+        // Forms
+        FormsModule,
+        ReactiveFormsModule,
+        // other
+        FontAwesomeModule,
+        FormControlPipe
+    ],
+    providers: [
+        FilterService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpErrorInterceptor,
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
 })
 export class AppModule { }

@@ -4,7 +4,7 @@
     <div class="row justify-content-center mb-3">
       <div class="col text-center">
         <button kendoButton (click)="refreshNetwork()" [disabled]="loading" style="width: 120px;" type="button">
-          <span class="spinner-border spinner-border-sm me-2" *ngIf="loading"></span>
+          <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loading"></span>
           Refresh
         </button>
       </div>
@@ -29,7 +29,7 @@
                 <!-- MAC Address LAN 1 -->
                 <kendo-formfield *ngIf="bridgeGridEnabled">
                   <kendo-label labelCssClass="kendoFormLabel" [for]="mac1" text="MAC Address LAN 1"></kendo-label>
-                  <kendo-maskedtextbox formControlName="mac1" [mask]="macAddressMask" includeLiterals="true" #mac1>
+                  <kendo-maskedtextbox formControlName="mac1" [mask]="macAddressMask" [includeLiterals]="true" #mac1>
                   </kendo-maskedtextbox>
                   <kendo-formhint>The MAC Address of the first ethernet port on the computer.</kendo-formhint>
                   <kendo-formerror>Error: MAC Address LAN 1 is required.</kendo-formerror>
@@ -37,7 +37,7 @@
                 <!-- MAC Address LAN 2 -->
                 <kendo-formfield *ngIf="bridgeGridEnabled">
                   <kendo-label labelCssClass="kendoFormLabel" [for]="mac2" text="MAC Address LAN 2"></kendo-label>
-                  <kendo-maskedtextbox formControlName="mac2" [mask]="macAddressMask" includeLiterals="true" #mac2>
+                  <kendo-maskedtextbox formControlName="mac2" [mask]="macAddressMask" [includeLiterals]="true" #mac2>
                   </kendo-maskedtextbox>
                   <kendo-formhint>The MAC Address of the second ethernet port on the computer.</kendo-formhint>
                   <kendo-formerror>Error: MAC Address LAN 2 is required.</kendo-formerror>
@@ -88,7 +88,7 @@
                       <ng-template kendoGridEditTemplate let-formGroup="BridgeGridForm">
                         <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
                           [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
-                          [formControl]="BridgeGridForm.get('cidr')" [adaptiveMode]="true">
+                          [formControl]="BridgeGridForm.get('cidr')! | formControl" adaptiveMode="auto">
                         </kendo-dropdownlist>
                       </ng-template>
                     </kendo-grid-column>
@@ -96,7 +96,7 @@
                       <ng-template kendoGridCellTemplate let-isNew="isNew">
                         <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
                         <button kendoGridRemoveCommand type="button">Remove</button>
-                        <button kendoGridSaveCommand [disabled]="BridgeGridForm?.invalid" type="button">{{ isNew ? 'Add'
+                        <button kendoGridSaveCommand [disabled]="BridgeGridForm.invalid" type="button">{{ isNew ? 'Add'
                           : 'Update'
                           }}</button>
                         <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
@@ -109,7 +109,7 @@
                 <button kendoButton
                   [disabled]="!BridgeForm.valid || !bridgeGridData.length || bridgeGridEditing || loadingBridge"
                   themeColor="primary" type="submit">
-                  <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingBridge"></span>
+                  <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loadingBridge"></span>
                   <span>Submit</span>
                 </button>
                 <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="BridgeForm.dirty"></fa-icon>
@@ -139,7 +139,7 @@
                 <!-- MAC Address -->
                 <kendo-formfield *ngIf="eth0GridEnabled">
                   <kendo-label labelCssClass="kendoFormLabel" [for]="mac" text="MAC Address"></kendo-label>
-                  <kendo-maskedtextbox formControlName="mac" [mask]="macAddressMask" includeLiterals="true" #mac>
+                  <kendo-maskedtextbox formControlName="mac" [mask]="macAddressMask" [includeLiterals]="true" #mac>
                   </kendo-maskedtextbox>
                   <kendo-formhint>The MAC Address of the first ethernet port on the computer.</kendo-formhint>
                   <kendo-formerror>Error: MAC Address is required.</kendo-formerror>
@@ -197,7 +197,7 @@
                       <ng-template kendoGridEditTemplate let-formGroup="Eth0GridForm">
                         <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
                           [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
-                          [formControl]="Eth0GridForm.get('cidr')" cc>
+                          [formControl]="Eth0GridForm.get('cidr')! | formControl" cc>
                         </kendo-dropdownlist>
                       </ng-template>
                     </kendo-grid-column>
@@ -205,7 +205,7 @@
                       <ng-template kendoGridCellTemplate let-isNew="isNew">
                         <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
                         <button kendoGridRemoveCommand type="button">Remove</button>
-                        <button kendoGridSaveCommand [disabled]="Eth0GridForm?.invalid" type="button">{{ isNew ? 'Add' :
+                        <button kendoGridSaveCommand [disabled]="Eth0GridForm.invalid" type="button">{{ isNew ? 'Add' :
                           'Update'
                           }}</button>
                         <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
@@ -218,7 +218,7 @@
                 <button kendoButton
                   [disabled]="!Eth0Form.valid || !eth0GridData.length || eth0GridEditing || loadingEth0"
                   themeColor="primary" type="submit">
-                  <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingEth0"></span>
+                  <span class="spinner-border spinner-border-sm me-2" role="status" role="status" *ngIf="loadingEth0"></span>
                   <span>Submit</span>
                 </button>
                 <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="Eth0Form.dirty"></fa-icon>
@@ -245,7 +245,7 @@
                 <!-- MAC Address -->
                 <kendo-formfield *ngIf="eth1GridEnabled">
                   <kendo-label labelCssClass="kendoFormLabel" [for]="mac" text="MAC Address"></kendo-label>
-                  <kendo-maskedtextbox formControlName="mac" [mask]="macAddressMask" includeLiterals="true" #mac>
+                  <kendo-maskedtextbox formControlName="mac" [mask]="macAddressMask" [includeLiterals]="true" #mac>
                   </kendo-maskedtextbox>
                   <kendo-formhint>The MAC Address of the second ethernet port on the computer.</kendo-formhint>
                   <kendo-formerror>Error: MAC Address is required.</kendo-formerror>
@@ -303,7 +303,7 @@
                       <ng-template kendoGridEditTemplate let-formGroup="Eth1GridForm">
                         <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
                           [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
-                          [formControl]="Eth1GridForm.get('cidr')" cc>
+                          [formControl]="Eth1GridForm.get('cidr')! | formControl" cc>
                         </kendo-dropdownlist>
                       </ng-template>
                     </kendo-grid-column>
@@ -311,7 +311,7 @@
                       <ng-template kendoGridCellTemplate let-isNew="isNew">
                         <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
                         <button kendoGridRemoveCommand type="button">Remove</button>
-                        <button kendoGridSaveCommand [disabled]="Eth1GridForm?.invalid" type="button">{{ isNew ? 'Add' :
+                        <button kendoGridSaveCommand [disabled]="Eth1GridForm.invalid" type="button">{{ isNew ? 'Add' :
                           'Update'
                           }}</button>
                         <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
@@ -324,7 +324,7 @@
                 <button kendoButton
                   [disabled]="!Eth1Form.valid || !eth1GridData.length || eth1GridEditing || loadingEth1"
                   themeColor="primary" type="submit">
-                  <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingEth1"></span>
+                  <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loadingEth1"></span>
                   <span>Submit</span>
                 </button>
                 <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="Eth1Form.dirty"></fa-icon>
@@ -415,7 +415,7 @@
                       <ng-template kendoGridEditTemplate let-formGroup="WiFiGridForm">
                         <kendo-dropdownlist [defaultItem]="{cidr: null, subnetMask: 'Select a subnet...'}"
                           [data]="subnetMaskCidr" textField="subnetMask" valueField="cidr" [valuePrimitive]="true"
-                          [formControl]="WiFiGridForm.get('cidr')" [adaptiveMode]="true">
+                          [formControl]="WiFiGridForm.get('cidr')! | formControl" adaptiveMode="auto">
                         </kendo-dropdownlist>
                       </ng-template>
                     </kendo-grid-column>
@@ -423,7 +423,7 @@
                       <ng-template kendoGridCellTemplate let-isNew="isNew">
                         <button kendoGridEditCommand themeColor="primary" type="button">Edit</button>
                         <button kendoGridRemoveCommand type="button">Remove</button>
-                        <button kendoGridSaveCommand [disabled]="WiFiGridForm?.invalid" type="button">{{ isNew ? 'Add' :
+                        <button kendoGridSaveCommand [disabled]="WiFiGridForm.invalid" type="button">{{ isNew ? 'Add' :
                           'Update'
                           }}</button>
                         <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
@@ -436,7 +436,7 @@
                 <button kendoButton
                   [disabled]="!WiFiForm.valid || !wifiGridData.length || wifiGridEditing || loadingWiFi"
                   themeColor="primary" type="submit">
-                  <span class="spinner-border spinner-border-sm me-2" *ngIf="loadingWiFi"></span>
+                  <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="loadingWiFi"></span>
                   <span>Submit</span>
                 </button>
                 <fa-icon [icon]="faPencilAlt" style="margin-left: 10px;" *ngIf="WiFiForm.dirty"></fa-icon>

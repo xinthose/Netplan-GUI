@@ -27,7 +27,7 @@ import models  # models.py
 
 # region
 
-VERSION = "1.2.0"
+VERSION = "1.3.0"
 NETPLAN = "/etc/netplan/01-network-manager-all.yaml"
 
 logger = log.setup_custom_logger("root")
@@ -116,10 +116,10 @@ def delayed_vpn_server_change():
 # region
 
 
-@app.get("/get_interfaces1")
-async def get_interfaces1():
+@app.get("/get_interfaces")
+async def get_interfaces():
     try:
-        # test: http://localhost:8080/get_interfaces1
+        # test: http://localhost:8080/get_interfaces
         debug = False
         ret_obj = {}
 

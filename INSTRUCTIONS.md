@@ -12,7 +12,6 @@
 - `sudo apt update`
 - `sudo apt install npm nodejs php libapache2-mod-php apache2-utils python3-fastapi gunicorn python3-simplejson`
 - `sudo npm i -g pm2`
-- `npm i express compression`
 
 ## Install Netplan GUI
 
@@ -22,6 +21,7 @@
   - `cd ~/Downloads`
   - `cp -r netplan-gui /var/www/html`  // copy folder
 - `cd /var/www/html/netplan-gui`  // change directories
+- `npm i express compression` // install the packages `server.js` needs
 - `pm2 start pm2.json`  // start client app
 - `cd assets/rest`  // pm2 start command needs to be run from the same directory as the app, so change directories to it
 - `pm2 start pm2.json`  // start REST app
@@ -31,6 +31,7 @@
 - `chmod -R 777 /etc/netplan`  // allow 01-network-manager-all.yaml file to be changed by non-root app
 - Netplan GUI can now be accessed locally from this URL: <http://localhost:3000>
   - change `localhost` to the IP address of the computer to accesss it remotely
+  - go to this URL <http://localhost/logs/> if the webpage is not loading and review the log files
 
 ### Run services on boot
 
@@ -84,6 +85,7 @@ wlp3s0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 ## Updating to New Version
 
 - `sudo rm -r /var/www/html/netplan-gui`
+- `rm -rf /var/www/html/logs/*`
 - Follow the steps in [Install Netplan GUI](#install-netplan-gui) again
 
 ## Troubleshooting
@@ -92,3 +94,7 @@ wlp3s0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
   - `/var/www/html/logs/netplan-gui-error.log`
   - `/var/www/html/logs/netplan-gui-rest-error.log`
   - `/var/www/html/logs/netplan-gui-rest.log`
+- If you run this command `pm2 start pm2.json ` in this folder `/var/www/html/netplan-gui` and see:
+  - `[PM2][ERROR] Process failed to launch EACCES: permission denied, open '/var/www/html/logs/netplan-gui-rest-error.log'`
+    - then remove the log files: `rm -rf /var/www/html/logs/*`
+  

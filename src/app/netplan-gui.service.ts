@@ -38,6 +38,12 @@ export class NetplanGUIService {
     private http: HttpClient,
     private logger: NGXLogger,  // trace, debug, info, log, warn, error, fatal
   ) {
+    if (environment.production) {
+      this.debug = false;
+    } else {
+      this.debug = true;
+    }
+
     this.BASE_URL = "http://" + SERVER + ":8080/";
   }
 
@@ -65,7 +71,7 @@ export class NetplanGUIService {
 
   public async getNetwork(): Promise<LinuxNetworkIntf> {
     try {
-      return await this.get("get_interfaces1");
+      return await this.get("get_interfaces");
     } catch (error: any) {
       this.logger.error(`${this.logID}getNetwork >> error = ${error}`);
       throw new Error(error.toString());
