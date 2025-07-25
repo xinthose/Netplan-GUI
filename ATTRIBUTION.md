@@ -1,7 +1,8 @@
 # Attribution
 
-## src/assets/gplaypattern.png
+## Background Pattern
 
-**Source**: <https://www.toptal.com/designers/subtlepatterns/gplay/>
-
-![gplaypattern](https://github.com/xinthose/Netplan-GUI/raw/master/src/assets/gplaypattern.png)
+- (`styles.scss`)[https://github.com/xinthose/Netplan-GUI/blob/master/src/styles.scss] --> `body` --> `background-image`
+- Source: <https://heropatterns.com/> --> Topography
+  - Foreground color: `#e6e6e6`
+  - Background color: `#ffffff`

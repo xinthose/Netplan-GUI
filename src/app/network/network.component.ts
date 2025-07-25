@@ -811,7 +811,7 @@ export class NetworkComponent implements OnInit {
   }
 
   public eth0GridAdd(args: AddEvent) {
-    this.eth0GridClose(sender);
+    this.eth0GridClose(args.sender);
 
     this.Eth0GridForm = this.formBuilder.group({
       guid: [this.chance.guid()],
@@ -819,31 +819,31 @@ export class NetworkComponent implements OnInit {
       cidr: ["", [Validators.required, Validators.min(1)]],
     });
 
-    sender.addRow(this.Eth0GridForm);
+    args.sender.addRow(this.Eth0GridForm);
     this.eth0GridEditing = true;
   }
 
   public eth0GridEdit(args: EditEvent) {
     if (this.debug) {
-      this.logger.debug(JSON.stringify(dataItem))
+      this.logger.debug(JSON.stringify(args.dataItem))
     }
-    this.eth0GridClose(sender);
+    this.eth0GridClose(args.sender);
 
     this.Eth0GridForm = this.formBuilder.group({
-      guid: [dataItem.guid],
-      address: [dataItem.address, [Validators.required, Validators.pattern(this.ipRegex)]],
-      cidr: [dataItem.cidr, [Validators.required, Validators.min(1)]],
+      guid: [args.dataItem.guid],
+      address: [args.dataItem.address, [Validators.required, Validators.pattern(this.ipRegex)]],
+      cidr: [args.dataItem.cidr, [Validators.required, Validators.min(1)]],
     });
 
-    this.eth0GridRow = rowIndex;
+    this.eth0GridRow = args.rowIndex;
 
-    sender.editRow(rowIndex, this.Eth0GridForm);
+    args.sender.editRow(args.rowIndex, this.Eth0GridForm);
 
     this.eth0GridEditing = true;
   }
 
   public eth0GridCancel(args: CancelEvent) {
-    this.eth0GridClose(sender, rowIndex);
+    this.eth0GridClose(args.sender, args.rowIndex);
   }
 
   public eth0GridSave({ sender, rowIndex, formGroup, isNew }: SaveEvent) {
@@ -878,11 +878,11 @@ export class NetworkComponent implements OnInit {
 
   public eth0GridRemove(args: RemoveEvent) {
     if (this.debug) {
-      this.logger.debug("NetworkComponent.eth0GridRemove >> dataItem = " + JSON.stringify(dataItem));
+      this.logger.debug("NetworkComponent.eth0GridRemove >> dataItem = " + JSON.stringify(args.dataItem));
     }
 
     // get data
-    const data: GridNetworkIntf = dataItem;
+    const data: GridNetworkIntf = args.dataItem;
 
     // filter out removed row
     this.eth0GridData = this.eth0GridData.filter((obj: GridNetworkIntf) => {

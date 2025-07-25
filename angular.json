@@ -148,7 +148,6 @@
       }
     }
   },
-  "defaultProject": "netplan-gui",
   "schematics": {
     "@schematics/angular:component": {
       "type": "component"
