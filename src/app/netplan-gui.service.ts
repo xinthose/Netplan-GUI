@@ -71,7 +71,7 @@ export class NetplanGUIService {
 
   public async getNetwork(): Promise<LinuxNetworkIntf> {
     try {
-      return await this.get("get_interfaces1");
+      return await this.get("get_interfaces");
     } catch (error: any) {
       this.logger.error(`${this.logID}getNetwork >> error = ${error}`);
       throw new Error(error.toString());

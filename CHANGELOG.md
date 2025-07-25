@@ -51,4 +51,4 @@
 
 ## 1.0.0 (9/26/2021)
 
-- project converted from kendo mobile (jQuery) to Angular
+- project converted from kendo mobile (jQuery) to Angular 12
