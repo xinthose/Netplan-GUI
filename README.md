@@ -34,3 +34,8 @@
 | 1.3.0         | Ubuntu 24     |
 | 1.1.0, 1.2.0  | Ubuntu 23     |
 | 1.0.0 - 1.0.5 | Ubuntu 22     |
+
+## 3rd Party Licenses
+
+- This software cannot be used commercially due to the use of [Kendo UI](https://www.telerik.com/kendo-angular-ui) widgets (unless you buy a license)
+- see the file `3rdpartylicenses.txt` for the software release version for more information

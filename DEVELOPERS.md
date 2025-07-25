@@ -22,8 +22,8 @@
 ## Build Release
 
 - `npm run build`
-- zip `dist/netplan-gui`
-- upload ZIP as new release for project [releases](https://github.com/xinthose/Netplan-GUI/releases)
+- zip the files inside this folder: `dist/netplan-gui/browser` and name it `netplan-gui`
+- upload `netplan-gui.zip` as a new release in project [releases](https://github.com/xinthose/Netplan-GUI/releases) along with the file `3rdpartylicenses.txt`
 
 ## Update Packages
 
@@ -33,6 +33,7 @@
 
 ## Package Documentation
 
+- [Kendo UI for Angular](https://www.telerik.com/kendo-angular-ui/components/)
 - [Bootstrap](https://getbootstrap.com)
 - [FastAPI](https://fastapi.tiangolo.com/)
 
