@@ -96,6 +96,4 @@ wlp3s0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 - If you run this command `pm2 start pm2.json ` in this folder `/var/www/html/netplan-gui` and see:
   - `[PM2][ERROR] Process failed to launch EACCES: permission denied, open '/var/www/html/logs/netplan-gui-rest-error.log'`
     - then remove the log files: `rm -rf /var/www/html/logs/*`
-  - `Error: Cannot find module 'express'`
-    - 
   
