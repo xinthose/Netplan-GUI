@@ -6,13 +6,15 @@ import { NetplanGUIService } from "../netplan-gui.service";
 import { NotificationService } from "@progress/kendo-angular-notification";
 
 // progress
-import {   AddEvent,
+import {
+  AddEvent,
   CancelEvent,
   EditEvent,
   GridComponent,
   GridDataResult,
   RemoveEvent,
-  SaveEvent } from "@progress/kendo-angular-grid";
+  SaveEvent
+} from "@progress/kendo-angular-grid";
 import { SortDescriptor, orderBy } from "@progress/kendo-data-query";
 import { SVGIcon, plusIcon } from '@progress/kendo-svg-icons';
 
@@ -27,6 +29,7 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 // other
 import { NGXLogger } from "ngx-logger";
 import Chance from 'chance';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: "app-network",
@@ -35,7 +38,8 @@ import Chance from 'chance';
   standalone: false
 })
 export class NetworkComponent implements OnInit {
-  debug: boolean = true;
+  debug: boolean;
+  private logID: string = "NetworkComponent.";
   // loading
   loading: boolean = false;
   loadingBridge: boolean = false;
@@ -232,6 +236,12 @@ export class NetworkComponent implements OnInit {
     private logger: NGXLogger,
     private formBuilder: FormBuilder,
   ) {
+    if (environment.production) {
+      this.debug = false;
+    } else {
+      this.debug = true;
+    }
+
     // setup forms
     this.BridgeForm = this.formBuilder.group({
       enabled: false,
@@ -449,7 +459,7 @@ export class NetworkComponent implements OnInit {
       // get eBox network
       await this.refreshNetwork();
     } catch (error: any) {
-      this.logger.error("NetworkComponent.ngAfterViewChecked >> error = " + error);
+      this.logger.error(`${this.logID}ngOnInit >> error = ${error}`);
     }
   }
 
@@ -588,7 +598,7 @@ export class NetworkComponent implements OnInit {
       // hide loading icon
       this.loading = false;
     } catch (error: any) {
-      this.logger.error("NetworkComponent.refreshNetwork >> error = " + error);
+      this.logger.error(`${this.logID}refreshNetwork >> error = ${error}`);
       this.loading = false;
     }
   }
@@ -599,7 +609,7 @@ export class NetworkComponent implements OnInit {
   async onSubmitBridge(e: any) {
     try {
       if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitBridge >> e.value = " + JSON.stringify(e.value));
+        this.logger.debug(`${this.logID}onSubmitBridge >> e.value = ${JSON.stringify(e.value)}`);
       }
 
       // validate
@@ -642,7 +652,7 @@ export class NetworkComponent implements OnInit {
       this.BridgeForm.markAsPristine();
       this.BridgeForm.markAsUntouched();
     } catch (error: any) {
-      this.logger.error("NetworkComponent.onSubmitBridge >> error = " + error);
+      this.logger.error(`${this.logID}onSubmitBridge >> error = ${error}`);
       this.loadingBridge = false;
     }
   }
@@ -667,7 +677,7 @@ export class NetworkComponent implements OnInit {
 
   public bridgeGridEdit({ sender, rowIndex, dataItem }: any) {
     if (this.debug) {
-      this.logger.debug(JSON.stringify(dataItem))
+      this.logger.debug(`${this.logID}bridgeGridEdit >> dataItem = ${JSON.stringify(dataItem)}`);
     }
     this.bridgeGridClose(sender);
 
@@ -690,7 +700,7 @@ export class NetworkComponent implements OnInit {
 
   public bridgeGridSave({ sender, rowIndex, formGroup, isNew }: any) {
     if (this.debug) {
-      this.logger.debug("NetworkComponent.bridgeGridSave >> formGroup.value = " + JSON.stringify(formGroup.value));
+      this.logger.debug(`${this.logID}bridgeGridSave >> formGroup.value = ${JSON.stringify(formGroup.value)}`);
     }
 
     // get data
@@ -706,7 +716,7 @@ export class NetworkComponent implements OnInit {
         row.address = data.address;
         row.cidr = data.cidr;
       } else {
-        this.logger.warn("NetworkComponent.bridgeGridRemove >> could not find row to update in grid data >> data = " + JSON.stringify(data));
+        this.logger.warn(`${this.logID}bridgeGridRemove >> could not find row to update in grid data >> data = ${JSON.stringify(data)}`);
       }
     }
 
@@ -721,7 +731,7 @@ export class NetworkComponent implements OnInit {
 
   public bridgeGridRemove({ dataItem }: any) {
     if (this.debug) {
-      this.logger.debug("NetworkComponent.bridgeGridRemove >> dataItem = " + JSON.stringify(dataItem));
+      this.logger.debug(`${this.logID}bridgeGridRemove >> dataItem = ${JSON.stringify(dataItem)}`);
     }
 
     // get data
@@ -739,7 +749,7 @@ export class NetworkComponent implements OnInit {
   private bridgeGridClose(grid: any, rowIndex = this.bridgeGridRow) {
     grid.closeRow(rowIndex);
     this.bridgeGridRow = 0;
-    this.BridgeGridForm = undefined!;
+    this.BridgeGridForm = this.formBuilder.group({});
     this.bridgeGridEditing = false;
   }
 
@@ -762,7 +772,7 @@ export class NetworkComponent implements OnInit {
   async onSubmitEth0(e: any) {
     try {
       if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitEth0 >> e.value = " + JSON.stringify(e.value));
+        this.logger.debug(`${this.logID}onSubmitEth0 >> e.value = ${JSON.stringify(e.value)}`);
       }
 
       // validate
@@ -805,7 +815,7 @@ export class NetworkComponent implements OnInit {
       this.Eth0Form.markAsPristine();
       this.Eth0Form.markAsUntouched();
     } catch (error: any) {
-      this.logger.error("NetworkComponent.onSubmitEth0 >> error = " + error);
+      this.logger.error(`${this.logID}onSubmitEth0 >> error = ${error}`);
       this.loadingEth0 = false;
     }
   }
@@ -825,7 +835,7 @@ export class NetworkComponent implements OnInit {
 
   public eth0GridEdit(args: EditEvent) {
     if (this.debug) {
-      this.logger.debug(JSON.stringify(args.dataItem))
+      this.logger.debug(`${this.logID}eth0GridEdit >> dataItem = ${JSON.stringify(args.dataItem)}`);
     }
     this.eth0GridClose(args.sender);
 
@@ -848,7 +858,7 @@ export class NetworkComponent implements OnInit {
 
   public eth0GridSave({ sender, rowIndex, formGroup, isNew }: SaveEvent) {
     if (this.debug) {
-      this.logger.debug("NetworkComponent.eth0GridSave >> formGroup.value = " + JSON.stringify(formGroup.value));
+      this.logger.debug(`${this.logID}eth0GridSave >> formGroup.value = ${JSON.stringify(formGroup.value)}`);
     }
 
     // get data
@@ -864,7 +874,7 @@ export class NetworkComponent implements OnInit {
         row.address = data.address;
         row.cidr = data.cidr;
       } else {
-        this.logger.warn("NetworkComponent.eth0GridRemove >> could not find row to update in grid data >> data = " + JSON.stringify(data));
+        this.logger.warn(`${this.logID}eth0GridRemove >> could not find row to update in grid data >> data = ${JSON.stringify(data)}`);
       }
     }
 
@@ -878,7 +888,7 @@ export class NetworkComponent implements OnInit {
 
   public eth0GridRemove(args: RemoveEvent) {
     if (this.debug) {
-      this.logger.debug("NetworkComponent.eth0GridRemove >> dataItem = " + JSON.stringify(args.dataItem));
+      this.logger.debug(`${this.logID}eth0GridRemove >> dataItem = ${JSON.stringify(args.dataItem)}`);
     }
 
     // get data
@@ -896,7 +906,7 @@ export class NetworkComponent implements OnInit {
   private eth0GridClose(grid: any, rowIndex = this.eth0GridRow) {
     grid.closeRow(rowIndex);
     this.eth0GridRow = 0;
-    this.Eth0GridForm = undefined!;
+    this.Eth0GridForm = this.formBuilder.group({});
     this.eth0GridEditing = false;
   }
 
@@ -919,7 +929,7 @@ export class NetworkComponent implements OnInit {
   async onSubmitEth1(e: any) {
     try {
       if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitEth1 >> e.value = " + JSON.stringify(e.value));
+        this.logger.debug(`${this.logID}onSubmitEth1 >> e.value = ${JSON.stringify(e.value)}`);
       }
 
       // validate
@@ -962,7 +972,7 @@ export class NetworkComponent implements OnInit {
       this.Eth1Form.markAsPristine();
       this.Eth1Form.markAsUntouched();
     } catch (error: any) {
-      this.logger.error("NetworkComponent.onSubmitEth1 >> error = " + error);
+      this.logger.error(`${this.logID}onSubmitEth1 >> error = ${error}`);
       this.loadingEth1 = false;
     }
   }
@@ -983,7 +993,7 @@ export class NetworkComponent implements OnInit {
 
   public eth1GridEdit({ sender, rowIndex, dataItem }: any) {
     if (this.debug) {
-      this.logger.debug(JSON.stringify(dataItem))
+      this.logger.debug(`${this.logID}eth1GridEdit >> dataItem = ${JSON.stringify(dataItem)}`);
     }
     this.eth1GridClose(sender);
 
@@ -1006,7 +1016,7 @@ export class NetworkComponent implements OnInit {
 
   public eth1GridSave({ sender, rowIndex, formGroup, isNew }: any) {
     if (this.debug) {
-      this.logger.debug("NetworkComponent.eth1GridSave >> formGroup.value = " + JSON.stringify(formGroup.value));
+      this.logger.debug(`${this.logID}eth1GridSave >> formGroup.value = ${JSON.stringify(formGroup.value)}`);
     }
 
     // get data
@@ -1022,7 +1032,7 @@ export class NetworkComponent implements OnInit {
         row.address = data.address;
         row.cidr = data.cidr;
       } else {
-        this.logger.warn("NetworkComponent.eth1GridRemove >> could not find row to update in grid data >> data = " + JSON.stringify(data));
+        this.logger.warn(`${this.logID}eth1GridRemove >> could not find row to update in grid data >> data = ${JSON.stringify(data)}`);
       }
     }
 
@@ -1037,7 +1047,7 @@ export class NetworkComponent implements OnInit {
 
   public eth1GridRemove({ dataItem }: any) {
     if (this.debug) {
-      this.logger.debug("NetworkComponent.eth1GridRemove >> dataItem = " + JSON.stringify(dataItem));
+      this.logger.debug(`${this.logID}eth1GridRemove >> dataItem = ${JSON.stringify(dataItem)}`);
     }
 
     // get data
@@ -1055,7 +1065,7 @@ export class NetworkComponent implements OnInit {
   private eth1GridClose(grid: any, rowIndex = this.eth1GridRow) {
     grid.closeRow(rowIndex);
     this.eth1GridRow = 0;
-    this.Eth1GridForm = undefined!;
+    this.Eth1GridForm = this.formBuilder.group({});
     this.eth1GridEditing = false;
   }
 
@@ -1078,7 +1088,7 @@ export class NetworkComponent implements OnInit {
   async onSubmitWiFi(e: any) {
     try {
       if (this.debug) {
-        this.logger.debug("NetworkComponent.onSubmitWiFi >> e.value = " + JSON.stringify(e.value));
+        this.logger.debug(`${this.logID}onSubmitWiFi >> e.value = ${JSON.stringify(e.value)}`);
       }
 
       // validate
@@ -1121,7 +1131,7 @@ export class NetworkComponent implements OnInit {
       this.WiFiForm.markAsPristine();
       this.WiFiForm.markAsUntouched();
     } catch (error: any) {
-      this.logger.error("NetworkComponent.onSubmitWiFi >> error = " + error);
+      this.logger.error(`${this.logID}onSubmitWiFi >> error = ${error}`);
       this.loadingWiFi = false;
     }
   }
@@ -1142,7 +1152,7 @@ export class NetworkComponent implements OnInit {
 
   public wifiGridEdit({ sender, rowIndex, dataItem }: any) {
     if (this.debug) {
-      this.logger.debug(JSON.stringify(dataItem))
+      this.logger.debug(`${this.logID}wifiGridEdit >> dataItem = ${JSON.stringify(dataItem)}`);
     }
     this.wifiGridClose(sender);
 
@@ -1165,7 +1175,7 @@ export class NetworkComponent implements OnInit {
 
   public wifiGridSave({ sender, rowIndex, formGroup, isNew }: any) {
     if (this.debug) {
-      this.logger.debug("NetworkComponent.wifiGridSave >> formGroup.value = " + JSON.stringify(formGroup.value));
+      this.logger.debug(`${this.logID}wifiGridSave >> formGroup.value = ${JSON.stringify(formGroup.value)}`);
     }
 
     // get data
@@ -1181,7 +1191,7 @@ export class NetworkComponent implements OnInit {
         row.address = data.address;
         row.cidr = data.cidr;
       } else {
-        this.logger.warn("NetworkComponent.wifiGridRemove >> could not find row to update in grid data >> data = " + JSON.stringify(data));
+        this.logger.warn(`${this.logID}wifiGridRemove >> could not find row to update in grid data >> data = ${JSON.stringify(data)}`);
       }
     }
 
@@ -1196,7 +1206,7 @@ export class NetworkComponent implements OnInit {
 
   public wifiGridRemove({ dataItem }: any) {
     if (this.debug) {
-      this.logger.debug("NetworkComponent.wifiGridRemove >> dataItem = " + JSON.stringify(dataItem));
+      this.logger.debug(`${this.logID}wifiGridRemove >> dataItem = ${JSON.stringify(dataItem)}`);
     }
 
     // get data
@@ -1214,7 +1224,7 @@ export class NetworkComponent implements OnInit {
   private wifiGridClose(grid: any, rowIndex = this.wifiGridRow) {
     grid.closeRow(rowIndex);
     this.wifiGridRow = 0;
-    this.WiFiGridForm = undefined!;
+    this.WiFiGridForm = this.formBuilder.group({});
     this.wifiGridEditing = false;
   }
 

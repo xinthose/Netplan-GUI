@@ -9,6 +9,7 @@ import { faPowerOff, faTrash, faLockOpen, faArrowRotateLeft, faDownload } from '
 
 // other
 import { NGXLogger } from "ngx-logger";
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-commands',
@@ -17,7 +18,7 @@ import { NGXLogger } from "ngx-logger";
     standalone: false
 })
 export class CommandsComponent implements OnInit {
-  debug: boolean = true;
+  debug: boolean;
   private logID: string = "CommandsComponent.";
   // button command loading
   loadingResPalCode: boolean = false;
@@ -52,6 +53,11 @@ export class CommandsComponent implements OnInit {
     private notificationService: NotificationService,
     private logger: NGXLogger,
   ) {
+    if (environment.production) {
+      this.debug = false;
+    } else {
+      this.debug = true;
+    }
   }
 
   ngOnInit() {

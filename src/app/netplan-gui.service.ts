@@ -38,6 +38,12 @@ export class NetplanGUIService {
     private http: HttpClient,
     private logger: NGXLogger,  // trace, debug, info, log, warn, error, fatal
   ) {
+    if (environment.production) {
+      this.debug = false;
+    } else {
+      this.debug = true;
+    }
+
     this.BASE_URL = "http://" + SERVER + ":8080/";
   }
 
