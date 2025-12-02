@@ -1,12 +1,12 @@
 # Netplan GUI Changelog
 
-## 1.3.0 (7/5/2025) - [Issue #12](https://github.com/xinthose/Netplan-GUI/issues/12))
+## 1.3.0 (7/5/2025) - [Issue #12](https://github.com/xinthose/Netplan-GUI/issues/12)
 
 - update packages (Angular 20)
 - in `server.js` use `app.all(/(.*)/, function (req, res)` instead of `app.all('*', function (req, res)`
   - [`express`](https://www.npmjs.com/package/express) had a [breaking change](https://expressjs.com/en/guide/migrating-5.html#path-syntax) when they moved to version 5
 
-## 1.2.0 (11/24/2023) - [Issue #11](https://github.com/xinthose/Netplan-GUI/issues/11))
+## 1.2.0 (11/24/2023) - [Issue #11](https://github.com/xinthose/Netplan-GUI/issues/11)
 
 - update packages (Angular 17)
 - **Feat**: in commands, add new buttons "Get Ethernet 1 Status", "Get Ethernet 2 Status", "Get 'ip a'"
